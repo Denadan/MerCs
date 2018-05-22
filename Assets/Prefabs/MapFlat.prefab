@@ -252,8 +252,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f514fb6c6a358304a86c75c633853f5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SizeX: 45
-  SizeY: 32
+  SizeX: 25
+  SizeY: 20
   MaxHeight: 5
   ForestTrashHold: 0.75
   RoughTrashHold: 0.75

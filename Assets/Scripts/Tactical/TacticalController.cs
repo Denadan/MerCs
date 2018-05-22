@@ -11,9 +11,15 @@ namespace Mercs.Tactical
     {
         public Map Map { get; set; }
         public HexGrid Grid { get; set; }
+        [HideInInspector]
         public List<UnitInfo> Units = new List<UnitInfo>();
         public UnitInfo SelectedUnit { get; private set; }
         public TacticalStateMachine StateMachine { get; private set; }
+
+        [SerializeField]
+        private Transform SelectionMark;
+        [SerializeField]
+        private Transform TargetMark;
 
         public GameObject MapPrefab;
 
@@ -31,10 +37,26 @@ namespace Mercs.Tactical
             if(info.Active)
             {
                 SelectedUnit = info;
+                SelectionMark.SetParent(info.transform, false);
+                SelectionMark.gameObject.SetActive(true);
                 return false;
             }
             return false;
 
+        }
+
+        public void HighlightUnit(UnitInfo info)
+        {
+            if(SelectedUnit != info)
+            {
+                TargetMark.SetParent(info.transform,false);
+                TargetMark.gameObject.SetActive(true);
+            }
+        }
+
+        public void HideHighlatedUnit(UnitInfo info)
+        {
+            TargetMark.gameObject.SetActive(false);
         }
     }
 }

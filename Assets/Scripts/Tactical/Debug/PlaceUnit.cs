@@ -37,6 +37,7 @@ namespace Mercs.Tactical
             var pos = unit.GetComponent<CellPosition>();
             unit.GetComponent<SpriteRenderer>().sprite = MechSprites.Rnd();
             unit.AddComponent<PolygonCollider2D>();
+            unit.GetComponent<UnitInfo>().Active = true;
             pos.Facing = facing;
             pos.position = coord;
             TacticalController.Instance.Units.Add(unit.GetComponent<UnitInfo>());

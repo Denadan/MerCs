@@ -47,6 +47,9 @@ TagManager:
   - name: Object
     uniqueID: 3766837141
     locked: 0
+  - name: SelectionMarks
+    uniqueID: 2637766793
+    locked: 0
   - name: Unit
     uniqueID: 3223171411
     locked: 0

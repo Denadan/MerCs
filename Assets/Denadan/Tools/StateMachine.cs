@@ -40,8 +40,7 @@ namespace Tools
 
         protected virtual void Start()
         {
-            currentState = StartState;
-            curStateHandler = _states[currentState];
+            State = StartState;
         }
 
         protected void addState(BaseState state)
