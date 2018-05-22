@@ -10,7 +10,8 @@ namespace Mercs.Tactical.States
         SelectUnit,
         SelectMovement,
         SelectRun,
-        SelectJump
+        SelectJump,
+        SelectRotation
     }
 
     public abstract class TacticalStateHandler : IState<TacticalState>

@@ -8,6 +8,7 @@ namespace Mercs.Tactical
     {
         public CellPosition Position { get; set; }
         public MovementData Movement { get; set; }
+        public bool Active { get; set; }
 
         private void Start()
         {

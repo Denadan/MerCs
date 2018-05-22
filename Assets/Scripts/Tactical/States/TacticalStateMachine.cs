@@ -38,5 +38,12 @@ namespace Mercs.Tactical.States
         {
             curStateHandler.UnitClick(unit, button);
         }
+
+        protected override void Start()
+        {
+            addState(new UnitSelectionState());
+
+            base.Start();
+        }
     }
 }

@@ -19,17 +19,21 @@ namespace Mercs.Tactical.States
 
         public override void UnitEnter(UnitInfo unit)
         {
-            throw new System.NotImplementedException();
         }
 
         public override void UnitLeave(UnitInfo unit)
         {
-            throw new System.NotImplementedException();
         }
 
         public override void UnitClick(UnitInfo unit, PointerEventData.InputButton button)
         {
-            throw new System.NotImplementedException();
+            if(button == PointerEventData.InputButton.Left && TacticalController.Instance.SelectUnit(unit))
+            {
+                if (unit.Movement == null)
+                    TacticalController.Instance.StateMachine.State = TacticalState.SelectRotation;
+                else
+                    TacticalController.Instance.StateMachine.State = TacticalState.SelectMovement;
+            }
         }
 
         public override TacticalState State { get; }
