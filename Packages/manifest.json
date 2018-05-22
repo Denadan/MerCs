@@ -1,0 +1,9 @@
+{
+  "dependencies": {
+    "com.unity.incrementalcompiler": "0.0.41",
+    "com.unity.package-manager-ui": "1.9.3",
+    "com.unity.ads": "exclude",
+    "com.unity.purchasing": "exclude"
+  },
+  "registry": "https://staging-packages.unity.com"
+}

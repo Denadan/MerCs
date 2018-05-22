@@ -1,0 +1,58 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags: []
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - Tiles
+  - Units
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Terrain
+    uniqueID: 2694258749
+    locked: 0
+  - name: Object
+    uniqueID: 3766837141
+    locked: 0
+  - name: Unit
+    uniqueID: 3223171411
+    locked: 0
+  - name: Marks
+    uniqueID: 1195733501
+    locked: 0
+  - name: TacticalOverlay
+    uniqueID: 473349967
+    locked: 0
