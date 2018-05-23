@@ -38,6 +38,6 @@ namespace Mercs.Tactical.States
             }
         }
 
-        public override TacticalState State { get; }
+        public override TacticalState State => TacticalState.SelectUnit;
     }
 }

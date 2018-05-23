@@ -7,6 +7,7 @@ namespace Mercs.Tactical.States
 
     public enum TacticalState
     {
+        Deploy,
         SelectUnit,
         SelectMovement,
         SelectRun,
@@ -25,6 +26,7 @@ namespace Mercs.Tactical.States
         public abstract void UnitLeave(UnitInfo unit);
         public abstract void UnitClick(UnitInfo unit, PointerEventData.InputButton button);
         public abstract TacticalState State { get; }
+
         public virtual void OnLoad()
         {
         }

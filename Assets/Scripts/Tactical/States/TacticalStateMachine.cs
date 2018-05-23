@@ -42,6 +42,7 @@ namespace Mercs.Tactical.States
         protected override void Start()
         {
             addState(new UnitSelectionState());
+            addState(new DeployState());
 
             base.Start();
         }
