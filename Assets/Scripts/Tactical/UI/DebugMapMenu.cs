@@ -4,8 +4,6 @@ namespace Mercs.Tactical.UI
 {
     public class DebugMapMenu : MonoBehaviour
     {
-        private PlaceUnit unitPlacer;
-
         public void ShowPath(bool value)
         { }
 
@@ -19,10 +17,5 @@ namespace Mercs.Tactical.UI
 
         }
 
-        public void AddUnit()
-        {
-            TacticalController.Instance.Map.GetComponent<PlaceUnit>().Place();
-
-        }
     }
 }

@@ -23,7 +23,6 @@ GameObject:
   - component: {fileID: 114763752134746080}
   - component: {fileID: 114101135788229610}
   - component: {fileID: 114542518974869722}
-  - component: {fileID: 114778337986896924}
   - component: {fileID: 114746455252689770}
   m_Layer: 0
   m_Name: MapFlat
@@ -269,9 +268,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c5d4f6a49be40040a1df42994ba4cbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TileParent: {fileID: 0}
-  TilePrefab: {fileID: 1004746293789162, guid: 3b650b9b584a2ea499981e2aa34440e0, type: 2}
-  Textures: []
 --- !u!114 &114763752134746080
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -283,29 +279,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48481a0283d981c4da5f1eb1cf28a4a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114778337986896924
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1031959539713628}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d1f083ac1e9d6454abf852039f611144, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MechSprites:
-  - {fileID: 21300000, guid: 04e33e58c2a6b124ab3fe7ed231c624b, type: 3}
-  - {fileID: 21300000, guid: 0f9017230ca07014391f499b1a05b7fe, type: 3}
-  - {fileID: 21300000, guid: bad9c5606534daf4c874e012d5d4a74d, type: 3}
-  - {fileID: 21300000, guid: 65d87d69da8eaa946847c470df2c303a, type: 3}
-  - {fileID: 21300000, guid: 4e3bd8feeffac7c4c80e3ecb3c6b675b, type: 3}
-  - {fileID: 21300000, guid: 0770908a321540444bab48930bed35de, type: 3}
-  - {fileID: 21300000, guid: 58eeb57c7bc8edf4a97dadbc776deb6a, type: 3}
-  - {fileID: 21300000, guid: 477390172c5a2ff46a31e6225188c8a0, type: 3}
-  - {fileID: 21300000, guid: 479977b6e5be3ad46a70def9f1e0500f, type: 3}
-  - {fileID: 21300000, guid: 78e8d8d0987fb8044a3bcd3cf0b084b6, type: 3}
-  - {fileID: 21300000, guid: 15c75bface4bcc44aa1a9a6817b28385, type: 3}
-  - {fileID: 21300000, guid: 5a6367cab35b4374ab0baaa6ed6f63df, type: 3}
-  - {fileID: 21300000, guid: b27a09cbe37761a45b3819e73046744c, type: 3}
-  MechPrefab: {fileID: 1282163278245234, guid: 02ab79c8da767d54a8f4f1556615a096, type: 2}
