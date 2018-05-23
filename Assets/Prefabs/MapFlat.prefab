@@ -62,21 +62,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1629332126002440
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4556542294154352}
-  m_Layer: 0
-  m_Name: Overlay
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
 --- !u!1 &1737559824481136
 GameObject:
   m_ObjectHideFlags: 0
@@ -146,19 +131,6 @@ Transform:
   m_Father: {fileID: 4614353106774778}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4556542294154352
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1629332126002440}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4614353106774778}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4614353106774778
 Transform:
   m_ObjectHideFlags: 1
@@ -173,7 +145,6 @@ Transform:
   - {fileID: 4117034211365896}
   - {fileID: 4007008490804490}
   - {fileID: 4821704328078302}
-  - {fileID: 4556542294154352}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -298,10 +269,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c5d4f6a49be40040a1df42994ba4cbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TileParent: {fileID: 4556542294154352}
+  TileParent: {fileID: 0}
   TilePrefab: {fileID: 1004746293789162, guid: 3b650b9b584a2ea499981e2aa34440e0, type: 2}
-  FilledSprite: {fileID: 21300000, guid: c6e4429e912c2ed4c87fe7f843dd5302, type: 3}
-  HatchSprite: {fileID: 21300000, guid: 1ada8fad8bc3682438c14f461ae3ed3f, type: 3}
+  Textures: []
 --- !u!114 &114763752134746080
 MonoBehaviour:
   m_ObjectHideFlags: 1

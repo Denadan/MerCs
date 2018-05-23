@@ -7,8 +7,6 @@ namespace Mercs.Tactical
     [RequireComponent(typeof(Map))]
     public class MapOverlay : MonoBehaviour
     {
-        public enum Tile { Filled, Hatched }
-
         private Map map;
         private HexGrid grid;
         private SpriteRenderer[,] sprites;
@@ -19,9 +17,7 @@ namespace Mercs.Tactical
         [SerializeField]
         private GameObject TilePrefab;
         [SerializeField]
-        private Sprite FilledSprite;
-        [SerializeField]
-        private Sprite HatchSprite;
+        private Texture2D[] Textures;
 
 
 
