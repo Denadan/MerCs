@@ -52,9 +52,11 @@ namespace Mercs.Tactical
 
 
             map.Generate(Orientation);
-            path.CreatePathMap();
 
+            path.CreatePathMap();
             MakeTiles();
+
+            GetComponent<MapOverlay>().Init();
         }
 
         void Clear()

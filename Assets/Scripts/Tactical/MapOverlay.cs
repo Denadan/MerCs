@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Denadan.Sprites;
 using UnityEngine;
 
 namespace Mercs.Tactical
@@ -9,40 +10,16 @@ namespace Mercs.Tactical
     {
         private Map map;
         private HexGrid grid;
-        private SpriteRenderer[,] sprites;
+        private OverlayedSprite[,] sprites;
 
-
-        [SerializeField]
-        private Transform TileParent;
-        [SerializeField]
-        private GameObject TilePrefab;
-        [SerializeField]
         private Texture2D[] Textures;
 
+        private static readonly Color Invisible = new Color(0, 0, 0, 0);
 
-
-        private void Start()
+        public void Init()
         {
             map = GetComponent<Map>();
-            grid = GetComponent<HexGrid>();
-            sprites = new SpriteRenderer[map.SizeX, map.SizeY];
-
-            for (int i = 0; i < map.SizeX; i++)
-                for (int j = 0; j < map.SizeY; j++)
-                {
-                    var pos = grid.CellToWorld(new Vector3Int(i, j, 0));
-                    var tile = Instantiate(TilePrefab, pos, Quaternion.identity, TileParent);
-
-                    sprites[i, j] = tile.GetComponent<SpriteRenderer>();
-                    sprites[i, j].color = new Color(0, 1, 1, 0.3f);
-                   // tile.SetActive(false);
-                }
-        }
-
-        private void Clear()
-        {
-            foreach (Transform tile in TileParent)
-                Destroy(tile.gameObject);
+            sprites = new OverlayedSprite[map.SizeX, map.SizeY];
         }
 
         public void HideAll()
@@ -50,19 +27,31 @@ namespace Mercs.Tactical
             for (int i = 0; i < map.SizeX; i++)
                 for (int j = 0; j < map.SizeY; j++)
                 {
-                    sprites[i, j].gameObject.SetActive(false);
+                    sprites[i, j].MaskColor = Invisible;
                 }
         }
 
-        private void ShowTile(Vector2Int coord, Color color)
+        public void HideTile(Vector2Int coord)
         {
-
+            if (coord.x < 0 || coord.y < 0 || coord.x >= map.SizeX || coord.y >= map.SizeY)
+            {
+                sprites[coord.x, coord.y].MaskColor = Invisible;
+            }
         }
 
-        private void ShowZone(List<Vector2Int> zone, Color color)
+        private void ShowTile(Vector2Int coord, Color color, int mark)
+        {
+            if (coord.x < 0 || coord.y < 0 || coord.x >= map.SizeX || coord.y >= map.SizeY)
+            {
+                sprites[coord.x, coord.y].Mask = Textures[mark];
+                sprites[coord.x, coord.y].MaskColor = color;
+            }
+        }
+
+        private void ShowZone(List<Vector2Int> zone, Color color, int mark)
         {
             foreach (var item in zone)
-                ShowTile(item, color);
+                ShowTile(item, color, mark);
         }
     }
 }
