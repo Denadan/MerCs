@@ -9,19 +9,23 @@ namespace Mercs.Tactical
 {
     public class TacticalController : SceneSingleton<TacticalController>
     {
-        public Map Map { get; set; }
-        public HexGrid Grid { get; set; }
+        public Map Map { get; private set; }
+        public HexGrid Grid { get; private set; }
+        public MapOverlay Overlay { get; private set; }
+        public TacticalStateMachine StateMachine { get; private set; }
+
         [HideInInspector]
         public List<UnitInfo> Units = new List<UnitInfo>();
         public UnitInfo SelectedUnit { get; private set; }
-        public TacticalStateMachine StateMachine { get; private set; }
 
         [SerializeField]
         private Transform SelectionMark;
         [SerializeField]
         private Transform TargetMark;
-
+        
         public GameObject MapPrefab;
+        [SerializeField]
+        private GameObject MechPrefab;
 
         public void Start()
         {
@@ -29,7 +33,25 @@ namespace Mercs.Tactical
             Map = map_obj.GetComponent<Map>();
             Grid = map_obj.GetComponent<HexGrid>();
             StateMachine = GetComponent<TacticalStateMachine>();
+            Overlay = map_obj.GetComponent<MapOverlay>();
+
             Units.Clear();
+            foreach(var item in GameController.Instance.Mechs)
+            {
+                var unit = Instantiate(MechPrefab, Grid.UnitsParent, false);
+                unit.GetComponent<SpriteRenderer>().sprite = item.MechSprite;
+                var move = unit.GetComponent<MovementData>();
+                move.MoveMp = item.MovePoints;
+                move.JumpMP = item.JumpPoints;
+                move.RunMP = item.RunPoints;
+                var info = unit.GetComponent<UnitInfo>();
+                info.Faction = GameController.Instance.PlayerFaction;
+                info.PilotName = item.Name;
+                info.gameObject.SetActive(false);
+                unit.GetComponent<CellPosition>().position = new Vector2Int(-1, -1);
+
+                Units.Add(info);
+            }
         }
             
         public bool SelectUnit(UnitInfo info)
@@ -57,6 +79,7 @@ namespace Mercs.Tactical
         public void HideHighlatedUnit(UnitInfo info)
         {
             TargetMark.gameObject.SetActive(false);
+            TargetMark.SetParent(this.transform);
         }
     }
 }

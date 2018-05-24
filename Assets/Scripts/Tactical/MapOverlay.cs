@@ -12,6 +12,7 @@ namespace Mercs.Tactical
         private HexGrid grid;
         private OverlayedSprite[,] sprites;
 
+        [SerializeField]
         private Texture2D[] Textures;
 
         private static readonly Color Invisible = new Color(0, 0, 0, 0);
@@ -39,7 +40,7 @@ namespace Mercs.Tactical
             }
         }
 
-        private void ShowTile(Vector2Int coord, Color color, int mark)
+        public void ShowTile(Vector2Int coord, Color color, int mark)
         {
             if (coord.x < 0 || coord.y < 0 || coord.x >= map.SizeX || coord.y >= map.SizeY)
             {
@@ -48,7 +49,7 @@ namespace Mercs.Tactical
             }
         }
 
-        private void ShowZone(List<Vector2Int> zone, Color color, int mark)
+        public void ShowZone(List<Vector2Int> zone, Color color, int mark)
         {
             foreach (var item in zone)
                 ShowTile(item, color, mark);

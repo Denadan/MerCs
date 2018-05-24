@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114980651859773748}
   - component: {fileID: 114592133580241504}
   - component: {fileID: 114224816123904760}
+  - component: {fileID: 114898744738742472}
   m_Layer: 9
   m_Name: Mech
   m_TagString: Untagged
@@ -71,7 +72,6 @@ MonoBehaviour:
   MoveMp: 5
   RunMP: 8
   JumpMP: 4
-  CanMoveNow: 1
 --- !u!114 &114592133580241504
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -83,6 +83,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da96c8bdc01ac0b45983fa418d09ab13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114898744738742472
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1282163278245234}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79cce417f0089af4cb9b663b18c11a17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CamoTemplate: {fileID: 0}
+  ColorR: {r: 0, g: 0, b: 0, a: 0}
+  ColorG: {r: 0, g: 0, b: 0, a: 0}
+  ColorB: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &114980651859773748
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -110,7 +125,7 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 553a166b0c5f3ee4f9baa33e83308a96, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -128,7 +143,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1071795885
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 04e33e58c2a6b124ab3fe7ed231c624b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
