@@ -15,12 +15,22 @@ namespace Mercs.Tactical
         [SerializeField]
         private Texture2D[] Textures;
 
+        public bool Ready { get; private set; } = false;
+
         private static readonly Color Invisible = new Color(0, 0, 0, 0);
 
         public void Init()
         {
             map = GetComponent<Map>();
+            grid = GetComponent<HexGrid>();
             sprites = new OverlayedSprite[map.SizeX, map.SizeY];
+            for (int i = 0; i < map.SizeX; i++)
+                for (int j = 0; j < map.SizeY; j++)
+                {
+                    sprites[i, j] = grid[i, j].GetComponent<OverlayedSprite>();
+                }
+
+            Ready = true;
         }
 
         public void HideAll()
@@ -35,18 +45,18 @@ namespace Mercs.Tactical
         public void HideTile(Vector2Int coord)
         {
             if (coord.x < 0 || coord.y < 0 || coord.x >= map.SizeX || coord.y >= map.SizeY)
-            {
-                sprites[coord.x, coord.y].MaskColor = Invisible;
-            }
+                return;
+
+            sprites[coord.x, coord.y].MaskColor = Invisible;
+
         }
 
         public void ShowTile(Vector2Int coord, Color color, int mark)
         {
             if (coord.x < 0 || coord.y < 0 || coord.x >= map.SizeX || coord.y >= map.SizeY)
-            {
-                sprites[coord.x, coord.y].Mask = Textures[mark];
-                sprites[coord.x, coord.y].MaskColor = color;
-            }
+                return;
+            sprites[coord.x, coord.y].Mask = Textures[mark];
+            sprites[coord.x, coord.y].MaskColor = color;
         }
 
         public void ShowZone(List<Vector2Int> zone, Color color, int mark)

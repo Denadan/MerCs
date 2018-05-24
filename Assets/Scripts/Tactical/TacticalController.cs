@@ -13,6 +13,7 @@ namespace Mercs.Tactical
         public HexGrid Grid { get; private set; }
         public MapOverlay Overlay { get; private set; }
         public TacticalStateMachine StateMachine { get; private set; }
+        public bool Ready { get; private set; }
 
         [HideInInspector]
         public List<UnitInfo> Units = new List<UnitInfo>();
@@ -34,6 +35,7 @@ namespace Mercs.Tactical
             Grid = map_obj.GetComponent<HexGrid>();
             StateMachine = GetComponent<TacticalStateMachine>();
             Overlay = map_obj.GetComponent<MapOverlay>();
+            UnityEngine.Debug.Log(Overlay.ToString());
 
             Units.Clear();
             foreach(var item in GameController.Instance.Mechs)
@@ -48,6 +50,7 @@ namespace Mercs.Tactical
                 info.Faction = GameController.Instance.PlayerFaction;
                 info.PilotName = item.Name;
                 info.gameObject.SetActive(false);
+                info.Active = false;
                 unit.GetComponent<CellPosition>().position = new Vector2Int(-1, -1);
 
                 Units.Add(info);

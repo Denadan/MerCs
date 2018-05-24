@@ -5,14 +5,17 @@ namespace Mercs.Tactical.UI
 {
     public class UnitSelectButton : MonoBehaviour
     {
-        [SerializeField]
-        private Image unitImage;
+        public Image unitImage;
         [SerializeField]
         private Text nameText;
         [SerializeField]
         private Text bottomText;
 
+        public Image Background;
+
+
         public UnitInfo Unit;
+
 
 
         public Text BottomText { get => bottomText; set => bottomText = value; }
@@ -24,6 +27,7 @@ namespace Mercs.Tactical.UI
             unitImage.sprite = Unit.GetComponent<SpriteRenderer>().sprite;
             unitImage.material = Unit.Faction.CamoMaterial;
             nameText.text = Unit.PilotName;
+            Background = GetComponent<Image>();
         }
     }
 }

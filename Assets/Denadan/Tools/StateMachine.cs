@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -12,14 +13,14 @@ namespace Tools
         void OnUnload();
     }
 
-    public class StateMachine<TEnum, BaseState> : MonoBehaviour
+    public abstract class StateMachine<TEnum, BaseState> : MonoBehaviour
         where BaseState : IState<TEnum>
+        where TEnum : IComparable
     {
         private Dictionary<TEnum, BaseState> _states = new Dictionary<TEnum, BaseState>();
         private TEnum currentState;
 
         protected BaseState curStateHandler { get; private set; }
-
         public TEnum StartState;
 
         public TEnum State
@@ -27,25 +28,34 @@ namespace Tools
             get => currentState;
             set
             {
-                if (curStateHandler != null)
-                    curStateHandler.OnUnload();
-                else
-                {
-                    currentState = value;
-                    curStateHandler = _states[value];
-                    curStateHandler.OnLoad();
-                }
+                Debug.Log($"Change State {currentState} => {value}");
+                curStateHandler?.OnUnload();
+                currentState = value;
+                curStateHandler = _states[value];
+                curStateHandler?.OnLoad();
             }
-        }
-
-        protected virtual void Start()
-        {
-            State = StartState;
         }
 
         protected void addState(BaseState state)
         {
             _states.Add(state.State, state);
         }
+
+        protected virtual void Start()
+        {
+            StartCoroutine(WaitForReady());
+        }
+
+        private IEnumerator WaitForReady()
+        {
+            while (!Ready)
+            {
+                yield return new WaitForFixedUpdate();
+            }
+
+            State = StartState;
+        }
+
+        protected abstract bool Ready { get; }
     }
 }

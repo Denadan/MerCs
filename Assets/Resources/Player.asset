@@ -15,6 +15,6 @@ MonoBehaviour:
   Flag: {fileID: 0}
   CamoTemplate: {fileID: 2800000, guid: 2e0fe096685d714438403a14d42ae67e, type: 3}
   CamoColorR: {r: 0.31523672, g: 0.40561333, b: 0.8679245, a: 1}
-  CamoColorG: {r: 1, g: 0, b: 0.88933325, a: 1}
-  CamoColorB: {r: 0.6981132, g: 0.008213097, b: 0, a: 1}
+  CamoColorG: {r: 1, g: 0, b: 1, a: 1}
+  CamoColorB: {r: 0.4339623, g: 0.004875981, b: 0, a: 1}
   BaseMaterial: {fileID: 2100000, guid: 553a166b0c5f3ee4f9baa33e83308a96, type: 2}

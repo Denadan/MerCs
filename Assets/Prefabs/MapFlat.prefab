@@ -271,6 +271,7 @@ MonoBehaviour:
   Textures:
   - {fileID: 2800000, guid: c6e4429e912c2ed4c87fe7f843dd5302, type: 3}
   - {fileID: 2800000, guid: 7297593f4933c4343801054d2c0d0f89, type: 3}
+  - {fileID: 2800000, guid: 1ada8fad8bc3682438c14f461ae3ed3f, type: 3}
 --- !u!114 &114763752134746080
 MonoBehaviour:
   m_ObjectHideFlags: 1
