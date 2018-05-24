@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ca515f4abc144d40ad2af8b3071d215, type: 3}
+  m_Name: Player
+  m_EditorClassIdentifier: 
+  Name: Player
+  Flag: {fileID: 0}
+  CamoTemplate: {fileID: 2800000, guid: 2e0fe096685d714438403a14d42ae67e, type: 3}
+  CamoColorR: {r: 0.31523672, g: 0.40561333, b: 0.8679245, a: 1}
+  CamoColorG: {r: 1, g: 0, b: 0.88933325, a: 1}
+  CamoColorB: {r: 0.6981132, g: 0.008213097, b: 0, a: 1}
+  BaseMaterial: {fileID: 2100000, guid: 553a166b0c5f3ee4f9baa33e83308a96, type: 2}

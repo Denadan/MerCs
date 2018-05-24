@@ -3,19 +3,19 @@
 namespace Denadan.Sprites
 {
     [ExecuteInEditMode]
-    [RequireComponent(typeof(SpriteRenderer))]
+    [RequireComponent(typeof(Renderer))]
     public class OverlayedSprite : MonoBehaviour
     {
         public Texture2D Mask;
         public Color MaskColor;
 
-        private SpriteRenderer m_renderer;
+        private Renderer m_renderer;
         private MaterialPropertyBlock props;
 
        [ExecuteInEditMode]
        private void Start()
         {
-            m_renderer = GetComponent<SpriteRenderer>();
+            m_renderer = GetComponent<Renderer>();
             props = new MaterialPropertyBlock();
         }
 

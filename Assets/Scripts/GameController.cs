@@ -8,5 +8,7 @@ namespace Mercs
     {
         [Header("TacticalMapInfo")]
         public List<StartMechInfo> Mechs = new List<StartMechInfo>();
+
+        public Faction PlayerFaction;
     }
 }
