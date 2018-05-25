@@ -53,7 +53,7 @@ namespace Mercs.Tactical.States
             for (int i = DeployZone.xMin; i < DeployZone.xMax; i++)
                 for (int j = DeployZone.yMin; j < DeployZone.yMax; j++)
                 {
-                    TacticalController.Instance.Overlay.ShowTile(new Vector2Int(i, j), Color.yellow, 1);
+                    TacticalController.Instance.Overlay.ShowTile(new Vector2Int(i, j), Color.yellow, 1, 1f);
                 }
 
             TacticalController.Instance.StateMachine.State = TacticalState.DeploySelectUnit;
@@ -80,7 +80,7 @@ namespace Mercs.Tactical.States
                 if (unit_to_add == null)
                     return;
                 if (unit.Active)
-                    TacticalController.Instance.Overlay.ShowTile(unit_to_add.Position.position, Color.yellow, 1);
+                    TacticalController.Instance.Overlay.ShowTile(unit_to_add.Position.position, Color.yellow, 1, 1f);
 
                 Object.Destroy(unit.GetComponent<PolygonCollider2D>());
                 unit.Active = false;
@@ -98,7 +98,7 @@ namespace Mercs.Tactical.States
                     if (unit_to_remove == null)
                         return;
 
-                    TacticalController.Instance.Overlay.ShowTile(unit_to_remove.Position.position, Color.yellow, 1);
+                    TacticalController.Instance.Overlay.ShowTile(unit_to_remove.Position.position, Color.yellow, 1, 1f);
 
                     unit_to_remove.info.gameObject.SetActive(false);
                     unit_to_remove.Position.position = new Vector2Int(-1, -1);

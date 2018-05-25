@@ -23,12 +23,17 @@ namespace Tools
         protected BaseState curStateHandler { get; private set; }
         public TEnum StartState;
 
+        public TEnum LastState { get; private set; }
+
         public TEnum State
         {
             get => currentState;
             set
             {
+#if UNITY_EDITOR
                 Debug.Log($"Change State {currentState} => {value}");
+#endif
+                LastState = currentState;
                 curStateHandler?.OnUnload();
                 currentState = value;
                 curStateHandler = _states[value];

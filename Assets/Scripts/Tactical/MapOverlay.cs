@@ -51,15 +51,21 @@ namespace Mercs.Tactical
 
         }
 
-        public void ShowTile(Vector2Int coord, Color color, int mark)
+        public void ShowTile(int x, int y, Color color, int mark, float alpha = 0.5f)
         {
-            if (coord.x < 0 || coord.y < 0 || coord.x >= map.SizeX || coord.y >= map.SizeY)
+            if (x < 0 || y < 0 || x >= map.SizeX || y >= map.SizeY)
                 return;
-            sprites[coord.x, coord.y].Mask = Textures[mark];
-            sprites[coord.x, coord.y].MaskColor = color;
+            color.a *= alpha;
+            sprites[x, y].Mask = Textures[mark];
+            sprites[x, y].MaskColor = color;
         }
 
-        public void ShowZone(List<Vector2Int> zone, Color color, int mark)
+        public  void ShowTile(Vector2Int coord, Color color, int mark, float alpha = 0.5f)
+        {
+            ShowTile(coord.x, coord.y, color, mark,alpha);
+        }
+
+        public void ShowZone(List<Vector2Int> zone, Color color, int mark, float alpha = 0.5f)
         {
             foreach (var item in zone)
                 ShowTile(item, color, mark);
