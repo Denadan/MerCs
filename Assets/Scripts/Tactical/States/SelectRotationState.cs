@@ -16,10 +16,8 @@ namespace Mercs.Tactical.States
             original.SetFacing(CONST.GetRotation(origin, dest));
             if (old_facing != original.Facing)
                 ShowFacing();
-//            TacticalUIController.Instance.DebugMenu.Rotation.text += $"  {original.Facing}";
             dest.z = origin.z;
 
- //           line.SetPosition(1, dest);
             if (Input.GetMouseButtonDown(0))
             {
                 Done();

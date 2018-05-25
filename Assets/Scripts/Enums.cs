@@ -97,10 +97,8 @@ namespace Mercs
         {
             var vector = dest - source;
             vector.z = 0;
-            TacticalUIController.Instance.DebugMenu.Rotation.text = $"{source} => {dest} = {vector}";
             var angle = Vector3.Angle(Vector3.up, vector);
             angle *= Mathf.Sign(vector.x);
-            TacticalUIController.Instance.DebugMenu.Rotation.text += $"/n{angle}";
 
             switch (angle)
             {
