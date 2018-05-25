@@ -1,9 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 namespace Mercs.Tactical.UI
 {
     public class DebugMapMenu : MonoBehaviour
     {
+        public Text Rotation;
+
         public void ShowPath(bool value)
         { }
 

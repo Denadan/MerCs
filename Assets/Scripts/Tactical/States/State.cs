@@ -11,6 +11,7 @@ namespace Mercs.Tactical.States
         DeployInit = 10,
         DeploySelectUnit = 11,
         DeployPlaceUnit = 12,
+        DeployRotation = 13,
         SelectUnit = 20,
         SelectMovement = 30,
         SelectRun = 31,

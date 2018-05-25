@@ -52,6 +52,7 @@ namespace Mercs.Tactical.States
             addState(deploy);
             addState(new DeploySelectUnitState(deploy));
             addState(new DeployPlaceUnitState(deploy));
+            addState(new DeployRotationState(deploy));
 
             base.Start();
         }

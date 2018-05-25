@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Mercs.Tactical;
 using UnityEngine;
 
 namespace Mercs
@@ -127,6 +128,36 @@ namespace Mercs
                     break;
             }
             return angle;
+        }
+
+        public static Dir GetRotation(Vector3 source, Vector3 dest)
+        {
+
+
+
+            var vector = dest - source;
+            vector.z = 0;
+            TacticalUIController.Instance.DebugMenu.Rotation.text = $"{source} => {dest} = {vector}";
+            var angle = Vector3.Angle(Vector3.up, vector);
+            TacticalUIController.Instance.DebugMenu.Rotation.text += $"/n{angle}";
+            
+            switch (angle)
+            {
+                case float a when a < 30f && a > -30f:
+                    return Dir.N;
+                case float a when a < 90f && a >= 30f:
+                    return Dir.NW;
+                case float a when a < 150f && a >= 90f:
+                    return Dir.NE;
+                case float a when a > -90f && a >= -30f:
+                    return Dir.SW;
+                case float a when a > -150f && a >= -390f:
+                    return Dir.SE;
+                case float a when a >= 150 || a <= -150f:
+                    return Dir.S;
+            }
+
+            return Dir.N;
         }
     }
 }

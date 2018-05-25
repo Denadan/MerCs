@@ -17,6 +17,11 @@ namespace Mercs.Tactical
         [SerializeField]
         private GameObject TileInfoMenu;
 
+        [SerializeField]
+        public DebugMapMenu DebugMenu;
+
+
+
 
         public void ClearUnitList()
         {

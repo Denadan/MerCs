@@ -69,6 +69,16 @@ namespace Mercs.Tactical
                 Destroy(child.gameObject);
         }
 
-    }
+        public Vector3 CellToWorld(Vector2Int tile_coord)
+        {
+            return CellToWorld(new Vector3Int(tile_coord.x, tile_coord.y, 0));
+        }
+        public Vector3 CellToWorld(int x, int y)
+        {
+            return CellToWorld(new Vector3Int(x, y, 0));
+        }
+
+
+}
 
 }
