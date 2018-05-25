@@ -47,13 +47,22 @@ namespace Mercs.Tactical.States
 
             Camera.main.transform.position = new Vector3(center.x, center.y, Camera.main.transform.position.z);
 
-            for (int i = DeployZone.xMin; i < DeployZone.xMax; i++)
-            for (int j = DeployZone.yMin; j < DeployZone.yMax; j++)
-            {
-                TacticalController.Instance.Overlay.ShowTile(new Vector2Int(i, j), Color.yellow, 1, 1f);
-            }
-
             TacticalController.Instance.StateMachine.State = TacticalState.DeploySelectUnit;
+        }
+
+        public void ShowDeployZone()
+        {
+
+            TacticalController.Instance.Overlay.HideAll();
+            for (int i = DeployZone.xMin; i < DeployZone.xMax; i++)
+                for (int j = DeployZone.yMin; j < DeployZone.yMax; j++)
+                {
+                    TacticalController.Instance.Overlay.ShowTile(new Vector2Int(i, j), Color.yellow, MapOverlay.Texture.GridMark);
+                }
+            foreach(var unit in units)
+            {
+                TacticalController.Instance.Overlay.HideTile(unit.Position.position);
+            }
         }
     }
 }

@@ -12,28 +12,21 @@ namespace Mercs.Tactical
         public float ForestTrashHold = 0.3f;
         public float RoughTrashHold = 0.3f;
 
-        public override void Generate(HexOrinetation orientation)
+        public override void Generate()
         {
             map = new TileInfo[SizeX, SizeY];
             float siny = Mathf.Sin(Mathf.PI / 3);
 
-            float maxx = orientation == HexOrinetation.Horizontal ? SizeX + 1 : SizeX * siny + 1;
-            float maxy = orientation == HexOrinetation.Horizontal ? SizeY * siny + 1 : SizeY + 1;
+            float maxx = SizeX * siny + 1;
+            float maxy = SizeY + 1;
 
             coord_delegate cx, cy;
-            if (orientation == HexOrinetation.Horizontal)
-            {
-                cx = (int a, int b) => a + (b % 2) * 0.5f;
-                cy = (int a, int b) => b * siny;
-            }
-            else
-            {
-                cx = (int a, int b) => a * siny;
-                cy = (int a, int b) => b + (a % 2) * 0.5f;
-            }
+
+            cx = (int a, int b) => a * siny;
+            cy = (int a, int b) => b + (a % 2) * 0.5f;
 
 
-            float[,,] temp_map = new float[SizeX, SizeY,3];
+            float[,,] temp_map = new float[SizeX, SizeY, 3];
 
             Noise height_noise = new PerlinNoise(5);
             Noise forest_noise = new PerlinNoise(10);

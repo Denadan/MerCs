@@ -4,7 +4,7 @@ namespace Mercs.Tactical
 {
     public class RandomMap : Map
     {
-        public override void Generate(HexOrinetation orientaion)
+        public override void Generate()
         {
             map = new TileInfo[SizeX, SizeY];
             for (int i = 0; i < SizeX; i++)

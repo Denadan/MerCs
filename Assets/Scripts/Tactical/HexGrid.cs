@@ -6,7 +6,6 @@ namespace Mercs.Tactical
     public abstract class HexGrid : MonoBehaviour
     {
         public abstract Vector3 CellToWorld(Vector3Int tile_coord);
-        public abstract HexOrinetation Orientation { get; }
         protected abstract void MakeTiles();
 
         protected Map map;
@@ -51,7 +50,7 @@ namespace Mercs.Tactical
             tile_map = new GameObject[map.SizeX, map.SizeY];
 
 
-            map.Generate(Orientation);
+            map.Generate();
 
             path.CreatePathMap();
             MakeTiles();

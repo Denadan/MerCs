@@ -19,7 +19,6 @@ namespace Mercs.Tactical
             }
         }
 
-
-        public abstract void Generate(HexOrinetation orientation);
+        public abstract void Generate();
     }
 }

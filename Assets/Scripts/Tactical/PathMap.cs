@@ -8,7 +8,6 @@ namespace Mercs.Tactical
     {
         private Map map;
         private Dir[] dirs;
-        private HexOrinetation orientation;
 
         
 
@@ -16,8 +15,7 @@ namespace Mercs.Tactical
         {
             map = GetComponent<Map>();
             var hex_map = GetComponent<HexGrid>();
-            dirs = hex_map.Orientation == HexOrinetation.Horizontal ? CONST.HorizontalDir : CONST.VerticalDir;
-            orientation = hex_map.Orientation;
+            dirs = CONST.AllDirs;
 
             for (int i = 0; i < map.SizeX; i++)
                 for (int j = 0; j < map.SizeY; j++)
@@ -34,7 +32,7 @@ namespace Mercs.Tactical
                     tile.PathList = new Dictionary<Dir, TileInfo.PathInfo>();
                     foreach (var dir in dirs)
                     {
-                        var shift = CONST.GetDirShift(i, j, dir, orientation);
+                        var shift = CONST.GetDirShift(i, j, dir);
                         //UnityEngine.Debug.Log($"{i} {j} {dir} {shift}");
                         var neighbour = map[i + shift.x, j + shift.y];
                         if(neighbour == null)

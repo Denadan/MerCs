@@ -82,12 +82,13 @@
 
 			fixed4 frag(v2f IN) : SV_Target
 			{
-				fixed4 c = SampleSpriteTexture(IN.texcoord) * IN.color;
+				fixed4 c = SampleSpriteTexture(IN.texcoord);
 				fixed4 msk = tex2D(_MaskTex, IN.texcoord) * _MaskColor;
-				c.rgb *= _Color;
+				
 				c.rgb = lerp(c.rgb, msk.rgb, msk.a);
-
+				c *= _Color;
 				c.rgb *= c.a;
+
 				return c;
 			}
 			ENDCG

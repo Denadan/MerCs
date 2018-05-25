@@ -49,8 +49,6 @@ namespace Mercs.Tactical
         [SerializeField]
         private GameObject[] Arrows;
 
-        public override HexOrinetation Orientation => HexOrinetation.Vertical;
-
         public override Vector3 CellToWorld(Vector3Int tile_coord)
         {
             float x = SizeX * tile_coord.x;
@@ -112,9 +110,9 @@ namespace Mercs.Tactical
                         arrow.name = $"arrow_{i}_{j}_{pathInfo.Key}";
                     }
 
-                    foreach(var dir in CONST.VerticalDir)
+                    foreach(var dir in CONST.AllDirs)
                     {
-                        var shift = CONST.GetDirShift(i, j, dir, Orientation);
+                        var shift = CONST.GetDirShift(i, j, dir);
                         var neigbour = map[i + shift.x, j + shift.y];
                         if (neigbour == null)
                             continue;
