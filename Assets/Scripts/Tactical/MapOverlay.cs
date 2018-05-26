@@ -9,7 +9,17 @@ namespace Mercs.Tactical
     [RequireComponent(typeof(Map))]
     public class MapOverlay : MonoBehaviour
     {
-        public enum Texture { White25 = 0, White50 = 1, White100 = 2, GridMark = 3, Stroke = 4 }
+        public enum Texture
+        {
+            White25 = 0, White50 = 1, White100 = 2, GridMark = 3, Stroke = 4,
+
+            SectorN = 5, SectorNE = 6, SectorSE = 7, SectorS = 8, SectorSW = 9, SectorNW = 10,
+            ArrowN = 11, ArrowNE = 12, ArrowSE = 13, ArrowS = 14, ArrowSW = 16, ArrowNW = 16,
+            HArrowN = 17, HArrowNE = 18, HArrowSE = 19, HArrowS = 20, HArrowSW = 21, HArrowNW = 22,
+            Sector2N = 23, Sector2NE = 24, Sector2SE = 25, Sector2S = 26, Sector2SW = 27, Sector2NW = 28,
+            Sector3N = 29, Sector3NE = 30, Sector3SE = 31, Sector3S = 32, Sector3SW = 33, Sector3NW = 34,
+            SectorFN = 35, SectorFNE = 36, SectorFSE = 37, SectorFS = 38, SectorFSW = 39, SectorFNW = 40,
+        }
 
         private Map map;
         private HexGrid grid;
@@ -27,9 +37,48 @@ namespace Mercs.Tactical
         [SerializeField]
         private Texture2D Stroke;
 
+        [Header("Directory")]
+        [SerializeField]
+        private Texture2D[] Sectors;
+        [SerializeField]
+        private Texture2D[] Arrows;
+        [SerializeField]
+        private Texture2D[] HArrows;
+        [SerializeField]
+        private Texture2D[] Sectors2;
+        [SerializeField]
+        private Texture2D[] Sectors3;
+        [SerializeField]
+        private Texture2D[] SectorsF;
+
         private Texture2D[] textures;
 
         public bool Ready { get; private set; } = false;
+
+        public static Texture Arrow(Dir dir)
+        {
+            return Texture.ArrowN + (int) dir - 1;
+        }
+        public static Texture HArrow(Dir dir)
+        {
+            return Texture.HArrowN + (int)dir - 1;
+        }
+        public static Texture Sector(Dir dir)
+        {
+            return Texture.SectorN + (int)dir - 1;
+        }
+        public static Texture Sector2(Dir dir)
+        {
+            return Texture.Sector2N + (int)dir - 1;
+        }
+        public static Texture Sector3(Dir dir)
+        {
+            return Texture.Sector3N + (int)dir - 1;
+        }
+        public static Texture SectorF(Dir dir)
+        {
+            return Texture.SectorFN + (int)dir - 1;
+        }
 
         private static readonly Color Invisible = new Color(0, 0, 0, 0);
 
@@ -47,7 +96,13 @@ namespace Mercs.Tactical
             Ready = true;
             textures = new Texture2D[]
             {
-                White25,White50,White100,GridMark,Stroke
+                White25,White50,White100,GridMark,Stroke,
+                Sectors[0], Sectors[1],Sectors[2], Sectors[3],Sectors[4], Sectors[5],
+                Arrows[0], Arrows[1],Arrows[2], Arrows[3],Arrows[4], Arrows[5],
+                HArrows[0], HArrows[1],HArrows[2], HArrows[3],HArrows[4], HArrows[5],
+                Sectors2[0], Sectors2[1],Sectors2[2], Sectors2[3],Sectors2[4], Sectors2[5],
+                Sectors3[0], Sectors3[1],Sectors3[2], Sectors3[3],Sectors3[4], Sectors3[5],
+                SectorsF[0], SectorsF[1],SectorsF[2], SectorsF[3],SectorsF[4], SectorsF[5],
             };
         }
 

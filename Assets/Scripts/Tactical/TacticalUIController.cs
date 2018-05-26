@@ -27,7 +27,7 @@ namespace Mercs.Tactical
         {
             foreach(Transform child in UnitListMenu.transform)
             {
-                Destroy(child);
+                Destroy(child.gameObject);
             }
         }
 
