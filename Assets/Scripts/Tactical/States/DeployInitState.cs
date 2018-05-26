@@ -47,6 +47,8 @@ namespace Mercs.Tactical.States
 
             Camera.main.transform.position = new Vector3(center.x, center.y, Camera.main.transform.position.z);
 
+
+            TacticalUIController.Instance.InitDeployWindow();
             TacticalController.Instance.StateMachine.State = TacticalState.DeploySelectUnit;
         }
 

@@ -48,12 +48,20 @@ namespace Mercs.Tactical.States
             Object.Destroy(unit.GetComponent<PolygonCollider2D>());
             unit_to_remove.button.Background.color = Color.white;
             unit_to_remove.button.BottomText.text = "RESERVE";
+
+            TacticalUIController.Instance.UpdateDeployWindow();
             return unit_to_remove;
         }
 
         public override void OnLoad()
         {
             state.ShowDeployZone();
+            TacticalUIController.Instance.UpdateDeployWindow();
+        }
+
+        public override void OnUnload()
+        {
+            TacticalUIController.Instance.DisableStartButton();
         }
     }
 }

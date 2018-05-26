@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Mercs.Tactical.Events;
+using System.Linq;
 using Mercs.Tactical.States;
 using Tools;
 using UnityEngine;
@@ -84,5 +84,6 @@ namespace Mercs.Tactical
             TargetMark.gameObject.SetActive(false);
             TargetMark.SetParent(this.transform);
         }
+
     }
 }
