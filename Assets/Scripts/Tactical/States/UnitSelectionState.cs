@@ -5,18 +5,6 @@ namespace Mercs.Tactical.States
 {
     public class UnitSelectionState : TacticalStateHandler
     {
-        public override void TileEnter(Vector2Int coord)
-        {
-        }
-
-        public override void TileLeave(Vector2Int coord)
-        {
-        }
-
-        public override void TileClick(Vector2Int coord, PointerEventData.InputButton button)
-        {
-        }
-
         public override void UnitEnter(UnitInfo unit)
         {
             TacticalController.Instance.HighlightUnit(unit);

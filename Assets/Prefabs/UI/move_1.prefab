@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4464625832790348}
   - component: {fileID: 212217890544098702}
   m_Layer: 0
-  m_Name: move_0
+  m_Name: move_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -73,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1195733501
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: de128a5f70e2a9c4fb2a4bde1e544af0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

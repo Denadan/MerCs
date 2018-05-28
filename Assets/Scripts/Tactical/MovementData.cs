@@ -7,6 +7,7 @@ namespace Mercs.Tactical
         public int MoveMp;
         public int RunMP;
         public int JumpMP;
+        public int Initiative;
 
         public int CurrentMP { get; private set; }
         public bool Runnig { get; private set; }

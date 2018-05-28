@@ -12,6 +12,8 @@ namespace Mercs.Tactical
         public Faction Faction { get; set; }
         public bool Active { get; set; }
         public string PilotName { get; set; }
+        public int Weight { get; set; }
+
 
         private void Start()
         {

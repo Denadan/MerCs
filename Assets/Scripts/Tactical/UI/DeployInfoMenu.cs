@@ -24,6 +24,9 @@ namespace Mercs.Tactical.UI
 
         public bool InitDeployInfo(DeployParameters prams)
         {
+            foreach(Transform child in transform)
+                Destroy(child.gameObject);
+
             this.prams = prams;
             Caption = Instantiate(TextPrefab, transform).GetComponent<Text>();
 

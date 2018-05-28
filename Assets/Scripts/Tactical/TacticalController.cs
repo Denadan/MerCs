@@ -56,7 +56,7 @@ namespace Mercs.Tactical
                 Units.Add(info);
             }
         }
-            
+          
         public bool SelectUnit(UnitInfo info)
         {
             if(info.Active)
@@ -74,15 +74,23 @@ namespace Mercs.Tactical
         {
             if(SelectedUnit != info)
             {
-                TargetMark.SetParent(info.transform,false);
                 TargetMark.gameObject.SetActive(true);
+                TargetMark.SetParent(info.transform,false);
+                TargetMark.transform.position = new Vector3(0,0,0);
             }
         }
 
         public void HideHighlatedUnit(UnitInfo info)
         {
-            TargetMark.gameObject.SetActive(false);
             TargetMark.SetParent(this.transform);
+            TargetMark.gameObject.SetActive(false);
+        }
+
+        public void FinishDeploy()
+        {
+            Overlay.HideAll();
+            TacticalUIController.Instance.HideDeployWindow();
+            StateMachine.State = TacticalState.SelectUnit;
         }
 
     }

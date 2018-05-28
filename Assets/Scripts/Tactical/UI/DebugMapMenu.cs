@@ -17,7 +17,6 @@ namespace Mercs.Tactical.UI
         {
             TacticalController.Instance.Grid.gameObject.SendMessage("Clear");
             TacticalController.Instance.Grid.gameObject.SendMessage("Start");
-
         }
 
     }
