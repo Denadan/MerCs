@@ -72,8 +72,8 @@ namespace Mercs.Tactical.UI
 
         public bool UpdateDeployInfo()
         {
-            int count = TacticalController.Instance.Units.Count(unit => unit.Active);
-            int weight = count * 30;
+            int count = TacticalController.Instance.Units.Count(unit => !unit.Reserve);
+            int weight = TacticalController.Instance.Units.Where(unit => !unit.Reserve).Sum(unit => unit.Weight);
 
             if (prams.CheckWeight == DeployParameters.Range.None && prams.CheckCount == DeployParameters.Range.None)
             {

@@ -55,7 +55,7 @@ namespace Mercs.Tactical.States
 
 
             state.unit_in_hand.info.gameObject.AddComponent<PolygonCollider2D>();
-            state.unit_in_hand.info.Active = true;
+            state.unit_in_hand.info.Reserve = false;
             state.unit_in_hand.button.Background.color = Color.green;
             state.unit_in_hand.button.BottomText.text = "DEPLOY";
             state.unit_in_hand.renderer.color = Color.white;

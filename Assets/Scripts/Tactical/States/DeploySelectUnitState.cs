@@ -27,7 +27,7 @@ namespace Mercs.Tactical.States
             }
             else if (button == PointerEventData.InputButton.Right)
             {
-                if (unit.Active)
+                if (!unit.Reserve)
                     RemoveFromBoard(unit);
             }
         }
@@ -38,13 +38,13 @@ namespace Mercs.Tactical.States
             if (unit_to_remove == null)
                 return null;
 
-            if(unit.Active)
+            if(!unit.Reserve)
                 TacticalController.Instance.Overlay.ShowTile(unit_to_remove.Position.position, Color.yellow, MapOverlay.Texture.GridMark);
 
             unit_to_remove.info.gameObject.SetActive(false);
             unit_to_remove.Position.position = new Vector2Int(-1, -1);
             unit_to_remove.Position.SetFacing(Dir.N);
-            unit_to_remove.info.Active = false;
+            unit_to_remove.info.Reserve = true;
             Object.Destroy(unit.GetComponent<PolygonCollider2D>());
             unit_to_remove.button.Background.color = Color.white;
             unit_to_remove.button.BottomText.text = "RESERVE";

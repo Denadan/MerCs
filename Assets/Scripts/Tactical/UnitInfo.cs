@@ -11,6 +11,7 @@ namespace Mercs.Tactical
         public MovementData Movement { get; set; }
         public Faction Faction { get; set; }
         public bool Active { get; set; }
+        public bool Reserve { get; set; }
         public string PilotName { get; set; }
         public int Weight { get; set; }
 

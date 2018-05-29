@@ -12,11 +12,18 @@ namespace Mercs.Tactical.States
         DeploySelectUnit = 11,
         DeployPlaceUnit = 12,
         DeployRotation = 13,
-        SelectUnit = 20,
-        SelectMovement = 30,
-        SelectRun = 31,
-        SelectJump = 32,
-        SelectRotation = 33
+
+        EnemyDeploy = 15,
+        BattlePrepare = 16,
+
+        TurnPrepare = 20,
+        PhasePrepare = 21,
+
+        SelectUnit = 30,
+        SelectMovement = 40,
+        SelectRun = 41,
+        SelectJump = 42,
+        SelectRotation = 43
     }
 
     public abstract class TacticalStateHandler : IState<TacticalState>

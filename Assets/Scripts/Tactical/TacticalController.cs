@@ -51,6 +51,8 @@ namespace Mercs.Tactical
                 info.PilotName = item.Name;
                 info.gameObject.SetActive(false);
                 info.Active = false;
+
+                info.Reserve = true;
                 unit.GetComponent<CellPosition>().position = new Vector2Int(-1, -1);
 
                 Units.Add(info);
@@ -76,19 +78,21 @@ namespace Mercs.Tactical
             {
                 TargetMark.gameObject.SetActive(true);
                 TargetMark.SetParent(info.transform,false);
-                TargetMark.transform.position = new Vector3(0,0,0);
             }
         }
 
         public void HideHighlatedUnit(UnitInfo info)
         {
-            TargetMark.SetParent(this.transform);
+            TargetMark.SetParent(this.transform,false);
             TargetMark.gameObject.SetActive(false);
         }
 
         public void FinishDeploy()
         {
             Overlay.HideAll();
+
+            TacticalUIController.Instance.ClearUnitList();
+
             TacticalUIController.Instance.HideDeployWindow();
             StateMachine.State = TacticalState.SelectUnit;
         }
