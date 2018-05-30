@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Mercs.Tactical.States;
 using Tools;
@@ -40,25 +41,32 @@ namespace Mercs.Tactical
             Units.Clear();
             foreach(var item in GameController.Instance.Mechs)
             {
-                var unit = Instantiate(MechPrefab, Grid.UnitsParent, false);
-                unit.GetComponent<SpriteRenderer>().sprite = item.MechSprite;
-                var move = unit.GetComponent<MovementData>();
-                move.MoveMp = item.MovePoints;
-                move.JumpMP = item.JumpPoints;
-                move.RunMP = item.RunPoints;
-                var info = unit.GetComponent<UnitInfo>();
-                info.Faction = GameController.Instance.PlayerFaction;
-                info.PilotName = item.Name;
-                info.gameObject.SetActive(false);
-                info.Active = false;
-
-                info.Reserve = true;
-                unit.GetComponent<CellPosition>().position = new Vector2Int(-1, -1);
+                UnitInfo info = CreateUnit(item, GameController.Instance.PlayerFaction);
 
                 Units.Add(info);
             }
         }
-          
+
+        private UnitInfo CreateUnit(StartMechInfo item, Faction faction)
+        {
+            var unit = Instantiate(MechPrefab, Grid.UnitsParent, false);
+            unit.GetComponent<SpriteRenderer>().sprite = item.MechSprite;
+            var move = unit.GetComponent<MovementData>();
+            move.MoveMp = item.MovePoints;
+            move.JumpMP = item.JumpPoints;
+            move.RunMP = item.RunPoints;
+            var info = unit.GetComponent<UnitInfo>();
+            info.Faction = faction;
+            info.PilotName = item.Name;
+            info.Active = false;
+            info.Position = info.GetComponent<CellPosition>();
+
+            info.Reserve = true;
+            info.Position.position = new Vector2Int(-1, -1);
+            info.gameObject.SetActive(false);
+            return info;
+        }
+
         public bool SelectUnit(UnitInfo info)
         {
             if(info.Active)
@@ -92,10 +100,46 @@ namespace Mercs.Tactical
             Overlay.HideAll();
 
             TacticalUIController.Instance.ClearUnitList();
-
             TacticalUIController.Instance.HideDeployWindow();
+
+            DeployEnemyForce();
+
             StateMachine.State = TacticalState.SelectUnit;
         }
 
+        private void DeployEnemyForce()
+        {
+            RectInt deploy_zone = new RectInt();
+
+            deploy_zone.width = Map.SizeX / 2;
+            deploy_zone.height = 2;
+            deploy_zone.x = Map.SizeX / 4;
+            deploy_zone.y = Map.SizeY - 2;
+
+            foreach(var item in GameController.Instance.EnemyMechs)
+            {
+                var unit = CreateUnit(item, GameController.Instance.EnemyFaction);
+                var coord = unit.GetComponent<CellPosition>();
+                Vector2Int c = new Vector2Int();
+                do
+                {
+                    c.x = UnityEngine.Random.Range(deploy_zone.xMin, deploy_zone.xMax);
+                    c.y = UnityEngine.Random.Range(deploy_zone.yMin, deploy_zone.yMax);
+
+
+                } while (Units.Find(u => u.Position.position == c));
+
+                unit.Position.position = c;
+                unit.Position.SetFacing(Dir.S);
+                unit.transform.position = Grid.CellToWorld(c);
+                unit.gameObject.AddComponent<PolygonCollider2D>();
+
+                unit.gameObject.SetActive(true);
+                Units.Add(unit);
+
+                var a = (1, "test");
+                
+            }
+        }
     }
 }

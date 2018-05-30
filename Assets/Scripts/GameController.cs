@@ -8,8 +8,10 @@ namespace Mercs
     {
         [Header("TacticalMapInfo")]
         public List<StartMechInfo> Mechs = new List<StartMechInfo>();
+        public List<StartMechInfo> EnemyMechs = new List<StartMechInfo>();
 
         public Faction PlayerFaction;
+        public Faction EnemyFaction;
 
         public DeployParameters DeployLimit;
     }
