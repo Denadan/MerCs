@@ -307,9 +307,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BarParent: {fileID: 224699982934849586}
   bar: {fileID: 1392670547466802, guid: 71ebd59d1ac373d4cba1e9eefc0411dc, type: 2}
-  maxHP: 8
+  maxHP: 3
   currentHP: 3
-  addHP: 2
+  addHP: 0
   FullHPSprite: {fileID: 21300006, guid: 525c018d95a974c419c89e6c0acf7af7, type: 3}
   EmptyHPSprite: {fileID: 21300006, guid: 525c018d95a974c419c89e6c0acf7af7, type: 3}
   AddHPSprite: {fileID: 21300006, guid: 525c018d95a974c419c89e6c0acf7af7, type: 3}

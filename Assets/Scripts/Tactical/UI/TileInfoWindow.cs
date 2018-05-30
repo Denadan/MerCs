@@ -25,7 +25,6 @@ namespace Mercs.Tactical.UI
 
         public void MouseTileEnter(Vector2Int coord)
         {
-
             var tile = TacticalController.Instance.Grid[coord];
             if (tile == null)
                 return;
