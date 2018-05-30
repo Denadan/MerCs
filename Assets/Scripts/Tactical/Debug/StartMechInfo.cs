@@ -8,12 +8,9 @@ using UnityEngine;
 namespace Mercs
 {
     [Serializable]
-    public class StartMechInfo
+    public class StartMechInfo 
     {
-        public string Name;
-        public Sprite MechSprite;
-        public int MovePoints;
-        public int RunPoints;
-        public int JumpPoints;
+        public MercInfo Merc;
+        public PilotInfo Pilot;
     }
 }

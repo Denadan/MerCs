@@ -13,9 +13,6 @@ namespace Mercs.Tactical.States
         DeployPlaceUnit = 12,
         DeployRotation = 13,
 
-        EnemyDeploy = 15,
-        BattlePrepare = 16,
-
         TurnPrepare = 20,
         PhasePrepare = 21,
 

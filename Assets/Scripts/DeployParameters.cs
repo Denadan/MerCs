@@ -14,6 +14,5 @@ namespace Mercs
 
         public Range CheckWeight = Range.None;
         public Vector2Int WeighLimit;
-
     }
 }

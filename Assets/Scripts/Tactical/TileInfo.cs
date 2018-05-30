@@ -22,5 +22,6 @@ namespace Mercs.Tactical
         public int PathTileCost { get; set; }
         public Dictionary<Dir, PathInfo> PathList;
 
+        public Visibility Vision;
     }
 }

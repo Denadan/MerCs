@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Mercs.Tactical.States;
+using Mercs.Tactical.UI;
 using Tools;
 using UnityEngine;
 
@@ -18,6 +19,8 @@ namespace Mercs.Tactical
 
         [HideInInspector]
         public List<UnitInfo> Units = new List<UnitInfo>();
+        public List<UnitSelectButton> Buttons = new List<UnitSelectButton>();
+
         public UnitInfo SelectedUnit { get; private set; }
 
         [SerializeField]
@@ -50,14 +53,14 @@ namespace Mercs.Tactical
         private UnitInfo CreateUnit(StartMechInfo item, Faction faction)
         {
             var unit = Instantiate(MechPrefab, Grid.UnitsParent, false);
-            unit.GetComponent<SpriteRenderer>().sprite = item.MechSprite;
+            unit.GetComponent<SpriteRenderer>().sprite = item.Merc.Sprite;
             var move = unit.GetComponent<MovementData>();
-            move.MoveMp = item.MovePoints;
-            move.JumpMP = item.JumpPoints;
-            move.RunMP = item.RunPoints;
+            move.MoveMp = item.Merc.MoveSpeed;
+            move.JumpMP = item.Merc.Jumps;
+            move.RunMP = item.Merc.RunSpeed;
             var info = unit.GetComponent<UnitInfo>();
             info.Faction = faction;
-            info.PilotName = item.Name;
+            info.PilotName = item.Pilot.name;
             info.Active = false;
             info.Position = info.GetComponent<CellPosition>();
 
@@ -104,7 +107,7 @@ namespace Mercs.Tactical
 
             DeployEnemyForce();
 
-            StateMachine.State = TacticalState.SelectUnit;
+            StateMachine.State = TacticalState.TurnPrepare;
         }
 
         private void DeployEnemyForce()
@@ -136,9 +139,6 @@ namespace Mercs.Tactical
 
                 unit.gameObject.SetActive(true);
                 Units.Add(unit);
-
-                var a = (1, "test");
-                
             }
         }
     }

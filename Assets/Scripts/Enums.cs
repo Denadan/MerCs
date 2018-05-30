@@ -22,6 +22,26 @@ namespace Mercs
         None, Road, Forest, Rough, Water, Cover, Pillar
     }
 
+    public enum Visibility
+    {
+        Clear, SensorNear, SensorFar, None
+    }
+
+    public enum MercClass {
+        Recon,  //25-40
+        Light,  //45-60
+        Medium, //65-80
+        Heavy,  //85-100
+        Behemot //105-120
+    }
+
+    public enum MercPart
+    {
+        Head,
+        CentralTorso, LeftTorso, RightTorso,
+        LeftHand, RightHand,
+        LeftLeg, Rightleg
+    }
 
     public static class CONST
     {

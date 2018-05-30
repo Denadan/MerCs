@@ -36,6 +36,18 @@ namespace Mercs.Editor
         {
             CreateAssets<Faction>();
         }
+
+        [MenuItem("Assets/Create/MerCs/Pilot")]
+        public static void CreatePilot()
+        {
+            CreateAssets<PilotInfo>();
+        }
+
+        [MenuItem("Assets/Create/MerCs/Merc")]
+        public static void CreatMerc()
+        {
+            CreateAssets<MercInfo>();
+        }
     }
     
 }
