@@ -1272,15 +1272,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ebd0a19b303a3eb478577d616e56f994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Mechs: []
-  EnemyMechs: []
+  Mechs:
+  - Merc: {fileID: 11400000, guid: b10ee2de0474d7448a01706fe67bf890, type: 2}
+    Pilot: {fileID: 11400000, guid: f9f32dcbe8d0d24428bb97175833920d, type: 2}
+  - Merc: {fileID: 11400000, guid: 2bc7b390e909ba048bd9be87906bc232, type: 2}
+    Pilot: {fileID: 11400000, guid: 8a28d24743257c94d87c603fa8af3707, type: 2}
+  - Merc: {fileID: 11400000, guid: f7b7b25721760314d8149cb67fcc70aa, type: 2}
+    Pilot: {fileID: 11400000, guid: 837d4ce9d929a5448bf7e4e7f8fd0ca9, type: 2}
+  - Merc: {fileID: 11400000, guid: 27e9b43d6a3f7664099ea06582063f01, type: 2}
+    Pilot: {fileID: 11400000, guid: 648d946661ce97b4684b027d7ec7b201, type: 2}
+  EnemyMechs:
+  - Merc: {fileID: 11400000, guid: 36be0f62c892a2945bd88d37474d0825, type: 2}
+    Pilot: {fileID: 11400000, guid: be78b116386bd4444b17e3b5dd059801, type: 2}
+  - Merc: {fileID: 11400000, guid: c164f05dde0dd5149b00e280234909b4, type: 2}
+    Pilot: {fileID: 11400000, guid: bbcab3c9bc5ba1340a3ae7f6ff8ff6af, type: 2}
+  - Merc: {fileID: 11400000, guid: dad8231c040066b4f94f315f004c43e0, type: 2}
+    Pilot: {fileID: 11400000, guid: bbcab3c9bc5ba1340a3ae7f6ff8ff6af, type: 2}
+  - Merc: {fileID: 11400000, guid: 27e9b43d6a3f7664099ea06582063f01, type: 2}
+    Pilot: {fileID: 11400000, guid: bfa76f72bca7c3745a3f55e9ef0bb2a9, type: 2}
   PlayerFaction: {fileID: 11400000, guid: ec45db1b173826a4aae26295e1dc6440, type: 2}
   EnemyFaction: {fileID: 11400000, guid: 802d38e9bc3e90848ad6bbb71479f3d4, type: 2}
   DeployLimit:
     CheckCount: 1
     CountLimit: {x: 2, y: 0}
-    CheckWeight: 0
-    WeighLimit: {x: 40, y: 100}
+    CheckWeight: 2
+    WeighLimit: {x: 40, y: 500}
 --- !u!4 &692544373
 Transform:
   m_ObjectHideFlags: 0

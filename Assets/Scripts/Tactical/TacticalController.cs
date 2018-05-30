@@ -63,7 +63,9 @@ namespace Mercs.Tactical
             info.PilotName = item.Pilot.name;
             info.Active = false;
             info.Position = info.GetComponent<CellPosition>();
-
+            info.PilotHP = info.GetComponent<PilotHp>();
+            info.PilotHP.Init(item);
+            info.Weight = item.Merc.Weight;
             info.Reserve = true;
             info.Position.position = new Vector2Int(-1, -1);
             info.gameObject.SetActive(false);

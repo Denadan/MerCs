@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 114035163580800750}
   - component: {fileID: 114562652395214452}
   - component: {fileID: 114483852627469344}
+  - component: {fileID: 114138116242135762}
   m_Layer: 5
   m_Name: UnitListItem
   m_TagString: Untagged
@@ -94,7 +95,7 @@ GameObject:
   - component: {fileID: 114914722005633728}
   - component: {fileID: 114694258599973372}
   m_Layer: 5
-  m_Name: Slider
+  m_Name: pilothp
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -159,8 +160,20 @@ MonoBehaviour:
   unitImage: {fileID: 114490447070086776}
   nameText: {fileID: 114775266018474982}
   bottomText: {fileID: 114488104165987792}
+  HpBar: {fileID: 114694258599973372}
   Background: {fileID: 114022566680178046}
   Unit: {fileID: 0}
+--- !u!114 &114138116242135762
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1088094728566408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a80b5bc90bc621b4db94ee341ea141d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114174713972879754
 MonoBehaviour:
   m_ObjectHideFlags: 1

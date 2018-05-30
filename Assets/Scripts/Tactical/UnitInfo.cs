@@ -9,11 +9,14 @@ namespace Mercs.Tactical
     {
         public CellPosition Position { get; set; }
         public MovementData Movement { get; set; }
+        public PilotHp PilotHP { get; set; }
+
         public Faction Faction { get; set; }
         public bool Active { get; set; }
         public bool Reserve { get; set; }
         public string PilotName { get; set; }
         public int Weight { get; set; }
+        
 
 
         private void Start()

@@ -23,6 +23,8 @@ namespace Mercs.Tactical
         [SerializeField]
         private GameObject[] RoughTiles;
 
+        [SerializeField]
+        private bool DrawOBorder;
 
 
         [SerializeField]
@@ -40,7 +42,6 @@ namespace Mercs.Tactical
         [SerializeField]
         private Sprite[] BorderNE;
         [SerializeField]
-        private bool DrawOBorder = false;
 
         private Dictionary<Dir, Sprite[]> borders = new Dictionary<Dir, Sprite[]>();
 
@@ -110,21 +111,21 @@ namespace Mercs.Tactical
                     //    arrow.name = $"arrow_{i}_{j}_{pathInfo.Key}";
                     //}
 
-                    //foreach(var dir in CONST.AllDirs)
-                    //{
-                    //    var shift = CONST.GetDirShift(i, j, dir);
-                    //    var neigbour = map[i + shift.x, j + shift.y];
-                    //    if (neigbour == null)
-                    //        continue;
-                    //    if (neigbour.Height < info.Info.Height || (!DrawOBorder && neigbour.Height == info.Info.Height))
-                    //        continue;
-                    //    int hd = neigbour.Height- info.Info.Height;
-                    //    var borderlist = borders[dir];
-                    //    if (hd >= borderlist.Length)
-                    //        hd = borderlist.Length - 1;
-                    //    var border = Instantiate(BorderPrefab, pos, Quaternion.identity, tile.transform);
-                    //    border.GetComponent<SpriteRenderer>().sprite = borderlist[hd];
-                    //}
+                    foreach (var dir in CONST.AllDirs)
+                    {
+                        var shift = CONST.GetDirShift(i, j, dir);
+                        var neigbour = map[i + shift.x, j + shift.y];
+                        if (neigbour == null)
+                            continue;
+                        if (neigbour.Height < info.Info.Height || (!DrawOBorder && neigbour.Height == info.Info.Height))
+                            continue;
+                        int hd = neigbour.Height - info.Info.Height;
+                        var borderlist = borders[dir];
+                        if (hd >= borderlist.Length)
+                            hd = borderlist.Length - 1;
+                        var border = Instantiate(BorderPrefab, pos, Quaternion.identity, tile.transform);
+                        border.GetComponent<SpriteRenderer>().sprite = borderlist[hd];
+                    }
                 }
         }
 

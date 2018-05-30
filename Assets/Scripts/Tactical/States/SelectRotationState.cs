@@ -32,7 +32,6 @@ namespace Mercs.Tactical.States
             Dir Left = CONST.TurnLeft(Main);
             Dir Right = CONST.TurnRight(Main);
 
-            float alpha = 1;
             var coord_main = original.position;
             Dir left_back = CONST.Inverse(Right);
             Dir right_back = CONST.Inverse(Left);

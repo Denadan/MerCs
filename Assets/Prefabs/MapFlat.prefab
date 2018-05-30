@@ -196,6 +196,7 @@ MonoBehaviour:
   - {fileID: 1951091458142444, guid: dbd1f939ab496d44eba31d109e06c820, type: 2}
   RoughTiles:
   - {fileID: 1479836352609656, guid: dcff78c9fb2d9f240ae6bda00ebd02b2, type: 2}
+  DrawOBorder: 1
   BorderPrefab: {fileID: 1775371542598530, guid: a3dc96e12f8ad42489c5cd7919f33d7f,
     type: 2}
   BorderN:
@@ -228,7 +229,6 @@ MonoBehaviour:
   - {fileID: 21300026, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
   - {fileID: 21300028, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
   - {fileID: 21300030, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
-  DrawOBorder: 0
   Marks:
   - {fileID: 1400822945053494, guid: fe9a4f559dc53904a84d89c927ce1fec, type: 2}
   - {fileID: 1311984500102344, guid: 8a86ee1f1e9dccf4fa77396ddadaa27a, type: 2}

@@ -13,6 +13,7 @@ namespace Mercs
         [Range(25,120)]
         public int Weight;
         public Sprite Sprite;
+        public int AddHp;
 
         public MercClass Class
         {

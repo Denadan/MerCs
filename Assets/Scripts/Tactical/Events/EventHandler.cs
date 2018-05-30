@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Tools;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -10,7 +11,7 @@ namespace Mercs.Tactical.Events
     {
         private List<GameObject> TileSubscribers = new List<GameObject>();
         private List<GameObject> UnitSubscribers = new List<GameObject>();
-
+        private List<GameObject> PilotHpSubscribers = new List<GameObject>();
 
         public static void UnitPointerClick(PointerEventData data, UnitInfo Unit)
         {
@@ -25,7 +26,6 @@ namespace Mercs.Tactical.Events
                 }
             }
         }
-
         public static void UnitPointerEnter(PointerEventData data, UnitInfo Unit)
         {
             if (Instance == null)
@@ -97,6 +97,17 @@ namespace Mercs.Tactical.Events
             }
         }
 
+        public static void PilotHpChange(UnitInfo unit)
+        {
+            if (Instance == null)
+                return;
+            foreach (var subscriber in Instance.PilotHpSubscribers)
+            {
+                ExecuteEvents.Execute<IPilotDamaged>(subscriber, null,
+                    (handler, eventData) => handler.PilotDamaged(unit));
+            }
+        }
+
         public static void TileSubscribe(GameObject go)
         {
             if (Instance == null)
@@ -125,8 +136,17 @@ namespace Mercs.Tactical.Events
             Instance.UnitSubscribers.Remove(go);
         }
 
-        void Start()
+        public static void PilotHpSubscribe(GameObject go)
         {
+            if (Instance == null)
+                return;
+            Instance.PilotHpSubscribers.Add(go);
+        }
+        public static void PilotHpUnSubscribe(GameObject go)
+        {
+            if (Instance == null)
+                return;
+            Instance.PilotHpSubscribers.Remove(go);
         }
     }
 }

@@ -16,4 +16,9 @@ namespace Mercs.Tactical.Events
         void MouseUnitLeave(UnitInfo unit);
         void MouseUnitClick(UnitInfo unit, PointerEventData.InputButton button);
     }
+
+    public interface IPilotDamaged : IEventSystemHandler
+    {
+        void PilotDamaged(UnitInfo unit);
+    }
 }
