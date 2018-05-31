@@ -16,7 +16,7 @@ namespace Mercs.Tactical
         public bool Reserve { get; set; }
         public string PilotName { get; set; }
         public int Weight { get; set; }
-        
+        public bool Selectable { get; set; }
 
 
         private void Start()

@@ -15,6 +15,9 @@ namespace Mercs.Tactical.States
 
         TurnPrepare = 20,
         PhasePrepare = 21,
+        PhaseSelectFaction = 22,
+        AIPrepare = 23,
+        PlayerPrepare = 24,
 
         SelectUnit = 30,
         SelectMovement = 40,

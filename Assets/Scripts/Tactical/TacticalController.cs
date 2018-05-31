@@ -11,18 +11,39 @@ namespace Mercs.Tactical
 {
     public class TacticalController : SceneSingleton<TacticalController>
     {
+        private Dictionary<UnitInfo, UnitSelectButton> unit_buttons;
+        private Faction[] factions;
+        private int current_faction;
+
+        #region Properties
         public Map Map { get; private set; }
         public HexGrid Grid { get; private set; }
         public MapOverlay Overlay { get; private set; }
         public TacticalStateMachine StateMachine { get; private set; }
         public bool Ready { get; private set; }
+        public UnitInfo SelectedUnit { get; private set; }
+        public int CurrentPhase { get; set; }
+        public int CurrentRound { get; set; }
+        public Faction CurrentFaction { get => factions[current_faction]; }
+
+
+        #endregion
+
+        public UnitSelectButton this[UnitInfo unit]
+        {
+            get
+            {
+                if (unit_buttons.TryGetValue(unit, out var item))
+                    return item;
+                return null;
+            }
+        }
 
         [HideInInspector]
         public List<UnitInfo> Units = new List<UnitInfo>();
-        public List<UnitSelectButton> Buttons = new List<UnitSelectButton>();
 
-        public UnitInfo SelectedUnit { get; private set; }
 
+        #region Inspector
         [SerializeField]
         private Transform SelectionMark;
         [SerializeField]
@@ -31,6 +52,8 @@ namespace Mercs.Tactical
         public GameObject MapPrefab;
         [SerializeField]
         private GameObject MechPrefab;
+        #endregion
+
 
         public void Start()
         {
@@ -74,7 +97,7 @@ namespace Mercs.Tactical
 
         public bool SelectUnit(UnitInfo info)
         {
-            if(info.Active)
+            if(info.Selectable)
             {
                 SelectedUnit = info;
                 SelectionMark.SetParent(info.transform, false);
@@ -104,12 +127,31 @@ namespace Mercs.Tactical
         {
             Overlay.HideAll();
 
-            TacticalUIController.Instance.ClearUnitList();
             TacticalUIController.Instance.HideDeployWindow();
 
             DeployEnemyForce();
+            MakeButtons();
+            CurrentRound = 0;
+            factions = new Faction[] { GameController.Instance.PlayerFaction, GameController.Instance.EnemyFaction };
+            current_faction = UnityEngine.Random.Range(0, factions.Length);
 
             StateMachine.State = TacticalState.TurnPrepare;
+        }
+
+        public Faction NextFaction()
+        {
+            current_faction = (current_faction + 1) % factions.Length;
+            return factions[current_faction];
+        }
+
+        private void MakeButtons()
+        {
+            TacticalUIController.Instance.ClearUnitList();
+            unit_buttons = (
+                from unit in Units
+                where unit.Faction == GameController.Instance.PlayerFaction
+                    && !unit.Reserve
+                select TacticalUIController.Instance.AddUnit(unit)).ToDictionary(item => item.Unit);
         }
 
         private void DeployEnemyForce()
@@ -138,6 +180,7 @@ namespace Mercs.Tactical
                 unit.Position.SetFacing(Dir.S);
                 unit.transform.position = Grid.CellToWorld(c);
                 unit.gameObject.AddComponent<PolygonCollider2D>();
+                unit.Reserve = false;
 
                 unit.gameObject.SetActive(true);
                 Units.Add(unit);

@@ -25,11 +25,18 @@ namespace Mercs.Tactical
         private GameObject TileInfoMenu;
         [SerializeField]
         private DeployInfoMenu DeployWindow;
+        [SerializeField]
+        private Text roundText;
 
         [SerializeField]
         public DebugMapMenu DebugMenu;
 
         public LineRenderer RotationLine;
+
+        public string RoundText
+        {
+            set => roundText.text = value;
+        }
 
 
         public void ClearUnitList()
