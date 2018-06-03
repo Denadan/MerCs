@@ -32,7 +32,7 @@ namespace Mercs.Tactical.UI
             nameText.text = Unit.PilotName;
 
             HpBar.MaxHP = Unit.PilotHP.MaxHp;
-            HpBar.addHP = Unit.PilotHP.AddHp;
+            HpBar.AddHP = Unit.PilotHP.AddHp;
             HpBar.HP = Unit.PilotHP.Hp;
         }
 

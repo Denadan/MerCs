@@ -96,6 +96,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da96c8bdc01ac0b45983fa418d09ab13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Position: {fileID: 114193226605979102}
+  Movement: {fileID: 114224816123904760}
+  PilotHP: {fileID: 114198907673821554}
 --- !u!114 &114898744738742472
 MonoBehaviour:
   m_ObjectHideFlags: 1

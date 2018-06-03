@@ -7,9 +7,9 @@ namespace Mercs.Tactical
     [RequireComponent(typeof(MovementData))]
     public class UnitInfo : MonoBehaviour
     {
-        public CellPosition Position { get; set; }
-        public MovementData Movement { get; set; }
-        public PilotHp PilotHP { get; set; }
+        public CellPosition Position;
+        public MovementData Movement;
+        public PilotHp PilotHP;
 
         public Faction Faction { get; set; }
         public bool Active { get; set; }

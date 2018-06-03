@@ -77,20 +77,17 @@ namespace Mercs.Tactical
         {
             var unit = Instantiate(MechPrefab, Grid.UnitsParent, false);
             unit.GetComponent<SpriteRenderer>().sprite = item.Merc.Sprite;
-            var move = unit.GetComponent<MovementData>();
-            move.MoveMp = item.Merc.MoveSpeed;
-            move.JumpMP = item.Merc.Jumps;
-            move.RunMP = item.Merc.RunSpeed;
             var info = unit.GetComponent<UnitInfo>();
             info.Faction = faction;
             info.PilotName = item.Pilot.name;
             info.Active = false;
-            info.Position = info.GetComponent<CellPosition>();
-            info.PilotHP = info.GetComponent<PilotHp>();
             info.PilotHP.Init(item);
             info.Weight = item.Merc.Weight;
             info.Reserve = true;
             info.Position.position = new Vector2Int(-1, -1);
+            info.Movement.MoveMp = item.Merc.MoveSpeed;
+            info.Movement.JumpMP = item.Merc.Jumps;
+            info.Movement.RunMP = item.Merc.RunSpeed;
             info.gameObject.SetActive(false);
             return info;
         }

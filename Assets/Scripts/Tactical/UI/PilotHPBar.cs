@@ -14,11 +14,11 @@ namespace Mercs.Tactical.UI
         private List<Image> bars = new List<Image>();
 
         [SerializeField]
-        public int maxHP;
+        private int maxHP;
         [SerializeField]
-        public int currentHP;
+        private int currentHP;
         [SerializeField]
-        public int addHP;
+        private int addHP;
 
 
         public int HP
@@ -68,6 +68,7 @@ namespace Mercs.Tactical.UI
                 {
                     var bar = Instantiate(this.bar, BarParent).GetComponent<Image>();
                     bars.Add(bar);
+                    addHP += 1;
                 }
 
                 updateBars();
@@ -87,8 +88,10 @@ namespace Mercs.Tactical.UI
             }
             updateBars();
         }
+
         private void updateBars()
         {
+            UnityEngine.Debug.Log($"{MaxHP} - {addHP} - {HP}");
             for (int i = 0; i < maxHP; i++)
             {
                 bars[i].sprite = i < currentHP ? FullHPSprite : EmptyHPSprite;
