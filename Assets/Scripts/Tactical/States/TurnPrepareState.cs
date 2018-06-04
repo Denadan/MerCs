@@ -18,7 +18,7 @@ namespace Mercs.Tactical.States
             TacticalController.Instance.CurrentRound += 1;
             TacticalController.Instance.CurrentPhase = 0;
 
-            TacticalController.Instance.StateMachine.State = TacticalState.PhasePrepare;
+            SwitchTo(TacticalState.PhasePrepare);
         }
     }
 }

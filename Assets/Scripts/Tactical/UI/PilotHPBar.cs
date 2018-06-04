@@ -91,7 +91,7 @@ namespace Mercs.Tactical.UI
 
         private void updateBars()
         {
-            UnityEngine.Debug.Log($"{MaxHP} - {addHP} - {HP}");
+//            UnityEngine.Debug.Log($"{MaxHP} - {addHP} - {HP}");
             for (int i = 0; i < maxHP; i++)
             {
                 bars[i].sprite = i < currentHP ? FullHPSprite : EmptyHPSprite;

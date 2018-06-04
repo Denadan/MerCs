@@ -88,21 +88,19 @@ namespace Mercs.Tactical
             info.Movement.MoveMp = item.Merc.MoveSpeed;
             info.Movement.JumpMP = item.Merc.Jumps;
             info.Movement.RunMP = item.Merc.RunSpeed;
+            info.Movement.Initiative = item.Merc.Initiative - item.Pilot.InitiativeBonus;
             info.gameObject.SetActive(false);
             return info;
         }
 
         public bool SelectUnit(UnitInfo info)
         {
-            if(info.Selectable)
-            {
                 SelectedUnit = info;
                 SelectionMark.SetParent(info.transform, false);
                 SelectionMark.gameObject.SetActive(true);
-                return false;
-            }
-            return false;
+                TacticalUIController.Instance.MoveCameraTo(info);
 
+                return false;
         }
 
         public void HighlightUnit(UnitInfo info)
@@ -163,6 +161,7 @@ namespace Mercs.Tactical
             foreach(var item in GameController.Instance.EnemyMechs)
             {
                 var unit = CreateUnit(item, GameController.Instance.EnemyFaction);
+                unit.gameObject.SetActive(true);
                 var coord = unit.GetComponent<CellPosition>();
                 Vector2Int c = new Vector2Int();
                 do
@@ -179,7 +178,6 @@ namespace Mercs.Tactical
                 unit.gameObject.AddComponent<PolygonCollider2D>();
                 unit.Reserve = false;
 
-                unit.gameObject.SetActive(true);
                 Units.Add(unit);
             }
         }

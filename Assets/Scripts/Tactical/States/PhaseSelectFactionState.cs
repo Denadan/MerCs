@@ -25,13 +25,15 @@ namespace Mercs.Tactical.States
                  faction = TacticalController.Instance.NextFaction();
             } while (state.ActiveUnits.Find(item => item.Faction == faction) == null);
 
-            if(faction = GameController.Instance.PlayerFaction)
+                        SwitchTo(TacticalState.AIPrepare);
+
+            if (faction = GameController.Instance.PlayerFaction)
             {
-                TacticalController.Instance.StateMachine.State = TacticalState.PlayerPrepare;
+                SwitchTo(TacticalState.PlayerPrepare);
             }
             else
             {
-                TacticalController.Instance.StateMachine.State = TacticalState.AIPrepare;
+                SwitchTo(TacticalState.AIPrepare);
             }
         }
     }

@@ -19,7 +19,7 @@
         public override void Done()
         {
             state.unit_in_hand = null;
-            TacticalController.Instance.StateMachine.State = TacticalState.DeploySelectUnit;
+            SwitchTo(TacticalState.DeploySelectUnit);
         }
     }
 }

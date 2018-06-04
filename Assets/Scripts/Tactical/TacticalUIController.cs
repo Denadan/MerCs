@@ -3,6 +3,7 @@ using Tools;
 using UnityEngine.UI;
 using Mercs.Tactical.UI;
 using Mercs.Tactical.Events;
+using System;
 
 namespace Mercs.Tactical
 {
@@ -93,5 +94,11 @@ namespace Mercs.Tactical
             DeployWindow.InitDeployInfo(GameController.Instance.DeployLimit);
         }
 
+
+        internal void MoveCameraTo(UnitInfo selectedUnit)
+        {
+            Camera.main.transform.position = new Vector3(selectedUnit.gameObject.transform.position.x, selectedUnit.gameObject.transform.position.y,
+                Camera.main.transform.position.z);
+        }
     }
 }

@@ -63,7 +63,7 @@ namespace Mercs.Tactical.States
             state.unit_in_hand.Position.position = coord;
 
             TacticalController.Instance.Overlay.HideTile(coord);
-            TacticalController.Instance.StateMachine.State = TacticalState.DeployRotation;
+            SwitchTo(TacticalState.DeployRotation);
         }
 
 
@@ -75,7 +75,7 @@ namespace Mercs.Tactical.States
                 state.unit_in_hand.button.Background.color = Color.white;
                 state.unit_in_hand = null;
 
-                TacticalController.Instance.StateMachine.State = TacticalState.DeploySelectUnit;
+                SwitchTo(TacticalState.DeploySelectUnit);
             }
 
         }

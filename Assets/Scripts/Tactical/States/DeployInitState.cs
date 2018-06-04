@@ -27,13 +27,13 @@ namespace Mercs.Tactical.States
             TacticalUIController.Instance.ClearUnitList();
             TacticalUIController.Instance.ShowUnitList();
             units = (from unit_info in TacticalController.Instance.Units
-                select new unit
-                {
-                    info = unit_info,
-                    renderer = unit_info.GetComponent<SpriteRenderer>(),
-                    button = TacticalUIController.Instance.AddUnit(unit_info),
-                    Position = unit_info.GetComponent<CellPosition>()
-                }).ToList();
+                     select new unit
+                     {
+                         info = unit_info,
+                         renderer = unit_info.GetComponent<SpriteRenderer>(),
+                         button = TacticalUIController.Instance.AddUnit(unit_info),
+                         Position = unit_info.GetComponent<CellPosition>()
+                     }).ToList();
             foreach (var unit in units)
                 unit.button.BottomText.text = "RESERVE";
 
@@ -49,7 +49,7 @@ namespace Mercs.Tactical.States
 
             TacticalUIController.Instance.RoundText = "Deploy Phase";
             TacticalUIController.Instance.InitDeployWindow();
-            TacticalController.Instance.StateMachine.State = TacticalState.DeploySelectUnit;
+            SwitchTo(TacticalState.DeploySelectUnit);
         }
 
         public void ShowDeployZone()
@@ -61,7 +61,7 @@ namespace Mercs.Tactical.States
                 {
                     TacticalController.Instance.Overlay.ShowTile(new Vector2Int(i, j), Color.yellow, MapOverlay.Texture.GridMark);
                 }
-            foreach(var unit in units)
+            foreach (var unit in units)
             {
                 TacticalController.Instance.Overlay.HideTile(unit.Position.position);
             }

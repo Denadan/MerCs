@@ -58,6 +58,7 @@ namespace Mercs.Tactical.States
             var prepare = new PhasePrepareState();
             addState(prepare);
             addState(new PhaseSelectFactionState(prepare));
+            addState(new AIPrepareState(prepare));
 
             base.Start();
         }

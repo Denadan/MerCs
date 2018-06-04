@@ -7,6 +7,7 @@ namespace Mercs.Tactical.States
     public class PhasePrepareState : TacticalStateHandler
     {
         public override TacticalState State => TacticalState.PhasePrepare;
+
         public List<UnitInfo> ActiveUnits;
 
 
@@ -17,18 +18,19 @@ namespace Mercs.Tactical.States
                 TacticalController.Instance.CurrentPhase += 1;
 
                 ActiveUnits = (from unit in TacticalController.Instance.Units
-                               where unit.Active && unit.Faction == GameController.Instance.PlayerFaction
-                                   && (TacticalController.Instance.CurrentPhase == 5 || unit.Movement.Initiative <= TacticalController.Instance.CurrentPhase)
+                               where unit.Active  && (TacticalController.Instance.CurrentPhase == 5
+                                || unit.Movement.Initiative <= TacticalController.Instance.CurrentPhase)
                                select unit).ToList();
 
                 TacticalUIController.Instance.RoundText = $"Round {TacticalController.Instance.CurrentRound}-{TacticalController.Instance.CurrentPhase}";
-                if(ActiveUnits.Count != 0)
+
+                if (ActiveUnits.Count != 0)
                 {
                     TacticalController.Instance.StateMachine.State = TacticalState.PhaseSelectFaction;
                     return;
                 }
             }
-            TacticalController.Instance.StateMachine.State = TacticalState.TurnPrepare;
+            SwitchTo(TacticalState.TurnPrepare);
         }
     }
 }

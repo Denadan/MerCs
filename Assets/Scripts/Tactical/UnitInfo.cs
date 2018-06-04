@@ -18,11 +18,13 @@ namespace Mercs.Tactical
         public int Weight { get; set; }
         public bool Selectable { get; set; }
 
+        private void Awake()
+        {
+            UnityEngine.Debug.Log("UnitInfo!");
+        }
 
         private void Start()
         {
-            Position = GetComponent<CellPosition>();
-            Movement = GetComponent<MovementData>();
             var camo = GetComponent<CamoSprite>();
             camo.CamoTemplate = Faction.CamoTemplate;
             camo.ColorB = Faction.CamoColorB;

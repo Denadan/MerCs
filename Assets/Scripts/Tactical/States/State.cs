@@ -18,6 +18,7 @@ namespace Mercs.Tactical.States
         PhaseSelectFaction = 22,
         AIPrepare = 23,
         PlayerPrepare = 24,
+        AIEndTurn = 25,
 
         SelectUnit = 30,
         SelectMovement = 40,
@@ -64,5 +65,10 @@ namespace Mercs.Tactical.States
 
         public virtual void Update()
         { }
+
+        protected void SwitchTo(TacticalState state)
+        {
+            TacticalController.Instance.StateMachine.State = state;
+        }
     }
 }

@@ -23,7 +23,7 @@ namespace Mercs.Tactical.States
                     return;
                 state.unit_in_hand = unit_to_add;
                 unit_to_add.button.Background.color = Color.yellow;
-                TacticalController.Instance.StateMachine.State = TacticalState.DeployPlaceUnit;
+                SwitchTo(TacticalState.DeployPlaceUnit);
             }
             else if (button == PointerEventData.InputButton.Right)
             {
