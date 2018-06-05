@@ -45,6 +45,13 @@ namespace Mercs
         Cancel
     }
 
+    public enum TacticalButton
+    {
+        Confirm,
+        Reserve,
+        Done
+    }
+
     
 
     public enum MercPart

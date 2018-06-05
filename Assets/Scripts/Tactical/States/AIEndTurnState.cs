@@ -20,11 +20,8 @@
 
             TacticalController.Instance.SelectedUnit = null;
 
-            if (state.ActiveUnits.Count > 0)
-                SwitchTo(TacticalState.PhaseSelectFaction);
-            else
-                SwitchTo(TacticalState.PhasePrepare);
-
+            SwitchTo(state.ActiveUnits.Count > 0 ? TacticalState.PhaseSelectFaction : TacticalState.PhasePrepare);
+           
         }
     }
 

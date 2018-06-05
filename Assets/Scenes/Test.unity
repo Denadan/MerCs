@@ -831,8 +831,9 @@ MonoBehaviour:
   UnitListItemPrefab: {fileID: 1088094728566408, guid: ad1d0923525fd7c49bdb5cefd1061053,
     type: 2}
   StartButton: {fileID: 187850357}
-  DoneButon: {fileID: 1694371811}
+  DoneButton: {fileID: 1694371811}
   ReserveButton: {fileID: 1422128953}
+  ConfirmButton: {fileID: 775857537}
   ActionBar: {fileID: 1325958036}
   ABB_Move: {fileID: 1291648042}
   ABB_Run: {fileID: 1899816903}
@@ -1806,6 +1807,7 @@ GameObject:
   - component: {fileID: 775857538}
   - component: {fileID: 775857537}
   - component: {fileID: 775857536}
+  - component: {fileID: 775857540}
   m_Layer: 5
   m_Name: Confirm
   m_TagString: Untagged
@@ -1889,7 +1891,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 775857538}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 775857540}
+        m_MethodName: OnClick
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &775857538
@@ -1925,6 +1938,17 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 775857534}
+--- !u!114 &775857540
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 775857534}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b578282a50a25374a86e44b08cee96ba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &955738775
 GameObject:
   m_ObjectHideFlags: 0

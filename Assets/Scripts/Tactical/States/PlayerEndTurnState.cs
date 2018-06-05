@@ -23,7 +23,7 @@ namespace Mercs.Tactical.States
             unit.Active = false;
 
             TacticalController.Instance.SelectedUnit = null;
-            TacticalUIController.Instance.ShowActionBar();
+            TacticalUIController.Instance.HideActionBar();
 
             if (state.ActiveUnits.Count > 0)
                 SwitchTo(TacticalState.PhaseSelectFaction);

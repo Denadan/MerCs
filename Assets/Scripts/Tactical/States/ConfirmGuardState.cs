@@ -9,7 +9,13 @@ namespace Mercs.Tactical.States
         public override void OnLoad()
         {
             TacticalController.Instance.Overlay.HideAll();
-            TacticalUIController.Instance.HighlightActionBarButton(ActionButton.Move);
+            TacticalUIController.Instance.HighlightActionBarButton(ActionButton.Guard);
+            TacticalUIController.Instance.ShowButton(TacticalButton.Confirm);
+        }
+
+        public override void OnUnload()
+        {
+            TacticalUIController.Instance.HideButton(TacticalButton.Confirm);
         }
     }
 }

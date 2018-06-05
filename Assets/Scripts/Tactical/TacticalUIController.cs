@@ -11,6 +11,7 @@ namespace Mercs.Tactical
     public class TacticalUIController : SceneSingleton<TacticalUIController>
     {
         private Dictionary<ActionButton, Image> action_bar;
+        private Dictionary<TacticalButton, Button> tactical_button;
         private Image highlated_abb;
 
         [Header("UnitListMenu")]
@@ -22,9 +23,11 @@ namespace Mercs.Tactical
         [SerializeField]
         private Button StartButton;
         [SerializeField]
-        private Button DoneButon;
+        private Button DoneButton;
         [SerializeField]
         private Button ReserveButton;
+        [SerializeField]
+        private Button ConfirmButton;
         [Header("Action Bar")]
         [SerializeField]
         private RectTransform ActionBar;
@@ -69,6 +72,12 @@ namespace Mercs.Tactical
                 [ActionButton.Run] = ABB_Run,
                 [ActionButton.Guard] = ABB_Guard,
                 [ActionButton.Cancel] = ABB_Cancel,
+            };
+            tactical_button = new Dictionary<TacticalButton, Button>
+            {
+                [TacticalButton.Confirm] = ConfirmButton,
+                [TacticalButton.Done] = DoneButton,
+                [TacticalButton.Reserve] = ReserveButton,
             };
         }
 
@@ -177,6 +186,14 @@ namespace Mercs.Tactical
                 highlated_abb.color = Color.yellow;
         }
 
+        public void ShowButton(TacticalButton button)
+        {
+            tactical_button[button].gameObject.SetActive(true);
+        }
+        public void HideButton(TacticalButton button)
+        {
+            tactical_button[button].gameObject.SetActive(false);
+        }
 
         public void MoveCameraTo(UnitInfo selectedUnit)
         {
