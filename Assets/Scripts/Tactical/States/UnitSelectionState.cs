@@ -17,13 +17,7 @@ namespace Mercs.Tactical.States
 
         public override void UnitClick(UnitInfo unit, PointerEventData.InputButton button)
         {
-            if(button == PointerEventData.InputButton.Left && TacticalController.Instance.SelectUnit(unit))
-            {
-                //if (unit.Movement == null)
-                //    TacticalController.Instance.StateMachine.State = TacticalState.SelectRotation;
-                //else
-                //    TacticalController.Instance.StateMachine.State = TacticalState.SelectMovement;
-            }
+
         }
 
         public override TacticalState State => TacticalState.SelectUnit;

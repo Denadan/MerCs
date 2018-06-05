@@ -20,14 +20,14 @@ namespace Mercs.Tactical.States
         public override void OnLoad()
         {
             Faction faction;
+            
+
             do
             {
                  faction = TacticalController.Instance.NextFaction();
             } while (state.ActiveUnits.Find(item => item.Faction == faction) == null);
 
-                        SwitchTo(TacticalState.AIPrepare);
-
-            if (faction = GameController.Instance.PlayerFaction)
+            if (faction == GameController.Instance.PlayerFaction)
             {
                 SwitchTo(TacticalState.PlayerPrepare);
             }

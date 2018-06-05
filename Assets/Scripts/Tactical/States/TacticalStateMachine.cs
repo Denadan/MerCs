@@ -59,6 +59,8 @@ namespace Mercs.Tactical.States
             addState(prepare);
             addState(new PhaseSelectFactionState(prepare));
             addState(new AIPrepareState(prepare));
+            addState(new AIEndTurnState(prepare));
+
 
             base.Start();
         }

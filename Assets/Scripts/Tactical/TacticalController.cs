@@ -14,6 +14,7 @@ namespace Mercs.Tactical
         private Dictionary<UnitInfo, UnitSelectButton> unit_buttons;
         private Faction[] factions;
         private int current_faction;
+        private UnitInfo selected;
 
         #region Properties
         public Map Map { get; private set; }
@@ -21,7 +22,25 @@ namespace Mercs.Tactical
         public MapOverlay Overlay { get; private set; }
         public TacticalStateMachine StateMachine { get; private set; }
         public bool Ready { get; private set; }
-        public UnitInfo SelectedUnit { get; private set; }
+
+        public UnitInfo SelectedUnit
+        {
+            get => selected;
+            set
+            {
+                selected = value;
+                if (value == null)
+                {
+                    SelectionMark.SetParent(transform, false);
+                    SelectionMark.gameObject.SetActive(false);
+                }
+                else
+                {
+                    SelectionMark.SetParent(selected.transform, false);
+                    SelectionMark.gameObject.SetActive(true);
+                }
+            }
+        }
         public int CurrentPhase { get; set; }
         public int CurrentRound { get; set; }
         public Faction CurrentFaction { get => factions[current_faction]; }
@@ -62,7 +81,6 @@ namespace Mercs.Tactical
             Grid = map_obj.GetComponent<HexGrid>();
             StateMachine = GetComponent<TacticalStateMachine>();
             Overlay = map_obj.GetComponent<MapOverlay>();
-            UnityEngine.Debug.Log(Overlay.ToString());
 
             Units.Clear();
             foreach(var item in GameController.Instance.Mechs)
@@ -93,16 +111,7 @@ namespace Mercs.Tactical
             return info;
         }
 
-        public bool SelectUnit(UnitInfo info)
-        {
-                SelectedUnit = info;
-                SelectionMark.SetParent(info.transform, false);
-                SelectionMark.gameObject.SetActive(true);
-                TacticalUIController.Instance.MoveCameraTo(info);
-
-                return false;
-        }
-
+       
         public void HighlightUnit(UnitInfo info)
         {
             if(SelectedUnit != info)

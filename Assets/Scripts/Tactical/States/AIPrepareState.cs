@@ -17,15 +17,12 @@ namespace Mercs.Tactical.States
 
         public override void OnLoad()
         {
-            TacticalController.Instance.SelectUnit(state.ActiveUnits.Find(
-                unit => unit.Faction == TacticalController.Instance.CurrentFaction));
+            TacticalController.Instance.SelectedUnit =  state.ActiveUnits.Find(
+                unit => unit.Faction == TacticalController.Instance.CurrentFaction);
+            TacticalController.Instance.StateMachine.StartCoroutine(Switch());
         }
 
-        public override void Update()
-        {
-            
-        }
-
+     
         public IEnumerator Switch()
         {
             yield return new WaitForSeconds(1f);

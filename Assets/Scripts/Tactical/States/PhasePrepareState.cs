@@ -27,6 +27,12 @@ namespace Mercs.Tactical.States
                 if (ActiveUnits.Count != 0)
                 {
                     TacticalController.Instance.StateMachine.State = TacticalState.PhaseSelectFaction;
+                    foreach (var unitInfo in TacticalController.Instance.Units.Where(
+                        unit => unit.Faction == GameController.Instance.PlayerFaction 
+                                && ActiveUnits.Contains(unit)))
+                    {
+                        unitInfo.Selectable = true;
+                    }
                     return;
                 }
             }
