@@ -4,11 +4,15 @@ using UnityEngine.UI;
 using Mercs.Tactical.UI;
 using Mercs.Tactical.Events;
 using System;
+using System.Collections.Generic;
 
 namespace Mercs.Tactical
 {
     public class TacticalUIController : SceneSingleton<TacticalUIController>
     {
+        private Dictionary<ActionButton, Image> action_bar;
+        private Image highlated_abb;
+
         [Header("UnitListMenu")]
         [SerializeField]
         private GameObject UnitListMenu;
@@ -21,6 +25,22 @@ namespace Mercs.Tactical
         private Button DoneButon;
         [SerializeField]
         private Button ReserveButton;
+        [Header("Action Bar")]
+        [SerializeField]
+        private RectTransform ActionBar;
+
+        [SerializeField]
+        private Image ABB_Move;
+        [SerializeField]
+        private Image ABB_Run;
+        [SerializeField]
+        private Image ABB_Jump;
+        [SerializeField]
+        private Image ABB_Guard;
+        [SerializeField]
+        private Image ABB_Cancel;
+
+
         [Header("Other")]
         [SerializeField]
         private GameObject TileInfoMenu;
@@ -34,11 +54,23 @@ namespace Mercs.Tactical
 
         public LineRenderer RotationLine;
 
+
         public string RoundText
         {
             set => roundText.text = value;
         }
 
+        private void Start()
+        {
+            action_bar = new Dictionary<ActionButton, Image>()
+            {
+                [ActionButton.Move] = ABB_Move,
+                [ActionButton.Jump] = ABB_Jump,
+                [ActionButton.Run] = ABB_Run,
+                [ActionButton.Guard] = ABB_Guard,
+                [ActionButton.Cancel] = ABB_Cancel,
+            };
+        }
 
         public void ClearUnitList()
         {
@@ -93,9 +125,60 @@ namespace Mercs.Tactical
             DeployWindow.gameObject.SetActive(false);
             DeployWindow.InitDeployInfo(GameController.Instance.DeployLimit);
         }
+        
+        public void ShowActionBar()
+        {
+            ActionBar.gameObject.SetActive(true);
+        }
+
+        public void HideActionBar()
+        {
+            ActionBar.gameObject.SetActive(false);
+        }
+
+        public void ShowActionBarButton(ActionButton button)
+        {
+            action_bar[button].gameObject.SetActive(true);
+        }
+
+        public void ShowActionBarButtons(UnitInfo unit)
+        {
+            if (unit.Movement.MoveMp > 0)
+                ShowActionBarButton(ActionButton.Move);
+            else
+                HideActionBarButton(ActionButton.Move);
+
+            if (unit.Movement.RunMP > 0)
+                ShowActionBarButton(ActionButton.Run);
+            else
+                HideActionBarButton(ActionButton.Run);
+
+            if (unit.Movement.JumpMP > 0)
+                ShowActionBarButton(ActionButton.Jump);
+            else
+                HideActionBarButton(ActionButton.Jump);
+
+            ShowActionBarButton(ActionButton.Guard);
+        }
+
+        public void HideActionBarButton(ActionButton button)
+        {
+            action_bar[button].gameObject.SetActive(false);
+        }
+
+        public void HighlightActionBarButton(ActionButton button)
+        {
+            if (highlated_abb != null)
+                highlated_abb.color = Color.white;
+
+            highlated_abb = action_bar[button];
+
+            if (highlated_abb != null)
+                highlated_abb.color = Color.yellow;
+        }
 
 
-        internal void MoveCameraTo(UnitInfo selectedUnit)
+        public void MoveCameraTo(UnitInfo selectedUnit)
         {
             Camera.main.transform.position = new Vector3(selectedUnit.gameObject.transform.position.x, selectedUnit.gameObject.transform.position.y,
                 Camera.main.transform.position.z);

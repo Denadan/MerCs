@@ -35,6 +35,18 @@ namespace Mercs
         Behemot //105-120
     }
 
+    public enum ActionButton
+    {
+        Move,
+        Run,
+        Jump,
+        Attack,
+        Guard,
+        Cancel
+    }
+
+    
+
     public enum MercPart
     {
         Head,

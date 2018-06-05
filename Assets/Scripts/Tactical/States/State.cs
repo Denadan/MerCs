@@ -24,7 +24,9 @@ namespace Mercs.Tactical.States
         SelectMovement = 40,
         SelectRun = 41,
         SelectJump = 42,
-        SelectRotation = 43
+        SelectRotation = 43,
+        ConfirmGuard = 44,
+        PlayerEndTurn = 45
     }
 
     public abstract class TacticalStateHandler : IState<TacticalState>

@@ -20,6 +20,7 @@ namespace Mercs.Tactical
         public Map Map { get; private set; }
         public HexGrid Grid { get; private set; }
         public MapOverlay Overlay { get; private set; }
+        public PathMap Path { get; private set; }
         public TacticalStateMachine StateMachine { get; private set; }
         public bool Ready { get; private set; }
 
@@ -84,6 +85,7 @@ namespace Mercs.Tactical
             Grid = map_obj.GetComponent<HexGrid>();
             StateMachine = GetComponent<TacticalStateMachine>();
             Overlay = map_obj.GetComponent<MapOverlay>();
+            Path = map_obj.GetComponent<PathMap>();
 
             Units.Clear();
             foreach(var item in GameController.Instance.Mechs)

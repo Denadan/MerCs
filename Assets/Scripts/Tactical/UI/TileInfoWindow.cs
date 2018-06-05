@@ -35,7 +35,7 @@ namespace Mercs.Tactical.UI
                 return;
             TileImage.sprite = image.sprite;
             NameText.text = info.Info.Feature.ToString();
-            MoveText.text = $"Move: {info.Info.PathTileCost}";
+            MoveText.text = $"Move: {TacticalController.Instance.Path[coord].Cost}";
             CoordText.text = info.Info.CellCoord.ToString();
 
             Window.SetActive(true);

@@ -49,6 +49,7 @@ namespace Mercs.Tactical.States
 
             TacticalUIController.Instance.RoundText = "Deploy Phase";
             TacticalUIController.Instance.InitDeployWindow();
+            TacticalUIController.Instance.HideActionBar();
             SwitchTo(TacticalState.DeploySelectUnit);
         }
 

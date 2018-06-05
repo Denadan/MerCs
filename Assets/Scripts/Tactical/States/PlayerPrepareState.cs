@@ -46,6 +46,12 @@ namespace Mercs.Tactical.States
                 TacticalController.Instance.SelectedUnit = selected;
                 TacticalUIController.Instance.MoveCameraTo(state.ActiveUnits.First(unit => unit.Selectable));
                 TacticalController.Instance[selected].Background.color = Color.green;
+                TacticalController.Instance.Path.MakePathMap(selected);
+                TacticalUIController.Instance.ShowActionBar();
+
+                TacticalUIController.Instance.ShowActionBarButtons(selected);
+                TacticalUIController.Instance.HideActionBarButton(ActionButton.Cancel);
+
                 SwitchTo(TacticalState.SelectMovement);
             }
             else
