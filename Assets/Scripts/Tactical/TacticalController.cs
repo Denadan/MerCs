@@ -62,6 +62,9 @@ namespace Mercs.Tactical
         public List<UnitInfo> Units = new List<UnitInfo>();
 
 
+        public IEnumerable<UnitInfo> PlayerUnits { get; private set; }
+        public IEnumerable<UnitInfo> EnemyUnits { get; private set; }
+
         #region Inspector
         [SerializeField]
         private Transform SelectionMark;
@@ -89,6 +92,15 @@ namespace Mercs.Tactical
 
                 Units.Add(info);
             }
+
+            PlayerUnits = from unit in Units
+                          where unit.Faction == GameController.Instance.PlayerFaction
+                          select unit;
+
+            EnemyUnits =  from unit in Units
+                          where unit.Faction == GameController.Instance.EnemyFaction
+                          select unit;
+
         }
 
         private UnitInfo CreateUnit(StartMechInfo item, Faction faction)
