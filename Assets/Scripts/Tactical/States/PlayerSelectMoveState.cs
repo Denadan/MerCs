@@ -21,6 +21,7 @@ namespace Mercs.Tactical.States
 
         protected override void ShowOverlay()
         {
+            TacticalController.Instance.Overlay.ShowMoveMapMove();
         }
 
         protected override List<PathMap.path_node> GetPath(Vector2Int coord)

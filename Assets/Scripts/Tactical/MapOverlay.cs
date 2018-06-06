@@ -213,5 +213,25 @@ namespace Mercs.Tactical
                 foreach (var item in TacticalController.Instance.Path.RunList)
                     ShowTile(item.coord, Color.yellow, Texture.White25);
         }
+
+        /// <summary>
+        /// нарисовать карту путей для бега
+        /// </summary>
+        public void ShowMoveMapMove()
+        {
+            if (TacticalController.Instance.Path.MoveList != null)
+                foreach (var item in TacticalController.Instance.Path.MoveList)
+                    ShowTile(item.coord, Color.green, Texture.White25);
+        }
+
+        /// <summary>
+        /// нарисовать карту путей для бега
+        /// </summary>
+        public void ShowMoveMapJump()
+        {
+            if (TacticalController.Instance.Path.RunList != null)
+                foreach (var item in TacticalController.Instance.Path.JumpList)
+                    ShowTile(item.coord, Color.blue, Texture.White25);
+        }
     }
 }

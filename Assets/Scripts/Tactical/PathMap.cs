@@ -250,7 +250,27 @@ namespace Mercs.Tactical
             //поиск пути для движения пешком
             if (Unit.Movement.MoveMp > 0)
             {
+                //получаем список всех путей и сортируем его по затратам од
+                List<path_node> run_list = step_move(new path_node
+                {
+                    coord = UnitPos,
+                    facing = Unit.Position.Facing,
+                    mpleft = Unit.Movement.MoveMp,
+                    prev = null
+                },
+                new List<path_node>()).OrderByDescending(item => item.mpleft).ToList();
 
+
+                //список всех доступных точек
+                MoveList = run_list
+                    .Select(i => i.coord)
+                    .Distinct()
+                    .Select(c => new path_target
+                    {
+                        coord = c,
+                        fast_path = run_list.Find(i => i.coord == c)
+                    })
+                    .ToList();
             }
 
             //поиск пути для бега
@@ -320,8 +340,73 @@ namespace Mercs.Tactical
             step(source.facing, 0);
             //продолжаем поиск влево
             step(CONST.TurnLeft(source.facing), 1);
-            //продолжаем поиск вперед
+            //продолжаем поиск вправо
             step(CONST.TurnRight(source.facing), 1);
+            return list;
+        }
+
+        private List<path_node> step_move(path_node source, List<path_node> list)
+        {
+            //продолжение поиска в указанном направлении
+            void step(Dir facing, int bonus)
+            {
+                //если есть переход по указанному направлению
+                if (this[source.coord].Links.TryGetValue(facing, out var link)
+                // и хватает очков движения
+                    && link.cost + bonus <= source.mpleft)
+                    //переходим
+                    step_run(new path_node
+                    {
+                        coord = link.target,
+                        facing = facing,
+                        mpleft = source.mpleft - link.cost - bonus,
+                        prev = source
+                    }, list);
+            }
+
+            void step_back(Dir facing, int bonus)
+            {
+                //если есть переход по указанному направлению
+                if (this[source.coord].Links.TryGetValue(CONST.Inverse(facing), out var link)
+                // и хватает очков движения
+                    && link.cost + bonus <= source.mpleft)
+                    //переходим
+                    step_run(new path_node
+                    {
+                        coord = link.target,
+                        facing = facing,
+                        mpleft = source.mpleft - link.cost - bonus,
+                        prev = source
+                    }, list);
+            }
+
+            //добавлеям стартовый узел в список пройденых
+            list.Add(source);
+            //поиск движения вперед
+            //продолжаем поиск вперед
+            step(source.facing, 0);
+            //продолжаем поиск влево
+            var dl1 = CONST.TurnLeft(source.facing);
+            var dl2 = CONST.TurnLeft(dl1);
+            step(dl1, 1);
+            step(dl2, 2);
+            //продолжаем поиск вперед
+            var dr1 = CONST.TurnRight(source.facing);
+            var dr2 = CONST.TurnRight(dr1);
+            step(dr1, 1);
+            step(dr2, 2);
+            //разворот
+            step(CONST.Inverse(source.facing), 3);
+
+            //движения назад
+            step_back(source.facing, 0);
+            //поворот влево
+            step_back(dl1, 1);
+            step_back(dl2, 2);
+            //поворот вправо
+            step_back(dr1, 1);
+            step_back(dr2, 2);
+
             return list;
         }
     }
