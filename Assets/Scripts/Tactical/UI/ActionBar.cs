@@ -35,6 +35,10 @@ namespace Mercs.Tactical.UI
         public void B_Cancel()
         {
             TacticalUIController.Instance.HideActionBar();
+            TacticalController.Instance[TacticalController.Instance.SelectedUnit].Background.color = Color.white;
+            TacticalController.Instance.SelectedUnit = null;
+            TacticalController.Instance.Path.MakePathMap(null);
+
             TacticalController.Instance.StateMachine.State = States.TacticalState.SelectUnit;
         }
     }
