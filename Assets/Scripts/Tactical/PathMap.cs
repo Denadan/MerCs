@@ -271,10 +271,10 @@ namespace Mercs.Tactical
                 RunList = run_list
                     .Select(i => i.coord)
                     .Distinct()
-                    .Select(coord => new path_target
+                    .Select(c => new path_target
                     {
-                        coord = coord,
-                        fast_path = run_list.Find(i => i.coord == coord)
+                        coord = c,
+                        fast_path = run_list.Find(i => i.coord == c)
                     })
                     .ToList();
 
@@ -303,7 +303,7 @@ namespace Mercs.Tactical
                 //если есть переход по указанному направлению
                 if (this[source.coord].Links.TryGetValue(facing, out var link)
                 // и хватает очков движения
-                    && link.cost <= source.mpleft + bonus)
+                    && link.cost + bonus <= source.mpleft)
                     //переходим
                     step_run(new path_node
                     {
