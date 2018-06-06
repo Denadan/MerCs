@@ -1,4 +1,5 @@
-﻿using Mercs.Sprites;
+﻿using System.Collections;
+using Mercs.Sprites;
 using UnityEngine;
 
 namespace Mercs.Tactical
@@ -27,6 +28,7 @@ namespace Mercs.Tactical
             camo.ColorR = Faction.CamoColorR;
             camo.ColorG = Faction.CamoColorG;
         }
+
     }
 
 }

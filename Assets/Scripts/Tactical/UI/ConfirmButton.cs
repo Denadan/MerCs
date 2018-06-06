@@ -13,8 +13,7 @@ namespace Mercs.Tactical.UI
                     TacticalController.Instance.StateMachine.State = TacticalState.PlayerEndTurn;
                     break;
             }
-
         }
-        
+       
     }
 }

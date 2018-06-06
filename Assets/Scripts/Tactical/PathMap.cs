@@ -93,10 +93,10 @@ namespace Mercs.Tactical
 
         public void MakePathMap(UnitInfo unit)
         {
-            if (unit == null)
-                return;
             if (make_path != null && make_path.Status == TaskStatus.Running)
                 token.Cancel();
+            if (unit == null)
+                return;
 
             DEBUG_TimeStart = Time.realtimeSinceStartup;
             Ready = false;

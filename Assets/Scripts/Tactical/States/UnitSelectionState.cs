@@ -7,7 +7,8 @@ namespace Mercs.Tactical.States
     {
         public override void UnitEnter(UnitInfo unit)
         {
-            TacticalController.Instance.HighlightUnit(unit);
+            if(unit.Selectable)
+                TacticalController.Instance.HighlightUnit(unit);
         }
 
         public override void UnitLeave(UnitInfo unit)
@@ -17,6 +18,17 @@ namespace Mercs.Tactical.States
 
         public override void UnitClick(UnitInfo unit, PointerEventData.InputButton button)
         {
+            if (unit.Selectable && button == PointerEventData.InputButton.Left)
+            {
+                TacticalController.Instance.SelectedUnit = unit;
+                TacticalUIController.Instance.ShowActionBar();
+                TacticalUIController.Instance.ShowActionBarButtons(unit);
+                TacticalUIController.Instance.ShowActionBarButton(ActionButton.Cancel);
+                TacticalController.Instance[unit].Background.color = Color.green;
+                TacticalController.Instance.Path.MakePathMap(unit);
+
+                SwitchTo(TacticalState.SelectMovement);
+            }
 
         }
 

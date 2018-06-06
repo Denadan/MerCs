@@ -74,7 +74,9 @@ namespace Mercs.Tactical
         
         public GameObject MapPrefab;
         [SerializeField]
-        private GameObject MechPrefab;
+        private GameObject PlayerMechPrefab;
+        [SerializeField]
+        private GameObject EnemyMechPrefab;
         #endregion
 
 
@@ -107,7 +109,12 @@ namespace Mercs.Tactical
 
         private UnitInfo CreateUnit(StartMechInfo item, Faction faction)
         {
-            var unit = Instantiate(MechPrefab, Grid.UnitsParent, false);
+            GameObject unit;
+            if(faction == GameController.Instance.PlayerFaction)
+                unit = Instantiate(PlayerMechPrefab, Grid.UnitsParent, false);
+            else
+                unit = Instantiate(EnemyMechPrefab, Grid.UnitsParent, false);
+
             unit.GetComponent<SpriteRenderer>().sprite = item.Merc.Sprite;
             var info = unit.GetComponent<UnitInfo>();
             info.Faction = faction;

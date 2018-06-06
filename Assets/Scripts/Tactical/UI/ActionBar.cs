@@ -34,6 +34,7 @@ namespace Mercs.Tactical.UI
 
         public void B_Cancel()
         {
+            TacticalUIController.Instance.HideActionBar();
             TacticalController.Instance.StateMachine.State = States.TacticalState.SelectUnit;
         }
     }
