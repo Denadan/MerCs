@@ -1,7 +1,9 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static Mercs.Tactical.PathMap;
 
 namespace Mercs.Tactical.States
 {
@@ -17,7 +19,10 @@ namespace Mercs.Tactical.States
         public override void OnLoad()
         {
             TacticalController.Instance.Overlay.HideAll();
-            TacticalController.Instance.StateMachine.StartCoroutine(wait_for_path(TacticalController.Instance.SelectedUnit));
+            if (TacticalController.Instance.Path.Ready)
+                ShowOverlay();
+            else
+                TacticalController.Instance.StateMachine.StartCoroutine(wait_for_path(TacticalController.Instance.SelectedUnit));
         }
 
         private IEnumerator wait_for_path(UnitInfo info)
@@ -52,6 +57,27 @@ namespace Mercs.Tactical.States
         public override void UnitLeave(UnitInfo unit)
         {
             TacticalController.Instance.HideHighlatedUnit(unit);
+        }
+
+        public override void TileEnter(Vector2Int coord)
+        {
+            var list = GetPath(coord);
+            if (list != null && list.Count >= 2)
+            {
+                var line = TacticalUIController.Instance.MoveLine;
+                line.gameObject.SetActive(true);
+                line.startColor = Color.red;
+                line.endColor = Color.green;
+                var points = (from v2 in list
+                              select TacticalController.Instance.Grid.CellToWorld(v2.coord)).ToArray();
+                line.positionCount = points.Length;
+                line.SetPositions(points);
+            }
+        }
+
+        public override void TileLeave(Vector2Int coord)
+        {
+            TacticalUIController.Instance.MoveLine.gameObject.SetActive(false);
         }
 
         public override void UnitClick(UnitInfo unit, PointerEventData.InputButton button)
@@ -98,5 +124,7 @@ namespace Mercs.Tactical.States
         }
 
         protected abstract void ShowOverlay();
+        protected abstract List<path_node> GetPath(Vector2Int coord);
+
     }
 }

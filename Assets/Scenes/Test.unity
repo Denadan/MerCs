@@ -643,7 +643,7 @@ LineRenderer:
   m_ReflectionProbeUsage: 0
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 0214730101ae5a340a58f25f4cf4e2ea, type: 2}
+  - {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -660,8 +660,8 @@ LineRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 473349967
-  m_SortingLayer: 6
+  m_SortingLayerID: -1657200503
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_Positions:
   - {x: 0, y: 0, z: 0}
@@ -847,7 +847,7 @@ MonoBehaviour:
   DeployWindow: {fileID: 177015757}
   roundText: {fileID: 624985803}
   DebugMenu: {fileID: 0}
-  RotationLine: {fileID: 454331253}
+  MoveLine: {fileID: 454331253}
 --- !u!1 &490215685
 GameObject:
   m_ObjectHideFlags: 0
@@ -1727,7 +1727,7 @@ Animator:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 774050849}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 702968f3af0b1904db327b7d04e15f5d, type: 2}
   m_CullingMode: 0

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -20,6 +21,11 @@ namespace Mercs.Tactical.States
 
         protected override void ShowOverlay()
         {
+        }
+
+        protected override List<PathMap.path_node> GetPath(Vector2Int coord)
+        {
+            return null;
         }
     }
 }

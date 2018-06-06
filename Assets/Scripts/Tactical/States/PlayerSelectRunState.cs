@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -22,7 +23,23 @@ namespace Mercs.Tactical.States
 
         protected override void ShowOverlay()
         {
+            TacticalController.Instance.Overlay.ShowMoveMapRun();
         }
 
+        protected override List<PathMap.path_node> GetPath(Vector2Int coord)
+        {
+            if (!TacticalController.Instance.Path.Ready || TacticalController.Instance.Path.RunList == null)
+                return null;
+            var start = TacticalController.Instance.Path.RunList.Find(item => item.coord == coord)?.fast_path;
+            if (start == null)
+                return null;
+            var result = new List<PathMap.path_node>();
+            do
+            {
+                result.Add(start);
+                start = start.prev;
+            } while (start != null);
+            return result;
+        }
     }
 }

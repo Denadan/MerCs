@@ -106,6 +106,9 @@ namespace Mercs.Tactical
             };
         }
 
+        /// <summary>
+        /// убрать всю подсветку
+        /// </summary>
         public void HideAll()
         {
             for (int i = 0; i < map.SizeX; i++)
@@ -115,6 +118,10 @@ namespace Mercs.Tactical
                 }
         }
 
+        /// <summary>
+        /// скрыть подсветку тайла
+        /// </summary>
+        /// <param name="coord"></param>
         public void HideTile(Vector2Int coord)
         {
             if (coord.x < 0 || coord.y < 0 || coord.x >= map.SizeX || coord.y >= map.SizeY)
@@ -124,6 +131,13 @@ namespace Mercs.Tactical
 
         }
 
+        /// <summary>
+        /// подсветить тайл
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="color"></param>
+        /// <param name="texture"></param>
         public void ShowTile(int x, int y, Color color, Texture2D texture)
         {
             if (x < 0 || y < 0 || x >= map.SizeX || y >= map.SizeY)
@@ -132,31 +146,72 @@ namespace Mercs.Tactical
             sprites[x, y].MaskColor = color;
         }
 
+        /// <summary>
+        /// подсветить тайл
+        /// </summary>
+        /// <param name="coord"></param>
+        /// <param name="color"></param>
+        /// <param name="texture"></param>
         public void ShowTile(Vector2Int coord, Color color, Texture2D texture)
         {
             ShowTile(coord.x, coord.y, color, texture);
         }
 
+        /// <summary>
+        /// подсветить список тайлов
+        /// </summary>
+        /// <param name="zone"></param>
+        /// <param name="color"></param>
+        /// <param name="texture"></param>
         public void ShowZone(List<Vector2Int> zone, Color color, Texture2D texture)
         {
             foreach (var item in zone)
                 ShowTile(item, color, texture);
         }
 
+        /// <summary>
+        /// подсветить тайл
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <param name="color"></param>
+        /// <param name="texture"></param>
         public void ShowTile(int x, int y, Color color, Texture texture)
         {
             ShowTile(x, y, color, textures[(int)texture]);
         }
 
+        /// <summary>
+        /// подсветить тайл
+        /// </summary>
+        /// <param name="coord"></param>
+        /// <param name="color"></param>
+        /// <param name="texture"></param>
         public void ShowTile(Vector2Int coord, Color color, Texture texture)
         {
             ShowTile(coord.x, coord.y, color, textures[(int)texture]);
         }
 
+        /// <summary>
+        /// подсветить список тайлов
+        /// </summary>
+        /// <param name="zone"></param>
+        /// <param name="color"></param>
+        /// <param name="texture"></param>
         public void ShowZone(List<Vector2Int> zone, Color color, Texture texture)
         {
             foreach (var item in zone)
                 ShowTile(item, color, textures[(int)texture]);
+        }
+
+        /// <summary>
+        /// нарисовать карту путей для бега
+        /// </summary>
+        public void ShowMoveMapRun()
+        {
+            if (TacticalController.Instance.Path.RunList != null)
+                foreach (var item in TacticalController.Instance.Path.RunList)
+                    ShowTile(item.coord, Color.yellow, Texture.White25);
         }
     }
 }

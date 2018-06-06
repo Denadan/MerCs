@@ -55,7 +55,7 @@ namespace Mercs.Tactical
         [SerializeField]
         public DebugMapMenu DebugMenu;
 
-        public LineRenderer RotationLine;
+        public LineRenderer MoveLine;
 
 
         public string RoundText
