@@ -92,7 +92,8 @@
 				camo += ct.g * _ColorG;
 				camo += ct.b * _ColorB;
 
-				c.rgb *= camo.rgb;
+				camo.rgb = lerp(c.rgb, camo.rgb, 0.85);
+				c.rgb = c.rgb * camo.rgb;
 				c.rgb *= _Color;
 
 				c.rgb *= c.a;
