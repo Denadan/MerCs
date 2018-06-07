@@ -25,6 +25,14 @@ namespace Mercs.Tactical
         private HexGrid grid;
         private OverlayedSprite[,] sprites;
 
+        [Header("Colors")]
+        [SerializeField]
+        private Color MoveColor = new Color(0,1,0,0.33f);
+        [SerializeField]
+        private Color RunColor = new Color(1, 1, 0, 0.33f);
+        [SerializeField]
+        private Color JumpColor = new Color(1, 0.5f, 0, 0.33f);
+
         [Header("Textures")]
         [SerializeField]
         private Texture2D White25;
@@ -37,7 +45,7 @@ namespace Mercs.Tactical
         [SerializeField]
         private Texture2D Stroke;
 
-        [Header("Directory")]
+        [Header("Directions")]
         [SerializeField]
         private Texture2D[] Sectors;
         [SerializeField]
@@ -50,6 +58,8 @@ namespace Mercs.Tactical
         private Texture2D[] Sectors3;
         [SerializeField]
         private Texture2D[] SectorsF;
+        [SerializeField]
+        private Texture2D[] HexParts;
 
         private Texture2D[] textures;
 

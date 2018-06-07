@@ -298,6 +298,8 @@ namespace Mercs.Tactical
                     })
                     .ToList();
 
+
+
             }
 
             //поиск пути для прижка
