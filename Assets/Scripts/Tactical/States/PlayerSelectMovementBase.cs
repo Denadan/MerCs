@@ -18,11 +18,15 @@ namespace Mercs.Tactical.States
 
         public override void OnLoad()
         {
-            TacticalController.Instance.Overlay.HideAll();
             if (TacticalController.Instance.Path.Ready)
                 ShowOverlay();
             else
                 TacticalController.Instance.StateMachine.StartCoroutine(wait_for_path(TacticalController.Instance.SelectedUnit));
+        }
+
+        public override void OnUnload()
+        {
+            TacticalController.Instance.Overlay.HideAll();
         }
 
         private IEnumerator wait_for_path(UnitInfo info)

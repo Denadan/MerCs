@@ -4,7 +4,6 @@ using UnityEngine.UI;
 
 namespace Mercs.Tactical.UI
 {
-    [RequireComponent(typeof(PilotDamagedSubscriber))]
     public class UnitSelectButton : MonoBehaviour, IPilotDamaged
     {
         public Image unitImage;
@@ -31,9 +30,18 @@ namespace Mercs.Tactical.UI
             unitImage.material = Unit.Faction.CamoMaterial;
             nameText.text = Unit.PilotName;
 
-            HpBar.MaxHP = Unit.PilotHP.MaxHp;
-            HpBar.AddHP = Unit.PilotHP.AddHp;
-            HpBar.HP = Unit.PilotHP.Hp;
+            if (Unit.PilotHP == null)
+            {
+                Destroy(HpBar.gameObject);
+                Destroy(GetComponent<PilotDamagedSubscriber>());
+                HpBar = null;
+            }
+            else
+            {
+                HpBar.MaxHP = Unit.PilotHP.MaxHp;
+                HpBar.AddHP = Unit.PilotHP.AddHp;
+                HpBar.HP = Unit.PilotHP.Hp;
+            }
         }
 
         public void PilotDamaged(UnitInfo unit)

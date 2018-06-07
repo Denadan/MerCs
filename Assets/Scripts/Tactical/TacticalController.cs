@@ -118,16 +118,26 @@ namespace Mercs.Tactical
             unit.GetComponent<SpriteRenderer>().sprite = item.Merc.Sprite;
             var info = unit.GetComponent<UnitInfo>();
             info.Faction = faction;
-            info.PilotName = item.Pilot.name;
+
             info.Active = false;
-            info.PilotHP.Init(item);
+            if (item.Pilot == null)
+            {
+                info.PilotName = "DroneAI";
+                Destroy(info.PilotHP);
+                info.PilotHP = null;
+            }
+            else
+            {
+                info.PilotName = item.Pilot.name;
+                info.PilotHP.Init(item);
+           }
             info.Weight = item.Merc.Weight;
             info.Reserve = true;
             info.Position.position = new Vector2Int(-1, -1);
             info.Movement.MoveMp = item.Merc.MoveSpeed;
             info.Movement.JumpMP = item.Merc.Jumps;
             info.Movement.RunMP = item.Merc.RunSpeed;
-            info.Movement.Initiative = item.Merc.Initiative - item.Pilot.InitiativeBonus;
+            info.Movement.Initiative = item.Merc.Initiative - (item.Pilot == null ? -1 : item.Pilot.InitiativeBonus);
             info.gameObject.SetActive(false);
             return info;
         }
