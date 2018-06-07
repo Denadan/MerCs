@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -9,7 +8,7 @@ namespace Mercs.Tactical.States
     {
         public override TacticalState State => TacticalState.SelectJump;
 
-        public PlayerSelectJumpState(PhasePrepareState state) : base(state)
+        public PlayerSelectJumpState(PhasePrepareState state, MovementStateData data) : base(state, data)
         {
         }
 
@@ -27,6 +26,11 @@ namespace Mercs.Tactical.States
         protected override List<PathMap.path_node> GetPath(Vector2Int coord)
         {
             return null;
+        }
+
+        protected override PathMap.path_target CanMove(Vector2Int coord)
+        {
+            return TacticalController.Instance.Path.JumpList?.Find(i => i.coord == coord);
         }
     }
 }

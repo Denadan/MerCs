@@ -10,19 +10,28 @@ namespace Mercs.Tactical.States
     public abstract class PlayerSelectMovementBase : TacticalStateHandler
     {
         protected PhasePrepareState state;
+        protected MovementStateData data;
 
-        public PlayerSelectMovementBase(PhasePrepareState state)
+        public path_target Path { get; private set; }
+
+        public PlayerSelectMovementBase(PhasePrepareState state, MovementStateData data)
         {
             this.state = state;
+            this.data = data;
         }
 
         public override void OnLoad()
         {
-            TacticalController.Instance.Overlay.HideAll();
+ //           TacticalController.Instance.Overlay.HideAll();
             if (TacticalController.Instance.Path.Ready)
                 ShowOverlay();
             else
                 TacticalController.Instance.StateMachine.StartCoroutine(wait_for_path(TacticalController.Instance.SelectedUnit));
+        }
+
+        public override void OnUnload()
+        {
+            TacticalController.Instance.Overlay.HideAll();
         }
 
         private IEnumerator wait_for_path(UnitInfo info)
@@ -103,7 +112,13 @@ namespace Mercs.Tactical.States
             {
                 CancelSelection();
             }
+            else if (button == PointerEventData.InputButton.Left &&
+                     (data.target = CanMove(coord))!= null)
+            {
+                SwitchTo(TacticalState.SelectRotation);
+            }
         }
+
 
         public override void Update()
         {
@@ -125,6 +140,6 @@ namespace Mercs.Tactical.States
 
         protected abstract void ShowOverlay();
         protected abstract List<path_node> GetPath(Vector2Int coord);
-
+        protected abstract path_target CanMove(Vector2Int coord);
     }
 }

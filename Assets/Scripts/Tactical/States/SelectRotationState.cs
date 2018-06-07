@@ -3,61 +3,98 @@ using UnityEngine;
 
 namespace Mercs.Tactical.States
 {
+    /// <summary>
+    /// Базовый класс для выбора вращения
+    /// </summary>
     public abstract class SelectRotationState : TacticalStateHandler
     {
+        /// <summary>
+        ///  позиция вращаемого юнита
+        /// </summary>
         private CellPosition original;
+        /// <summary>
+        /// точка в мире откуда вращать
+        /// </summary>
         private Vector3 origin;
-        private LineRenderer line;
+
 
         public override void Update()
         {
+            //получаем координаты мыши 
             var dest = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            var old_facing = original.Facing;
-            original.SetFacing(CONST.GetRotation(origin, dest));
-            if (old_facing != original.Facing)
-                ShowFacing();
             dest.z = origin.z;
 
+            //считаем новый поворот
+            var new_facing = CONST.GetRotation(origin, dest);
+
+            //если поворот доступен и изменился
+            if (Allowed(new_facing) && original.Facing != new_facing)
+            {
+                //вращаем юнит
+                original.SetFacing(new_facing);
+                //рисуем подсветку
+                ShowFacing();
+            }
+
+            // левая кнопка - завершить
             if (Input.GetMouseButtonDown(0))
             {
                 Done();
             }
+            // правая - отменить
+            else if (Input.GetMouseButtonDown(1))
+            {
+                Cancel();
+            }
         }
 
+        /// <summary>
+        /// рисуем оверлей
+        /// </summary>
         protected virtual void ShowFacing()
         {
             TacticalController.Instance.Overlay.HideAll();
 
+            //направления оверлея
             Dir Main = original.Facing;
             Dir Left = CONST.TurnLeft(Main);
             Dir Right = CONST.TurnRight(Main);
-
+            //начальная точка
             var coord_main = original.position;
+            //направления по которым будем двигатся при рисовании
             Dir left_back = CONST.Inverse(Right);
             Dir right_back = CONST.Inverse(Left);
 
+            // рисуем тайл под юнитом
             TacticalController.Instance.Overlay.ShowTile(coord_main, Color.green, MapOverlay.Sector2(Main));
 
-            for (int n = 1;n<=25;n++)
-            { 
+            //рисуем на 25 тайлов
+            for (int n = 1; n <= 25; n++)
+            {
+                // сдвигаемся вдоль главного направления вперед
                 coord_main += CONST.GetDirShift(coord_main, Main);
+                //левая метка
                 var c_left = coord_main;
+                //правая метка
                 var c_right = coord_main;
 
+                //рисуем главную линию
                 (var tex, var color) = TileInfo(coord_main, true);
                 TacticalController.Instance.Overlay.ShowTile(coord_main, color, tex);
 
+                //уходим в стороны от неё
                 for (int i = 0; i < n; i++)
                 {
                     c_left += CONST.GetDirShift(c_left, left_back);
                     c_right += CONST.GetDirShift(c_right, right_back);
 
+                    //рисуем влево
                     if (TacticalController.Instance.Map.OnMap(c_left))
                     {
                         (tex, color) = TileInfo(c_left);
                         TacticalController.Instance.Overlay.ShowTile(c_left, color, tex);
                     }
-
+                    //рисуем вправо
                     if (TacticalController.Instance.Map.OnMap(c_right))
                     {
                         (tex, color) = TileInfo(c_right);
@@ -67,6 +104,12 @@ namespace Mercs.Tactical.States
             }
         }
 
+        /// <summary>
+        /// получить информацию что рисовать на проверяемом тайле
+        /// </summary>
+        /// <param name="coord"></param>
+        /// <param name="main"></param>
+        /// <returns></returns>
         protected virtual (MapOverlay.Texture tex, Color color) TileInfo(Vector2Int coord, bool main = false)
         {
             Color c = Color.white;
@@ -81,22 +124,38 @@ namespace Mercs.Tactical.States
                 return (MapOverlay.Texture.White25, c);
         }
 
+
         public override void OnLoad()
         {
             original = GetOrigin();
             origin = TacticalController.Instance.Grid.CellToWorld(original.position);
-            //line = TacticalUIController.Instance.RotationLine;
-            //line.gameObject.SetActive(true);
-            //line.SetPosition(0, origin);
-            //line.SetPosition(1, origin);
+
             ShowFacing();
         }
+
         public override void OnUnload()
         {
-            //line.gameObject.SetActive(false);
+            TacticalController.Instance.Overlay.HideAll();
         }
 
+        /// <summary>
+        /// можно ли повернуться в указанном направлении
+        /// </summary>
+        /// <param name="newFacing"></param>
+        /// <returns></returns>
+        protected abstract bool Allowed(Dir newFacing);
+        /// <summary>
+        /// получить точку откуда считать поворот
+        /// </summary>
+        /// <returns></returns>
         public abstract CellPosition GetOrigin();
+        /// <summary>
+        /// завершить поворот
+        /// </summary>
         public abstract void Done();
+        /// <summary>
+        /// отменить поворот
+        /// </summary>
+        protected abstract void Cancel();
     }
 }

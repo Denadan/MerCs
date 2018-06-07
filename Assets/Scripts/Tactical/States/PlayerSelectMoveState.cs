@@ -9,7 +9,7 @@ namespace Mercs.Tactical.States
     {
         public override TacticalState State => TacticalState.SelectMovement;
 
-        public PlayerSelectMoveState(PhasePrepareState state) : base(state)
+        public PlayerSelectMoveState(PhasePrepareState state, MovementStateData data) : base(state, data)
         {
         }
 
@@ -38,6 +38,12 @@ namespace Mercs.Tactical.States
                 start = start.prev;
             } while (start != null);
             return result;
+        }
+
+
+        protected override PathMap.path_target CanMove(Vector2Int coord)
+        {
+            return TacticalController.Instance.Path.MoveList?.Find(i => i.coord == coord);
         }
     }
 }

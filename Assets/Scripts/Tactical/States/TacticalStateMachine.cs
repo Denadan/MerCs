@@ -61,10 +61,13 @@ namespace Mercs.Tactical.States
             addState(new AIPrepareState(prepare));
             addState(new AIEndTurnState(prepare));
             addState(new PlayerPrepareState(prepare));
-            addState(new PlayerSelectMoveState(prepare));
-            addState(new PlayerSelectRunState(prepare));
-            addState(new PlayerSelectJumpState(prepare));
+            var movement = new MovementStateData();
+
+            addState(new PlayerSelectMoveState(prepare, movement));
+            addState(new PlayerSelectRunState(prepare, movement));
+            addState(new PlayerSelectJumpState(prepare, movement));
             addState(new PlayerEndTurnState(prepare));
+            addState(new SelectRotationMoveState(movement));
 
 
             addState(new ConfirmGuardState());
