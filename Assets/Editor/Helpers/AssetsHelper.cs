@@ -31,6 +31,29 @@ namespace Mercs.Editor
             Selection.activeObject = asset;
         }
 
+        public static void CreateCustomAsset<T>(T asset)
+            where T : ScriptableObject
+        {
+            string path = AssetDatabase.GetAssetPath(Selection.activeObject);
+            if (path == "")
+            {
+                path = "Assets";
+            }
+            else if (Path.GetExtension(path) != "")
+            {
+                path = path.Replace(Path.GetFileName(AssetDatabase.GetAssetPath(Selection.activeObject)), "");
+            }
+
+            string assetPathAndName = AssetDatabase.GenerateUniqueAssetPath(path + "/New " + typeof(T).ToString() + ".asset");
+
+            AssetDatabase.CreateAsset(asset, assetPathAndName);
+
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            EditorUtility.FocusProjectWindow();
+            Selection.activeObject = asset;
+        }
+
         [MenuItem("Assets/Create/MerCs/Faction")]
         public static void CreateFaction()
         {
@@ -43,11 +66,34 @@ namespace Mercs.Editor
             CreateAssets<PilotInfo>();
         }
 
-        [MenuItem("Assets/Create/MerCs/Merc")]
+        [MenuItem("Assets/Create/MerCs/Unit/Merc")]
         public static void CreatMerc()
         {
-            CreateAssets<MercInfo>();
+            var t = ScriptableObject.CreateInstance<UnitTemplate>();
+            t.SetType(UnitType.MerC);
+            CreateCustomAsset(t);
+        }
+        [MenuItem("Assets/Create/MerCs/Unit/Tank")]
+        public static void CreatTank()
+        {
+            var t = ScriptableObject.CreateInstance<UnitTemplate>();
+            t.SetType(UnitType.Tank);
+            CreateCustomAsset(t);
+        }
+        [MenuItem("Assets/Create/MerCs/Unit/Turret")]
+        public static void CreatTurret()
+        {
+            var t = ScriptableObject.CreateInstance<UnitTemplate>();
+            t.SetType(UnitType.Turret);
+            CreateCustomAsset(t);
+        }
+        [MenuItem("Assets/Create/MerCs/Unit/Vehicle")]
+        public static void CreatVehicle()
+        {
+            var t = ScriptableObject.CreateInstance<UnitTemplate>();
+            t.SetType(UnitType.Vehicle);
+            CreateCustomAsset(t);
         }
     }
-    
+
 }

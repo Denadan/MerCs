@@ -27,7 +27,8 @@ namespace Mercs
         Clear, SensorNear, SensorFar, None
     }
 
-    public enum MercClass {
+    public enum MercClass
+    {
         Recon,  //25-40
         Light,  //45-60
         Medium, //65-80
@@ -35,6 +36,9 @@ namespace Mercs
         Behemot //105-120
     }
 
+    /// <summary>
+    /// Кнопки Экшен бара
+    /// </summary>
     public enum ActionButton
     {
         Move,
@@ -52,14 +56,45 @@ namespace Mercs
         Done
     }
 
-    
-
-    public enum MercPart
+    /// <summary>
+    /// Части юнитов
+    /// </summary>
+    [Flags]
+    public enum Parts
     {
-        Head,
-        CentralTorso, LeftTorso, RightTorso,
-        LeftHand, RightHand,
-        LeftLeg, Rightleg
+        None = 0,
+
+        //Части Меха
+        LS = 1 << 0,
+        HD = 1 << 1,
+        RS = 1 << 2,
+        LT = 1 << 3,
+        CT = 1 << 4,
+        RT = 1 << 5,
+        LH = 1 << 6,
+        RH = 1 << 7,
+        LL = 1 << 8,
+        RL = 1 << 9,
+
+        //Части техники
+        LC = 1 << 10,
+        RC = 1 << 11,
+        FC = 1 << 12,
+        BC = 1 << 13,
+        TC = 1 << 14,
+        LM = 1 << 15,
+        VC = 1 << 16,
+        
+        //Турель
+        TT = 1 << 17
+    }
+
+    public enum UnitType
+    {
+        MerC,
+        Tank,
+        Vehicle,
+        Turret
     }
 
     public static class CONST
@@ -132,6 +167,12 @@ namespace Mercs
             return angle;
         }
 
+        /// <summary>
+        /// получить направление по двум точкам
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="dest"></param>
+        /// <returns></returns>
         public static Dir GetRotation(Vector3 source, Vector3 dest)
         {
             var vector = dest - source;
@@ -158,27 +199,47 @@ namespace Mercs
             return Dir.N;
         }
 
-
+        /// <summary>
+        /// соседи
+        /// </summary>
         private static Dir[] neighbour =
         {
             Dir.NW, Dir.N, Dir.NE, Dir.SE, Dir.S, Dir.SW, Dir.NW, Dir.N
         };
 
+        /// <summary>
+        /// обратное направление
+        /// </summary>
         private static Dir[] back =
         {
             Dir.S, Dir.SW, Dir.NW, Dir.N, Dir.NE, Dir.SE
         };
 
+        /// <summary>
+        /// получить направление слева
+        /// </summary>
+        /// <param name="dir"></param>
+        /// <returns></returns>
         public static Dir TurnLeft(Dir dir)
         {
             return neighbour[(int)dir - 1];
         }
 
+        /// <summary>
+        /// получить обратне направление
+        /// </summary>
+        /// <param name="dir"></param>
+        /// <returns></returns>
         public static Dir Inverse(Dir dir)
         {
             return back[(int)dir - 1];
         }
 
+        /// <summary>
+        /// получить направление справа
+        /// </summary>
+        /// <param name="dir"></param>
+        /// <returns></returns>
         public static Dir TurnRight(Dir dir)
         {
             return neighbour[(int)dir + 1];

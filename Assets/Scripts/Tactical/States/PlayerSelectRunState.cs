@@ -8,8 +8,6 @@ namespace Mercs.Tactical.States
     public class PlayerSelectRunState : PlayerSelectMovementBase
     {
         public override TacticalState State => TacticalState.SelectRun;
-        private PhasePrepareState state;
-
 
         public PlayerSelectRunState(PhasePrepareState state) : base(state)
         {

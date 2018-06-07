@@ -10,7 +10,7 @@ namespace Mercs
     [Serializable]
     public class StartMechInfo 
     {
-        public MercInfo Merc;
+        public UnitTemplate Merc;
         public PilotInfo Pilot;
     }
 }

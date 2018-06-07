@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d783d9c944b743419ee3e72db25e354, type: 3}
+  m_Name: merc-35-Jenner
+  m_EditorClassIdentifier: 
+  Weight: 35
+  Sprite: {fileID: 21300000, guid: 54de049198835db46b09c4dc084b1948, type: 3}
+  AddHp: 0
+  Type: 0
+  MoveSpeed: 7
+  RunSpeed: 11
+  Jumps: 6
+  PartTable:
+  - Place: 2
+    Structure: 3
+    Armor: 7
+    BackArmor: 0
+    DependOn: 0
+    TransferTo: 0
+    Critical: 1
+    HasBackArmor: 0
+  - Place: 16
+    Structure: 11
+    Armor: 10
+    BackArmor: 83
+    DependOn: 0
+    TransferTo: 0
+    Critical: 1
+    HasBackArmor: 1
+  - Place: 8
+    Structure: 8
+    Armor: 8
+    BackArmor: 4
+    DependOn: 0
+    TransferTo: 16
+    Critical: 0
+    HasBackArmor: 1
+  - Place: 32
+    Structure: 8
+    Armor: 8
+    BackArmor: 4
+    DependOn: 0
+    TransferTo: 16
+    Critical: 0
+    HasBackArmor: 1
+  - Place: 64
+    Structure: 6
+    Armor: 4
+    BackArmor: 0
+    DependOn: 8
+    TransferTo: 8
+    Critical: 0
+    HasBackArmor: 0
+  - Place: 128
+    Structure: 6
+    Armor: 4
+    BackArmor: 0
+    DependOn: 32
+    TransferTo: 32
+    Critical: 0
+    HasBackArmor: 0
+  - Place: 256
+    Structure: 8
+    Armor: 6
+    BackArmor: 0
+    DependOn: 0
+    TransferTo: 8
+    Critical: 0
+    HasBackArmor: 0
+  - Place: 512
+    Structure: 8
+    Armor: 6
+    BackArmor: 0
+    DependOn: 0
+    TransferTo: 32
+    Critical: 0
+    HasBackArmor: 0
