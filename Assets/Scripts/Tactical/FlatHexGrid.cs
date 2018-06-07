@@ -1,8 +1,8 @@
-﻿using System;
+﻿#pragma warning disable 649
+
 using System.Collections.Generic;
 using Tools;
 using UnityEngine;
-using UnityEngine.Tilemaps;
 
 namespace Mercs.Tactical
 {

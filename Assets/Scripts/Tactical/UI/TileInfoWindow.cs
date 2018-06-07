@@ -1,4 +1,6 @@
-﻿using Mercs.Tactical.Events;
+﻿#pragma warning disable 649
+
+using Mercs.Tactical.Events;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;

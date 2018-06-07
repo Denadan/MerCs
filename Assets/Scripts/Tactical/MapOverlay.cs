@@ -1,7 +1,12 @@
-﻿using System;
+﻿#pragma warning disable 649
+
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using Denadan.Sprites;
 using UnityEngine;
+
+
 
 namespace Mercs.Tactical
 {
@@ -214,6 +219,25 @@ namespace Mercs.Tactical
                 ShowTile(item, color, textures[(int)texture]);
         }
 
+        private Texture2D get_tex(PathMap.path_target item)
+        {
+            int n = 0;
+            var dirs = item.AllowedDir;
+            if (dirs.Contains(Dir.N))
+                n += 1;
+            if (dirs.Contains(Dir.NE))
+                n += 2;
+            if (dirs.Contains(Dir.SE))
+                n += 4;
+            if (dirs.Contains(Dir.S))
+                n += 8;
+            if (dirs.Contains(Dir.SW))
+                n += 16;
+            if (dirs.Contains(Dir.NW))
+                n += 32;
+            return HexParts[n];
+        }
+
         /// <summary>
         /// нарисовать карту путей для бега
         /// </summary>
@@ -221,7 +245,10 @@ namespace Mercs.Tactical
         {
             if (TacticalController.Instance.Path.RunList != null)
                 foreach (var item in TacticalController.Instance.Path.RunList)
-                    ShowTile(item.coord, Color.yellow, Texture.White25);
+                {
+                    sprites[item.coord.x, item.coord.y].Mask = get_tex(item);
+                    sprites[item.coord.x, item.coord.y].MaskColor = RunColor;
+                }
         }
 
         /// <summary>
@@ -231,7 +258,10 @@ namespace Mercs.Tactical
         {
             if (TacticalController.Instance.Path.MoveList != null)
                 foreach (var item in TacticalController.Instance.Path.MoveList)
-                    ShowTile(item.coord, Color.green, Texture.White25);
+                {
+                    sprites[item.coord.x, item.coord.y].Mask = get_tex(item);
+                    sprites[item.coord.x, item.coord.y].MaskColor = MoveColor;
+                }
         }
 
         /// <summary>
@@ -241,7 +271,10 @@ namespace Mercs.Tactical
         {
             if (TacticalController.Instance.Path.RunList != null)
                 foreach (var item in TacticalController.Instance.Path.JumpList)
-                    ShowTile(item.coord, Color.blue, Texture.White25);
+                {
+                    sprites[item.coord.x, item.coord.y].Mask = HexParts[63];
+                    sprites[item.coord.x, item.coord.y].MaskColor = JumpColor;
+                }
         }
     }
 }

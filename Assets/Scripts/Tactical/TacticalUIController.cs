@@ -1,9 +1,10 @@
-﻿using UnityEngine;
+﻿#pragma warning disable 649
+
+using UnityEngine;
 using Tools;
 using UnityEngine.UI;
 using Mercs.Tactical.UI;
 using Mercs.Tactical.Events;
-using System;
 using System.Collections.Generic;
 
 namespace Mercs.Tactical

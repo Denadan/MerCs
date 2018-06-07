@@ -162,6 +162,11 @@ namespace Mercs.Tactical
         public Vector2Int UnitPos { get; private set; }
 
         /// <summary>
+        /// список координат других юнитов
+        /// </summary>
+        private Vector2Int[] other_unit;
+
+        /// <summary>
         /// создаем карту проходимости
         /// </summary>
         public void CreatePathMap()
@@ -234,7 +239,10 @@ namespace Mercs.Tactical
             Ready = false;
             Unit = unit;
             UnitPos = unit.Position.position;
-
+            other_unit = (from u in TacticalController.Instance.Units
+                          where !u.Reserve && unit != u
+                          select u.Position.position
+                ).ToArray();
             token = new CancellationTokenSource();
 
             make_path = new Task(() => calc_path(token.Token));
@@ -251,54 +259,87 @@ namespace Mercs.Tactical
             if (Unit.Movement.MoveMp > 0)
             {
                 //получаем список всех путей и сортируем его по затратам од
-                List<path_node> run_list = step_move(new path_node
+                var list = step_move(new path_node
                 {
                     coord = UnitPos,
                     facing = Unit.Position.Facing,
                     mpleft = Unit.Movement.MoveMp,
                     prev = null
                 },
-                new List<path_node>()).OrderByDescending(item => item.mpleft).ToList();
+                new List<path_node>())
+                    .OrderByDescending(item => item.mpleft)
+                    .GroupBy(i => i.coord)
+                    .ToList();
 
-
-                //список всех доступных точек
-                MoveList = run_list
-                    .Select(i => i.coord)
-                    .Distinct()
+                //список всех доступных конечных точек
+                MoveList = list
                     .Select(c => new path_target
                     {
-                        coord = c,
-                        fast_path = run_list.Find(i => i.coord == c)
+                        coord = c.Key,
+                        fast_path = c.First()
                     })
                     .ToList();
+
+                //находим пути для всех направлений точки
+                var dict = list.ToDictionary(i => i.Key, i => i.ToList());
+                foreach (var node in MoveList)
+                    foreach (var dir in CONST.AllDirs)
+                    {
+                        var dir_l1 = CONST.TurnLeft(dir);
+                        var dir_r1 = CONST.TurnRight(dir);
+                        var dir_l2 = CONST.TurnLeft(dir_l1);
+                        var dir_r2 = CONST.TurnRight(dir_r1);
+                        var dir_i = CONST.Inverse(dir);
+
+                        var path = dict[node.coord].Find(i =>
+                            i.facing == dir
+                            || (i.facing == dir_l1 || i.facing == dir_r1) && i.mpleft >= 1
+                            || (i.facing == dir_l2 || i.facing == dir_r2) && i.mpleft >= 2 
+                            || i.facing == dir_i && i.mpleft >= 3);
+                        if (path != null)
+                            node.other_path.Add(dir, path);
+                    }
             }
 
             //поиск пути для бега
             if (Unit.Movement.RunMP > 0)
             {
                 //получаем список всех путей и сортируем его по затратам од
-                List<path_node> run_list = step_run(new path_node
+                var list = step_run(new path_node
                 {
                     coord = UnitPos,
                     facing = Unit.Position.Facing,
                     mpleft = Unit.Movement.RunMP,
                     prev = null
                 },
-                new List<path_node>()).OrderByDescending(item => item.mpleft).ToList();
+                new List<path_node>())
+                    .OrderByDescending(item => item.mpleft)
+                    .GroupBy(i => i.coord)
+                    .ToList();
 
-
-                //список всех доступных точек
-                RunList = run_list
-                    .Select(i => i.coord)
-                    .Distinct()
+                //список всех доступных конечных точек
+                RunList = list
                     .Select(c => new path_target
                     {
-                        coord = c,
-                        fast_path = run_list.Find(i => i.coord == c)
+                        coord = c.Key,
+                        fast_path = c.First()
                     })
                     .ToList();
 
+                var dict = list.ToDictionary(i => i.Key, i => i.ToList());
 
+                foreach (var node in RunList)
+                    foreach (var dir in CONST.AllDirs)
+                    {
+                        var dir_l = CONST.TurnLeft(dir);
+                        var dir_r = CONST.TurnRight(dir);
+
+                        var path = dict[node.coord].Find(i =>
+                          i.facing == dir ||
+                          (i.facing == dir_l || i.facing == dir_r) && i.mpleft >= 1);
+                        if (path != null)
+                            node.other_path.Add(dir, path);
+                    }
 
             }
 
@@ -325,7 +366,9 @@ namespace Mercs.Tactical
                 //если есть переход по указанному направлению
                 if (this[source.coord].Links.TryGetValue(facing, out var link)
                 // и хватает очков движения
-                    && link.cost + bonus <= source.mpleft)
+                    && link.cost + bonus <= source.mpleft
+                // и клетка свободна
+                    && !other_unit.Contains(link.target))
                     //переходим
                     step_run(new path_node
                     {
@@ -355,7 +398,10 @@ namespace Mercs.Tactical
                 //если есть переход по указанному направлению
                 if (this[source.coord].Links.TryGetValue(facing, out var link)
                 // и хватает очков движения
-                    && link.cost + bonus <= source.mpleft)
+                    && link.cost + bonus <= source.mpleft
+                    // и клетка свободна
+                    && !other_unit.Contains(link.target))
+
                     //переходим
                     step_run(new path_node
                     {
