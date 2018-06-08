@@ -266,11 +266,13 @@ namespace Mercs.Tactical
                     mpleft = Unit.Movement.MoveMp,
                     prev = null
                 },
-                new List<path_node>())
+                new List<path_node>(), token)
                     .OrderByDescending(item => item.mpleft)
                     .GroupBy(i => i.coord)
                     .ToList();
 
+                if(token.IsCancellationRequested) return;
+                
                 //список всех доступных конечных точек
                 MoveList = list
                     .Select(c => new path_target
@@ -280,11 +282,15 @@ namespace Mercs.Tactical
                     })
                     .ToList();
 
+                if (token.IsCancellationRequested) return;
+
                 //находим пути для всех направлений точки
                 var dict = list.ToDictionary(i => i.Key, i => i.ToList());
                 foreach (var node in MoveList)
                     foreach (var dir in CONST.AllDirs)
                     {
+                        if (token.IsCancellationRequested) return;
+
                         var dir_l1 = CONST.TurnLeft(dir);
                         var dir_r1 = CONST.TurnRight(dir);
                         var dir_l2 = CONST.TurnLeft(dir_l1);
@@ -294,7 +300,7 @@ namespace Mercs.Tactical
                         var path = dict[node.coord].Find(i =>
                             i.facing == dir
                             || (i.facing == dir_l1 || i.facing == dir_r1) && i.mpleft >= 1
-                            || (i.facing == dir_l2 || i.facing == dir_r2) && i.mpleft >= 2 
+                            || (i.facing == dir_l2 || i.facing == dir_r2) && i.mpleft >= 2
                             || i.facing == dir_i && i.mpleft >= 3);
                         if (path != null)
                             node.other_path.Add(dir, path);
@@ -312,10 +318,12 @@ namespace Mercs.Tactical
                     mpleft = Unit.Movement.RunMP,
                     prev = null
                 },
-                new List<path_node>())
+                new List<path_node>(), token)
                     .OrderByDescending(item => item.mpleft)
                     .GroupBy(i => i.coord)
                     .ToList();
+
+                if (token.IsCancellationRequested) return;
 
                 //список всех доступных конечных точек
                 RunList = list
@@ -326,11 +334,15 @@ namespace Mercs.Tactical
                     })
                     .ToList();
 
+                if (token.IsCancellationRequested) return;
+
                 var dict = list.ToDictionary(i => i.Key, i => i.ToList());
 
                 foreach (var node in RunList)
                     foreach (var dir in CONST.AllDirs)
                     {
+                        if (token.IsCancellationRequested) return;
+
                         var dir_l = CONST.TurnLeft(dir);
                         var dir_r = CONST.TurnRight(dir);
 
@@ -347,10 +359,68 @@ namespace Mercs.Tactical
             if (Unit.Movement.JumpMP > 0)
             {
 
+                var start_node = new path_node
+                {
+                    coord = UnitPos,
+                    facing = Unit.Position.Facing,
+                    mpleft = Unit.Movement.JumpMP,
+                    prev = null
+                };
+                if (JumpList == null)
+                    JumpList = new List<path_target>();
+                else
+                    JumpList.Clear();
+
+
+                // для всех секторов
+                foreach (var f_dir in CONST.AllDirs)
+                {
+                    if (token.IsCancellationRequested) return;
+                    Vector2Int start = UnitPos;
+                    var l_dir = CONST.TurnLeft(CONST.TurnLeft(f_dir));
+
+                    // на глубину прыжка
+                    for (int i = 1; i < Unit.Movement.JumpMP * 3 / 2 + 1; i++)
+                    {
+                        //сдвигаем в сторону сектора
+                        start = start.ShiftTo(f_dir);
+                        var point = start;
+                        for (int j = 0; j < i; j++)
+                        {
+                            if (token.IsCancellationRequested) return;
+                            //проверяем доступность прыжка
+                            if (step_jump(point))
+                            {
+                                var path = new path_target
+                                {
+                                    coord = point,
+                                    fast_path = new path_node
+                                    {
+                                        coord = point,
+                                        facing = f_dir,
+                                        mpleft = 0,
+                                        prev = start_node
+                                    }
+                                };
+                                foreach (var dir in CONST.AllDirs)
+                                    path.other_path.Add(dir, new path_node{ coord = point, facing = dir, mpleft = 0, prev = start_node});
+                                JumpList.Add(path);
+                            }
+                            //сдвигаем в сторону
+                            point = point.ShiftTo(l_dir);
+                        }
+                    }
+                }
             }
 
             //закончили, можно пользоваться
             Ready = true;
+        }
+
+        private bool step_jump(Vector2Int point)
+        {
+            var dist = TacticalController.Instance.Map.Distance(UnitPos, point);
+            return dist <= Unit.Movement.JumpMP;
         }
 
         /// <summary>
@@ -358,11 +428,13 @@ namespace Mercs.Tactical
         /// </summary>
         /// <param name="source">стартовый узел</param>
         /// <param name="list">список пройденных узлов</param>
-        private List<path_node> step_run(path_node source, List<path_node> list)
+        private List<path_node> step_run(path_node source, List<path_node> list, CancellationToken token)
         {
             //продолжение поиска в указанном направлении
             void step(Dir facing, int bonus)
             {
+                if (token.IsCancellationRequested) return;
+
                 //если есть переход по указанному направлению
                 if (this[source.coord].Links.TryGetValue(facing, out var link)
                 // и хватает очков движения
@@ -376,7 +448,7 @@ namespace Mercs.Tactical
                         facing = facing,
                         mpleft = source.mpleft - link.cost - bonus,
                         prev = source
-                    }, list);
+                    }, list ,token);
             }
 
             //добавлеям стартовый узел в список пройденых
@@ -390,11 +462,13 @@ namespace Mercs.Tactical
             return list;
         }
 
-        private List<path_node> step_move(path_node source, List<path_node> list)
+        private List<path_node> step_move(path_node source, List<path_node> list, CancellationToken token)
         {
             //продолжение поиска в указанном направлении
             void step(Dir facing, int bonus)
             {
+                if (token.IsCancellationRequested) return;
+
                 //если есть переход по указанному направлению
                 if (this[source.coord].Links.TryGetValue(facing, out var link)
                 // и хватает очков движения
@@ -409,11 +483,13 @@ namespace Mercs.Tactical
                         facing = facing,
                         mpleft = source.mpleft - link.cost - bonus,
                         prev = source
-                    }, list);
+                    }, list, token);
             }
 
             void step_back(Dir facing, int bonus)
             {
+                if (token.IsCancellationRequested) return;
+
                 //если есть переход по указанному направлению
                 if (this[source.coord].Links.TryGetValue(CONST.Inverse(facing), out var link)
                 // и хватает очков движения
@@ -425,7 +501,7 @@ namespace Mercs.Tactical
                         facing = facing,
                         mpleft = source.mpleft - link.cost - bonus,
                         prev = source
-                    }, list);
+                    }, list, token);
             }
 
             //добавлеям стартовый узел в список пройденых

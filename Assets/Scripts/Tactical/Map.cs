@@ -7,6 +7,7 @@ namespace Mercs.Tactical
         public int SizeX;
         public int SizeY;
 
+
         protected TileInfo[,] map;
 
         public TileInfo this[int x, int y]

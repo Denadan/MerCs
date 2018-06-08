@@ -25,7 +25,13 @@ namespace Mercs.Tactical.States
 
         protected override List<PathMap.path_node> GetPath(Vector2Int coord)
         {
-            return null;
+            var node = TacticalController.Instance.Path.JumpList.Find(i => i.coord == coord);
+            if (node == null)
+                return null;
+            return  new List<PathMap.path_node>
+            {
+                node.fast_path, node.fast_path.prev
+            };
         }
 
         protected override PathMap.path_target CanMove(Vector2Int coord)

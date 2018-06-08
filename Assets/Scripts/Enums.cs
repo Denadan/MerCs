@@ -103,6 +103,11 @@ namespace Mercs
             return GetDirShift(coord.x, coord.y, dir);
         }
 
+        public static Vector2Int ShiftTo(this Vector2Int coord, Dir dir)
+        {
+            return coord + GetDirShift(coord, dir);
+        }
+
         public static Vector2Int GetDirShift(int x, int y, Dir dir)
         {
             return x % 2 == 0 ? shifts_even[dir] : shifts_odd[dir];
