@@ -11,7 +11,9 @@ namespace Mercs
     public enum Dir
     {
         N = 1, S = 4,
-        NE = 2, NW = 6, SE = 3, SW = 5
+        NE = 2, NW = 6, SE = 3, SW = 5,
+        E = 10,
+        W = 11
     }
 
     /// <summary>
@@ -59,7 +61,6 @@ namespace Mercs
     /// <summary>
     /// Части юнитов
     /// </summary>
-    [Flags]
     public enum Parts
     {
         None = 0,
