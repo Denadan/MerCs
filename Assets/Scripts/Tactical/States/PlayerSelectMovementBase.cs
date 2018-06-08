@@ -33,6 +33,7 @@ namespace Mercs.Tactical.States
         public override void OnUnload()
         {
             TacticalController.Instance.Overlay.HideAll();
+            TacticalUIController.Instance.MoveLine.gameObject.SetActive(false);
         }
 
         private IEnumerator wait_for_path(UnitInfo info)
