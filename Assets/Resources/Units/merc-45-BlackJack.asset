@@ -27,6 +27,11 @@ MonoBehaviour:
     TransferTo: 0
     Critical: 1
     HasBackArmor: 0
+    Size:
+    - 1
+    - 1
+    - 1
+    - 0
   - Place: 16
     Structure: 14
     Armor: 18
@@ -34,7 +39,12 @@ MonoBehaviour:
     DependOn: 0
     TransferTo: 0
     Critical: 1
-    HasBackArmor: 1
+    HasBackArmor: 0
+    Size:
+    - 7
+    - 5
+    - 5
+    - 7
   - Place: 8
     Structure: 11
     Armor: 15
@@ -42,7 +52,12 @@ MonoBehaviour:
     DependOn: 0
     TransferTo: 16
     Critical: 0
-    HasBackArmor: 1
+    HasBackArmor: 0
+    Size:
+    - 5
+    - 7
+    - 0
+    - 5
   - Place: 32
     Structure: 11
     Armor: 15
@@ -50,7 +65,12 @@ MonoBehaviour:
     DependOn: 0
     TransferTo: 16
     Critical: 0
-    HasBackArmor: 1
+    HasBackArmor: 0
+    Size:
+    - 5
+    - 0
+    - 7
+    - 5
   - Place: 64
     Structure: 7
     Armor: 12
@@ -59,6 +79,11 @@ MonoBehaviour:
     TransferTo: 8
     Critical: 0
     HasBackArmor: 0
+    Size:
+    - 5
+    - 7
+    - 0
+    - 5
   - Place: 128
     Structure: 7
     Armor: 12
@@ -67,6 +92,11 @@ MonoBehaviour:
     TransferTo: 32
     Critical: 0
     HasBackArmor: 0
+    Size:
+    - 5
+    - 0
+    - 7
+    - 5
   - Place: 256
     Structure: 11
     Armor: 17
@@ -75,6 +105,11 @@ MonoBehaviour:
     TransferTo: 8
     Critical: 0
     HasBackArmor: 0
+    Size:
+    - 4
+    - 7
+    - 0
+    - 4
   - Place: 512
     Structure: 11
     Armor: 17
@@ -83,3 +118,8 @@ MonoBehaviour:
     TransferTo: 32
     Critical: 0
     HasBackArmor: 0
+    Size:
+    - 4
+    - 0
+    - 7
+    - 4

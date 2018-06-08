@@ -27,6 +27,11 @@ MonoBehaviour:
     TransferTo: 0
     Critical: 1
     HasBackArmor: 0
+    Size:
+    - 1
+    - 1
+    - 1
+    - 1
   - Place: 2048
     Structure: 0
     Armor: 20
@@ -35,6 +40,11 @@ MonoBehaviour:
     TransferTo: 16384
     Critical: 0
     HasBackArmor: 0
+    Size:
+    - 2
+    - 0
+    - 5
+    - 2
   - Place: 1024
     Structure: 0
     Armor: 20
@@ -43,6 +53,11 @@ MonoBehaviour:
     TransferTo: 16384
     Critical: 0
     HasBackArmor: 0
+    Size:
+    - 2
+    - 5
+    - 0
+    - 2
   - Place: 4096
     Structure: 0
     Armor: 24
@@ -51,6 +66,11 @@ MonoBehaviour:
     TransferTo: 16384
     Critical: 0
     HasBackArmor: 0
+    Size:
+    - 5
+    - 2
+    - 2
+    - 0
   - Place: 8192
     Structure: 0
     Armor: 20
@@ -59,3 +79,8 @@ MonoBehaviour:
     TransferTo: 16384
     Critical: 0
     HasBackArmor: 0
+    Size:
+    - 0
+    - 2
+    - 2
+    - 5

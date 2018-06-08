@@ -1,6 +1,10 @@
 ﻿using Mercs.Tactical;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using System.Linq;
+#endif
+
 namespace Mercs
 {
     public class UnitTemplate : ScriptableObject
@@ -60,6 +64,7 @@ namespace Mercs
         [Header("Parts")]
         public UnitPart[] PartTable;
 
+#if UNITY_EDITOR
         public void SetType(UnitType type)
         {
             Type = type;
@@ -103,6 +108,25 @@ namespace Mercs
                     };
                     break;
             }
+            foreach (var part in PartTable)
+                part.SetDefaultSize();
         }
+
+
+        public bool NeedUpdate
+        {
+            get => PartTable == null
+                    || PartTable.Length == 0
+                    || PartTable.Any(i => i.Size.All(p => p == 0));
+        }
+
+        public void Update()
+        {
+            if (PartTable == null || PartTable.Length == 0)
+                SetType(Type);
+            foreach (var part in PartTable.Where(i => i.Size.All(p => p == 0)))
+                part.SetDefaultSize();
+        }
+#endif
     }
 }
