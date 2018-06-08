@@ -20,7 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4614353106774778}
   - component: {fileID: 114291790252129412}
-  - component: {fileID: 114763752134746080}
   - component: {fileID: 114101135788229610}
   - component: {fileID: 114542518974869722}
   - component: {fileID: 114746455252689770}
@@ -171,6 +170,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea8dea19f65c1ed49b8c674897a9e3f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  DEBUG_TimeStart: 0
+  DEBUG_TimeEnd: 0
 --- !u!114 &114291790252129412
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -315,14 +316,3 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 67e836739cc713a4da85461439db989c, type: 3}
   - {fileID: 2800000, guid: 4aeecea9b4fd7544881b0b318354cdc8, type: 3}
   - {fileID: 2800000, guid: d74c43baa3a8bff4bb8967113a398592, type: 3}
---- !u!114 &114763752134746080
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1031959539713628}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 48481a0283d981c4da5f1eb1cf28a4a6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
