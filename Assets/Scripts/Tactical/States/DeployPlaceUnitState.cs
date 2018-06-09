@@ -72,7 +72,7 @@ namespace Mercs.Tactical.States
                 state.unit_in_hand.info.gameObject.SetActive(false);
                 state.unit_in_hand.button.Background.color = Color.white;
                 state.unit_in_hand = null;
-
+                TacticalUIController.Instance.HideSelectedUnitWindow();
                 SwitchTo(TacticalState.DeploySelectUnit);
             }
 

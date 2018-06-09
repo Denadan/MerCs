@@ -19,6 +19,16 @@ namespace Mercs.Tactical.Events
 
     public interface IPilotDamaged : IEventSystemHandler
     {
-        void PilotDamaged(UnitInfo unit);
+        void PilotDamaged(PilotHp hp);
+    }
+
+    public interface IUnitDamaged : IEventSystemHandler
+    {
+        void UnitDamage(UnitHp hp);
+    }
+
+    public interface IPartDamaged : IEventSystemHandler
+    {
+        void PartDamaged(UnitHp hp);
     }
 }

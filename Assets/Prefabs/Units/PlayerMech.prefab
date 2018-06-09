@@ -63,6 +63,7 @@ GameObject:
   - component: {fileID: 114233372524924754}
   - component: {fileID: 114285813899632404}
   - component: {fileID: 114585662307577290}
+  - component: {fileID: 114898140824414448}
   m_Layer: 9
   m_Name: PlayerMech
   m_TagString: Untagged
@@ -98,6 +99,7 @@ MonoBehaviour:
   Position: {fileID: 114648366674161404}
   Movement: {fileID: 114233372524924754}
   PilotHP: {fileID: 114585662307577290}
+  UnitHP: {fileID: 114898140824414448}
 --- !u!114 &114233372524924754
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -243,6 +245,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   OriginalUnit: {fileID: 0}
+--- !u!114 &114898140824414448
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1775771083925676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfb8e2ec8a77dc64fbea9c4590dcb523, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114999356163704460
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -307,7 +320,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 0.85714287}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
 --- !u!222 &222897102889812940
 CanvasRenderer:

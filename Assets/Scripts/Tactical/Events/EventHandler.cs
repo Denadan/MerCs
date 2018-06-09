@@ -12,7 +12,8 @@ namespace Mercs.Tactical.Events
     {
         private List<GameObject> TileSubscribers = new List<GameObject>();
         private List<GameObject> UnitSubscribers = new List<GameObject>();
-        private List<GameObject> PilotHpSubscribers = new List<GameObject>();
+        private Dictionary<UnitInfo, PilotHp> pilotHps = new Dictionary<UnitInfo, PilotHp>();
+        private Dictionary<UnitInfo, UnitHp> UnitHPs = new Dictionary<UnitInfo, UnitHp>();
 
         public static void UnitPointerClick(PointerEventData data, UnitInfo Unit)
         {
@@ -99,16 +100,7 @@ namespace Mercs.Tactical.Events
             }
         }
 
-        public static void PilotHpChange(UnitInfo unit)
-        {
-            if (Instance == null)
-                return;
-            foreach (var subscriber in Instance.PilotHpSubscribers)
-            {
-                ExecuteEvents.Execute<IPilotDamaged>(subscriber, null,
-                    (handler, eventData) => handler.PilotDamaged(unit));
-            }
-        }
+
 
         public static void TileSubscribe(GameObject go)
         {
@@ -138,17 +130,51 @@ namespace Mercs.Tactical.Events
             Instance.UnitSubscribers.Remove(go);
         }
 
-        public static void PilotHpSubscribe(GameObject go)
+        public static void PilotHpSubscribe(GameObject go, UnitInfo unit)
         {
             if (Instance == null)
                 return;
-            Instance.PilotHpSubscribers.Add(go);
+
+            if(Instance.pilotHps.TryGetValue(unit, out var hp))
+                hp.Subscribe(go);
         }
-        public static void PilotHpUnSubscribe(GameObject go)
+
+        public static void PilotHpUnSubscribe(GameObject go, UnitInfo unit)
         {
             if (Instance == null)
                 return;
-            Instance.PilotHpSubscribers.Remove(go);
+            if (Instance.pilotHps.TryGetValue(unit, out var hp))
+                hp.Unsubscribe(go);
+        }
+
+        public static void RegisterPilotHp(UnitInfo unit, PilotHp hp)
+        {
+            if (Instance == null)
+                return;
+
+            Instance.pilotHps.Add(unit,hp);
+        }
+
+        public static void UnRegisterPilotHp(UnitInfo unit)
+        {
+            if (Instance == null)
+                return;
+            Instance.pilotHps.Remove(unit);
+        }
+
+        public static void RegisterUnitHp(UnitInfo unit, UnitHp hp)
+        {
+            if (Instance == null)
+                return;
+
+            Instance.UnitHPs.Add(unit, hp);
+        }
+
+        public static void UnRegisterUnitHp(UnitInfo unit)
+        {
+            if (Instance == null)
+                return;
+            Instance.UnitHPs.Remove(unit);
         }
     }
 }

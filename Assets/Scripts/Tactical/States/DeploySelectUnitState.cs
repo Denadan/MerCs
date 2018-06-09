@@ -22,6 +22,7 @@ namespace Mercs.Tactical.States
                 if (unit_to_add == null)
                     return;
                 state.unit_in_hand = unit_to_add;
+                TacticalUIController.Instance.ShowSelectedUnitWindow(unit_to_add.info);
                 unit_to_add.button.Background.color = Color.yellow;
                 SwitchTo(TacticalState.DeployPlaceUnit);
             }

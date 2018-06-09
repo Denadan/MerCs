@@ -44,6 +44,10 @@ namespace Mercs.Tactical
                     template.Structure,
                     template.Armor,
                     template.HasBackArmor ? template.BackArmor : 0);
+
+                //current_hp.x *= UnityEngine.Random.Range(0f, 1f);
+                //current_hp.y *= UnityEngine.Random.Range(0f, 1f);
+                //current_hp.z *= UnityEngine.Random.Range(0f, 1f);
             }
 
         }
@@ -67,8 +71,6 @@ namespace Mercs.Tactical
                     parts[p.template.DependOn].childrens.Add(p.part);
                 if (p.template.TransferTo != Parts.None)
                     p.part.transfer = parts[p.template.TransferTo];
-
-
             }
         }
 
@@ -79,7 +81,7 @@ namespace Mercs.Tactical
         public Parts[] AllParts => parts.Keys.ToArray();
         public bool PartDestroyed(Parts p) => parts.TryGetValue(p, out var part) && (part.cripped || part.destroyed);
         public (float structure, float armor, float back_armor, bool has_back_armor) CurrentHp(Parts p) =>
-            !parts.TryGetValue(p, out var part) ?
+            parts.TryGetValue(p, out var part) ?
             (part.current_hp.x, part.current_hp.y, part.current_hp.z, part.has_back_armor) :
             (0, 0, 0, false);
         public (float structure, float armor, float back_armor, bool has_back_armor) MaxHp(Parts p) =>

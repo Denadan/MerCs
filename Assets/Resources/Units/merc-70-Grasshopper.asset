@@ -39,7 +39,7 @@ MonoBehaviour:
     DependOn: 0
     TransferTo: 0
     Critical: 1
-    HasBackArmor: 0
+    HasBackArmor: 1
     Size:
     - 7
     - 5
@@ -52,7 +52,7 @@ MonoBehaviour:
     DependOn: 0
     TransferTo: 16
     Critical: 0
-    HasBackArmor: 0
+    HasBackArmor: 1
     Size:
     - 5
     - 7
@@ -65,7 +65,7 @@ MonoBehaviour:
     DependOn: 0
     TransferTo: 16
     Critical: 0
-    HasBackArmor: 0
+    HasBackArmor: 1
     Size:
     - 5
     - 0

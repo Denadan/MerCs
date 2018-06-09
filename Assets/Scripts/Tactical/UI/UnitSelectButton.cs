@@ -35,7 +35,6 @@ namespace Mercs.Tactical.UI
             if (Unit.PilotHP == null)
             {
                 Destroy(HpBar.gameObject);
-                Destroy(GetComponent<PilotDamagedSubscriber>());
                 HpBar = null;
             }
             else
@@ -43,16 +42,22 @@ namespace Mercs.Tactical.UI
                 HpBar.MaxHP = Unit.PilotHP.MaxHp;
                 HpBar.AddHP = Unit.PilotHP.AddHp;
                 HpBar.HP = Unit.PilotHP.Hp;
+                EventHandler.PilotHpSubscribe(gameObject, Unit);
             }
         }
 
-        public void PilotDamaged(UnitInfo unit)
+        public void PilotDamaged(PilotHp hp)
         {
-            if (unit == Unit)
-            {
-                HpBar.AddHP = Unit.PilotHP.AddHp;
-                HpBar.HP = Unit.PilotHP.Hp;
-            }
+
+            HpBar.AddHP = Unit.PilotHP.AddHp;
+            HpBar.HP = Unit.PilotHP.Hp;
+
+        }
+
+        public void OnDestroy()
+        {
+            if (Unit != null)
+                EventHandler.PilotHpUnSubscribe(gameObject, Unit);
         }
     }
 }

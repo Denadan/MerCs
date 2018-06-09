@@ -51,6 +51,8 @@ namespace Mercs.Tactical
         [SerializeField]
         private DeployInfoMenu DeployWindow;
         [SerializeField]
+        private UnitStateWindow SelectedUnitStateWindow;
+        [SerializeField]
         private Text roundText;
 
         [SerializeField]
@@ -200,6 +202,17 @@ namespace Mercs.Tactical
         {
             Camera.main.transform.position = new Vector3(selectedUnit.gameObject.transform.position.x, selectedUnit.gameObject.transform.position.y,
                 Camera.main.transform.position.z);
+        }
+
+        public void HideSelectedUnitWindow()
+        {
+            SelectedUnitStateWindow.gameObject.SetActive(false);
+        }
+
+        public void ShowSelectedUnitWindow(UnitInfo value)
+        {
+            SelectedUnitStateWindow.gameObject.SetActive(true);
+            SelectedUnitStateWindow.SetUnit(value);
         }
     }
 }

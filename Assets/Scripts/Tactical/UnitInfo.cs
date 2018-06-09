@@ -11,6 +11,7 @@ namespace Mercs.Tactical
         public CellPosition Position;
         public MovementData Movement;
         public PilotHp PilotHP;
+        public UnitHp UnitHP;
 
         public Faction Faction { get; set; }
         public bool Active { get; set; }

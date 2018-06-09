@@ -42,6 +42,8 @@ namespace Mercs.Tactical.States
         {
             state.unit_in_hand = null;
             SwitchTo(TacticalState.DeploySelectUnit);
+            TacticalUIController.Instance.HideSelectedUnitWindow();
+
         }
 
         //отменяем

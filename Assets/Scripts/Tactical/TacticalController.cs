@@ -35,11 +35,14 @@ namespace Mercs.Tactical
                 {
                     SelectionMark.SetParent(transform, false);
                     SelectionMark.gameObject.SetActive(false);
+                    TacticalUIController.Instance.HideSelectedUnitWindow();
                 }
                 else
                 {
                     SelectionMark.SetParent(selected.transform, false);
                     SelectionMark.gameObject.SetActive(true);
+                    if (value.Faction == GameController.Instance.PlayerFaction) 
+                        TacticalUIController.Instance.ShowSelectedUnitWindow(value);
                 }
             }
         }
@@ -131,7 +134,8 @@ namespace Mercs.Tactical
             {
                 info.PilotName = item.Pilot.name;
                 info.PilotHP.Init(item);
-           }
+            }
+            info.UnitHP.Build(item.Merc);
             info.Weight = item.Merc.Weight;
             info.Reserve = true;
             info.Position.position = new Vector2Int(-1, -1);
