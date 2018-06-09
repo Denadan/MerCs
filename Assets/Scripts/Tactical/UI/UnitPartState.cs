@@ -7,7 +7,9 @@ using UnityEngine.UI;
 
 namespace Mercs.Tactical.UI
 {
-    public class UnitPartState : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPartDamaged
+
+
+    public class UnitPartState : UnitPartStateBase
     {
         [SerializeField]
         private Text PartText;
@@ -27,21 +29,13 @@ namespace Mercs.Tactical.UI
         [SerializeField] private UnitPartStateSlider ArmorFSlider;
         [SerializeField] private UnitPartStateSlider ArmorBSlider;
 
-        private UnitStateWindow window;
-        private Parts part;
-        private UnitHp hp;
-        private bool has_structure;
 
- //       private string debug;
+        protected bool has_structure;
 
-        public void Init(UnitStateWindow window, Parts part, UnitHp hp)
+        public override void Init(UnitStateWindow window, Parts part, UnitHp hp)
         {
-            this.window = window;
-            this.part = part;
-            this.hp = hp;
 
-
-//            debug = part.ToString();
+            base.Init(window, part, hp);
 
             PartText.text = part.ToString();
 
@@ -56,7 +50,6 @@ namespace Mercs.Tactical.UI
             else
             {
                 var max = hp.MaxHp(part);
-                //debug += "\nmax:" + max.ToString(); 
                 has_structure = max.structure > 0;
                 if (has_structure)
                 {
@@ -81,22 +74,12 @@ namespace Mercs.Tactical.UI
                     ArmorBBar.SetActive(false);
                     ArmorFullSlider.MaxValue = max.armor;
                 }
-                PartDamaged(hp);
-  //              UnityEngine.Debug.Log(debug);
+                UpdateValues(hp);
             }
         }
 
-        public void OnPointerEnter(PointerEventData eventData)
-        {
-            window.ShowPartDetail(part);
-        }
 
-        public void OnPointerExit(PointerEventData eventData)
-        {
-            window.HidePartDetail();
-        }
-
-        public void PartDamaged(UnitHp hp)
+        protected  override void UpdateValues(UnitHp hp)
         {
             if (hp.PartDestroyed(part))
             {
@@ -126,11 +109,10 @@ namespace Mercs.Tactical.UI
                     StructureSlider.Value = current.structure;
                     gradient = StructureSlider.Gradient;
                 }
+                else if (current.has_back_armor)
+                    gradient = ArmorFSlider.Gradient;
                 else
-                    if (current.has_back_armor)
-                        gradient = ArmorFSlider.Gradient;
-                    else
-                        gradient = ArmorFullSlider.Gradient;
+                    gradient = ArmorFullSlider.Gradient;
 
                 if (gradient == 0)
                     PartStateBack.color = Color.black;
@@ -143,8 +125,7 @@ namespace Mercs.Tactical.UI
                 else if (gradient > 0.1f)
                     PartStateBack.color = Color.Lerp(Color.red, Color.yellow, (gradient - 0.1f) / 0.7f);
                 else
-                    PartStateBack.color = Color.Lerp(Color.black, Color.red, gradient/ 0.1f);
-
+                    PartStateBack.color = Color.Lerp(Color.black, Color.red, gradient / 0.1f);
             }
         }
     }

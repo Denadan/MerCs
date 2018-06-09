@@ -241,6 +241,7 @@ MonoBehaviour:
   Movement: {fileID: 114834039150910526}
   PilotHP: {fileID: 114682303501864208}
   UnitHP: {fileID: 114242414471348930}
+  Vision: 2
 --- !u!114 &114969418616604688
 MonoBehaviour:
   m_ObjectHideFlags: 1

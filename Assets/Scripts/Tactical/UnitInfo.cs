@@ -12,6 +12,7 @@ namespace Mercs.Tactical
         public MovementData Movement;
         public PilotHp PilotHP;
         public UnitHp UnitHP;
+        public Visibility Vision;
 
         public Faction Faction { get; set; }
         public bool Active { get; set; }
@@ -19,6 +20,7 @@ namespace Mercs.Tactical
         public string PilotName { get; set; }
         public int Weight { get; set; }
         public bool Selectable { get; set; }
+
 
 
         private void Start()

@@ -135,6 +135,8 @@ namespace Mercs.Tactical
                 info.PilotName = item.Pilot.name;
                 info.PilotHP.Init(item);
             }
+
+
             info.UnitHP.Build(item.Merc);
             info.Weight = item.Merc.Weight;
             info.Reserve = true;

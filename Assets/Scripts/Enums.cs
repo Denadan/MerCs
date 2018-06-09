@@ -26,7 +26,7 @@ namespace Mercs
 
     public enum Visibility
     {
-        Clear, SensorNear, SensorFar, None
+        None, Sensor, Visual, Scanned, Friendly
     }
 
     public enum MercClass
