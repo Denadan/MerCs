@@ -32,7 +32,7 @@ namespace Mercs.Tactical.UI
 
         protected bool has_structure;
 
-        public override void Init(UnitStateWindow window, Parts part, UnitHp hp)
+        public override void Init(IUnitStateWindow window, Parts part, UnitHp hp)
         {
 
             base.Init(window, part, hp);
@@ -103,29 +103,15 @@ namespace Mercs.Tactical.UI
                     ArmorFullSlider.Value = current.armor;
                 }
 
-                float gradient = 0;
                 if (has_structure)
                 {
                     StructureSlider.Value = current.structure;
-                    gradient = StructureSlider.Gradient;
+                    PartStateBack.color = CONST.GetColor(StructureSlider.Gradient, 1);
                 }
                 else if (current.has_back_armor)
-                    gradient = ArmorFSlider.Gradient;
+                    PartStateBack.color = CONST.GetColor(ArmorFSlider.Gradient, 1);
                 else
-                    gradient = ArmorFullSlider.Gradient;
-
-                if (gradient == 0)
-                    PartStateBack.color = Color.black;
-                else if (gradient >= 1)
-                    PartStateBack.color = Color.white;
-                else if (gradient > 0.9f)
-                    PartStateBack.color = Color.Lerp(Color.green, Color.white, (gradient - 0.9f) / 0.1f);
-                else if (gradient > 0.5f)
-                    PartStateBack.color = Color.Lerp(Color.yellow, Color.green, (gradient - 0.5f) / 0.4f);
-                else if (gradient > 0.1f)
-                    PartStateBack.color = Color.Lerp(Color.red, Color.yellow, (gradient - 0.1f) / 0.7f);
-                else
-                    PartStateBack.color = Color.Lerp(Color.black, Color.red, gradient / 0.1f);
+                    PartStateBack.color = CONST.GetColor(ArmorFullSlider.Gradient, 1);
             }
         }
     }

@@ -20,7 +20,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4614353106774778}
   - component: {fileID: 114291790252129412}
-  - component: {fileID: 114763752134746080}
   - component: {fileID: 114101135788229610}
   - component: {fileID: 114542518974869722}
   - component: {fileID: 114746455252689770}
@@ -231,18 +230,6 @@ MonoBehaviour:
   - {fileID: 21300026, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
   - {fileID: 21300028, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
   - {fileID: 21300030, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
-  Marks:
-  - {fileID: 1400822945053494, guid: fe9a4f559dc53904a84d89c927ce1fec, type: 2}
-  - {fileID: 1311984500102344, guid: 8a86ee1f1e9dccf4fa77396ddadaa27a, type: 2}
-  - {fileID: 1483227451488848, guid: 204555cb3ecde7a42abc895f91d079de, type: 2}
-  - {fileID: 1961363045240352, guid: f153b0007d6a2ec46b2bae2cd06efa4d, type: 2}
-  - {fileID: 1833592636058334, guid: b6e4fbb59c6b8c8439d54d31eec8e9b1, type: 2}
-  Arrows:
-  - {fileID: 1472305079678060, guid: 694203167cb409e4ebba5c5f82b73673, type: 2}
-  - {fileID: 1128639848356446, guid: 38f65a72a4f75084895010637d95f19b, type: 2}
-  - {fileID: 1212604831308122, guid: ad18e58befbabf14db04fa34b42cca2a, type: 2}
-  - {fileID: 1817076112548430, guid: 96979a9aa65274d42bf00004c7f5d093, type: 2}
-  - {fileID: 1875430672680726, guid: 9c26925847a37e144a9766f590ebbe81, type: 2}
 --- !u!114 &114542518974869722
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -270,6 +257,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c5d4f6a49be40040a1df42994ba4cbc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MoveColor: {r: 0, g: 1, b: 0, a: 0.33}
+  RunColor: {r: 1, g: 1, b: 0, a: 0.33}
+  JumpColor: {r: 1, g: 0.5, b: 0, a: 0.33}
   White25: {fileID: 2800000, guid: c60dda5127058e84099ccbe67088737d, type: 3}
   White50: {fileID: 2800000, guid: 18084449e377e8141b7c4bc8e45f50c3, type: 3}
   White100: {fileID: 2800000, guid: 0f74296b534eed94aaa0d6498d668cd2, type: 3}

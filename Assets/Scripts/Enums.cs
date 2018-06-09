@@ -251,5 +251,31 @@ namespace Mercs
             return neighbour[(int)dir + 1];
         }
 
+        /// <summary>
+        /// возвращает цвет по количеству хп
+        /// </summary>
+        /// <param name="cur"></param>
+        /// <param name="max"></param>
+        /// <returns></returns>
+        public static Color GetColor(float cur, float max)
+        {
+            if (max == 0 || cur == 0)
+                return Color.black;
+
+            switch (cur / max)
+            {
+                case float i when i >= 0.95f:
+                    return Color.white;
+                case float i when i >= 0.8f:
+                    return Color.green;
+                case float i when i >= 0.5f:
+                    return Color.yellow;
+                case float i when i > 0.25f:
+                    return new Color(1f, 0.33f, 0);
+                default:
+                    return Color.red;
+            }
+        }
+
     }
 }

@@ -45,11 +45,6 @@ namespace Mercs.Tactical
 
         private Dictionary<Dir, Sprite[]> borders = new Dictionary<Dir, Sprite[]>();
 
-        [SerializeField]
-        private GameObject[] Marks;
-        [SerializeField]
-        private GameObject[] Arrows;
-
         public override Vector3 CellToWorld(Vector3Int tile_coord)
         {
             float x = SizeX * tile_coord.x;
@@ -99,18 +94,7 @@ namespace Mercs.Tactical
                     info.Map = map;
                     info.Info = map[i, j];
 
-                    //var digit = Instantiate(Marks[map[i, j].PathTileCost - 1], pos, Quaternion.identity, PathCostParent);
-                    //digit.name = $"mark_{i}_{j}";
-                    //foreach (var pathInfo in map[i,j].PathList)
-                    //{
-                    //    var s_pos = CellToWorld(map[i, j].CellCoord);
-                    //    var t_pos = CellToWorld(pathInfo.Value.Neighbour.CellCoord);
-
-                    //    var arrow = Instantiate(Arrows[pathInfo.Value.Cost - 1], Vector3.Lerp(s_pos, t_pos, 0.35f),
-                    //        Quaternion.Euler(0,0,CONST.GetAngleV(pathInfo.Key)), LinksCostParent);
-                    //    arrow.name = $"arrow_{i}_{j}_{pathInfo.Key}";
-                    //}
-
+                  
                     foreach (var dir in CONST.AllDirs)
                     {
                         var shift = CONST.GetDirShift(i, j, dir);

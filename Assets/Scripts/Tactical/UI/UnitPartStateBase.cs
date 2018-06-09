@@ -6,13 +6,13 @@ namespace Mercs.Tactical.UI
 {
     public abstract class UnitPartStateBase : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPartDamaged
     {
-        private UnitStateWindow window;
+        private IUnitStateWindow window;
         protected Parts part;
         protected UnitHp hp;
 
         protected abstract void UpdateValues(UnitHp hp);
 
-        public virtual void Init(UnitStateWindow window, Parts part, UnitHp hp)
+        public virtual void Init(IUnitStateWindow window, Parts part, UnitHp hp)
         {
             this.window = window;
             this.part = part;

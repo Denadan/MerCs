@@ -1,72 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Mercs.Tactical.Events;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Mercs.Tactical.UI
 {
-    public class UnitStateWindow : MonoBehaviour, IUnitDamaged
+    public partial class UnitStateWindow : MonoBehaviour, IUnitDamaged, IUnitStateWindow
     {
         [SerializeField] private GameObject PartPrefab;
         [SerializeField] private Transform PartsHolder;
         [SerializeField] private Text CaptionText;
-
-        [Serializable]
-        public class SliderInfo
-        {
-            [SerializeField]
-            private GameObject Bar;
-            [SerializeField]
-            private UnitPartStateSlider slider;
-            [SerializeField]
-            private Text text;
-
-            private float max = 0, current = 0;
-
-            public void Show()
-            {
-                Bar.SetActive(true);
-                text.gameObject.SetActive(true);
-            }
-
-            public void Hide()
-            {
-                Bar.SetActive(false);
-                text.gameObject.SetActive(false);
-            }
-
-            public float Max
-            {
-                set
-                {
-                    max = value;
-                    if (max == 0)
-                    {
-                        Bar.SetActive(false);
-                        text.text = "NONE";
-                    }
-                    else
-                    {
-                        slider.MaxValue = max;
-                        text.text = $"{current:F1}/{max:F1}";
-                    }
-                }
-            }
-
-            public float Hp
-            {
-                set
-                {
-                    slider.Value = current = value;
-                    if (max == 0)
-                        text.text = "NONE";
-                    else
-                        text.text = $"{current:F1}/{max:F1}";
-                }
-            }
-
-        }
 
         [SerializeField] private SliderInfo Shield;
         [SerializeField] private SliderInfo Armor;
@@ -89,22 +32,43 @@ namespace Mercs.Tactical.UI
 
         public void SetUnit(UnitInfo info)
         {
+
+            if (this.info != null)
+                Events.EventHandler.UnsubscribeUnitHp(info, this.gameObject);
+
+
+
             parts.Clear();
-            CaptionText.text = info.PilotName;
-            this.info = info;
             foreach (Transform child in PartsHolder)
                 Destroy(child.gameObject);
+
+            if (info == null)
+            {
+                Armor.Hide();
+                Shield.Hide();
+                ArmorB.Hide();
+                ArmorF.Hide();
+                Structure.Hide();
+
+                return;
+            }
+
+            Events.EventHandler.SubscribeUnitHp(info, this.gameObject);
+
+            CaptionText.text = info.PilotName;
+            this.info = info;
             foreach (var part in info.UnitHP.AllParts)
             {
                 var p = Instantiate(PartPrefab, PartsHolder, false).GetComponent<UnitPartStateBase>();
                 p.Init(this, part, info.UnitHP);
                 parts.Add(part, p);
             }
+
             foreach (Transform child in StringContainer)
                 Destroy(child.gameObject);
             if (info.Movement.MoveMp > 0)
             {
-                var item = Instantiate(StringPrefab, StringContainer,false).GetComponent<IconText>();
+                var item = Instantiate(StringPrefab, StringContainer, false).GetComponent<IconText>();
                 item.Icon = MoveSprite;
                 item.Text = info.Movement.MoveMp.ToString();
             }
@@ -129,6 +93,11 @@ namespace Mercs.Tactical.UI
         private void OnDisable()
         {
             selected = Parts.None;
+            if (info != null)
+            {
+                Events.EventHandler.UnsubscribeUnitHp(info, this.gameObject);
+                info = null;
+            }
         }
 
         public void ShowPartDetail(Parts part)

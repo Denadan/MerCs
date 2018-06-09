@@ -176,5 +176,45 @@ namespace Mercs.Tactical.Events
                 return;
             Instance.UnitHPs.Remove(unit);
         }
+
+        public static void SubscribePart(UnitInfo unit, Parts part, GameObject go)
+        {
+            if (Instance == null)
+                return;
+            if (Instance.UnitHPs.TryGetValue(unit, out var hp))
+            {
+                hp.Subscribe(go, part);
+            }
+        }
+
+        public static void UnsubscribePart(UnitInfo unit, Parts part, GameObject go)
+        {
+            if (Instance == null)
+                return;
+            if (Instance.UnitHPs.TryGetValue(unit, out var hp))
+            {
+                hp.UnSubscribe(go, part);
+            }
+        }
+
+        public static void SubscribeUnitHp(UnitInfo unit, GameObject go)
+        {
+            if (Instance == null)
+                return;
+            if (Instance.UnitHPs.TryGetValue(unit, out var hp))
+            {
+                hp.Subscribe(go);
+            }
+        }
+
+        public static void UnsubscribeUnitHp(UnitInfo unit, GameObject go)
+        {
+            if (Instance == null)
+                return;
+            if (Instance.UnitHPs.TryGetValue(unit, out var hp))
+            {
+                hp.UnSubscribe(go);
+            }
+        }
     }
 }
