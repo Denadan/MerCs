@@ -42,7 +42,7 @@ namespace Mercs.Tactical
                 {
                     SelectionMark.SetParent(selected.transform, false);
                     SelectionMark.gameObject.SetActive(true);
-                    if (value.Faction == GameController.Instance.PlayerFaction) 
+                    if (value.Faction == GameController.Instance.PlayerFaction)
                         TacticalUIController.Instance.ShowSelectedUnitWindow(value);
                 }
             }
@@ -76,7 +76,7 @@ namespace Mercs.Tactical
         private Transform SelectionMark;
         [SerializeField]
         private Transform TargetMark;
-        
+
         public GameObject MapPrefab;
         [SerializeField]
         private GameObject PlayerMechPrefab;
@@ -95,7 +95,7 @@ namespace Mercs.Tactical
             Path = map_obj.GetComponent<PathMap>();
 
             Units.Clear();
-            foreach(var item in GameController.Instance.Mechs)
+            foreach (var item in GameController.Instance.Mechs)
             {
                 UnitInfo info = CreateUnit(item, GameController.Instance.PlayerFaction);
 
@@ -106,16 +106,16 @@ namespace Mercs.Tactical
                           where unit.Faction == GameController.Instance.PlayerFaction
                           select unit;
 
-            EnemyUnits =  from unit in Units
-                          where unit.Faction == GameController.Instance.EnemyFaction
-                          select unit;
+            EnemyUnits = from unit in Units
+                         where unit.Faction == GameController.Instance.EnemyFaction
+                         select unit;
 
         }
 
         private UnitInfo CreateUnit(StartMechInfo item, Faction faction)
         {
             GameObject unit;
-            if(faction == GameController.Instance.PlayerFaction)
+            if (faction == GameController.Instance.PlayerFaction)
                 unit = Instantiate(PlayerMechPrefab, Grid.UnitsParent, false);
             else
                 unit = Instantiate(EnemyMechPrefab, Grid.UnitsParent, false);
@@ -148,29 +148,43 @@ namespace Mercs.Tactical
             info.Movement.RunMP = item.Merc.RunSpeed;
             info.Movement.Initiative = item.Merc.Initiative;
 
-            if(item.Pilot == null)
-                info.Buffs.Add(new BuffDescriptor {Type = BuffType.InitiativeBonus, Value = -1, TAG = "No Pilot", MinVision = Visibility.Scanned});
-            else if(item.Pilot.InitiativeBonus > 0)
-                info.Buffs.Add(new BuffDescriptor { Type = BuffType.InitiativeBonus, Value = item.Pilot.InitiativeBonus, TAG = "Master Pilot", MinVision = Visibility.Scanned });
-            
+            if (item.Pilot == null)
+                info.Buffs.Add(new BuffDescriptor
+                {
+                    Type = BuffType.InitiativeBonus,
+                    Value = -1,
+                    TAG = "No Pilot",
+                    MinVision = Visibility.Scanned,
+                    ToolTip = "Initiative {0}"
+                });
+            else if (item.Pilot.InitiativeBonus > 0)
+                info.Buffs.Add(new BuffDescriptor
+                {
+                    Type = BuffType.InitiativeBonus,
+                    Value = item.Pilot.InitiativeBonus,
+                    TAG = "Master Pilot",
+                    MinVision = Visibility.Scanned,
+                    ToolTip = "Initiative {0}"
+                });
+
 
             info.gameObject.SetActive(false);
             return info;
         }
 
-       
+
         public void HighlightUnit(UnitInfo info)
         {
-            if(SelectedUnit != info)
+            if (SelectedUnit != info)
             {
                 TargetMark.gameObject.SetActive(true);
-                TargetMark.SetParent(info.transform,false);
+                TargetMark.SetParent(info.transform, false);
             }
         }
 
         public void HideHighlatedUnit(UnitInfo info)
         {
-            TargetMark.SetParent(this.transform,false);
+            TargetMark.SetParent(this.transform, false);
             TargetMark.gameObject.SetActive(false);
         }
 
@@ -214,7 +228,7 @@ namespace Mercs.Tactical
             deploy_zone.x = Map.SizeX / 4;
             deploy_zone.y = Map.SizeY - 2;
 
-            foreach(var item in GameController.Instance.EnemyMechs)
+            foreach (var item in GameController.Instance.EnemyMechs)
             {
                 var unit = CreateUnit(item, GameController.Instance.EnemyFaction);
                 unit.gameObject.SetActive(true);

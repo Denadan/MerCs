@@ -172,7 +172,7 @@ namespace Mercs.Tactical
         public void CreatePathMap()
         {
             map = GetComponent<Map>();
-            dirs = CONST.AllDirs;
+            dirs = DirHelper.AllDirs;
             nodes = new pathmap_node[map.SizeX, map.SizeY];
 
             //получаем стоимость перехода для каждой точки пути
@@ -183,7 +183,7 @@ namespace Mercs.Tactical
                     if (tile == null)
                         throw new InvalidOperationException($"Не могу построить карту путей - пустые ячейка по координатам ({i}, {j}) ");
                     nodes[i, j] = new pathmap_node()
-                    { Cost = CONST.MoveCose[tile.Feature] };
+                    { Cost = CONST.MoveCost[tile.Feature] };
                 }
             //начинаем строить соединения
             for (int i = 0; i < map.SizeX; i++)
@@ -195,7 +195,7 @@ namespace Mercs.Tactical
                     foreach (var dir in dirs)
                     {
                         //находим соседа
-                        var shift = CONST.GetDirShift(i, j, dir);
+                        var shift = dir.GetDirShift(i, j);
                         var neighbour = map[i + shift.x, j + shift.y];
                         //соседа нет - пропускаем
                         if (neighbour == null)
@@ -287,15 +287,15 @@ namespace Mercs.Tactical
                 //находим пути для всех направлений точки
                 var dict = list.ToDictionary(i => i.Key, i => i.ToList());
                 foreach (var node in MoveList)
-                    foreach (var dir in CONST.AllDirs)
+                    foreach (var dir in DirHelper.AllDirs)
                     {
                         if (token.IsCancellationRequested) return;
 
-                        var dir_l1 = CONST.TurnLeft(dir);
-                        var dir_r1 = CONST.TurnRight(dir);
-                        var dir_l2 = CONST.TurnLeft(dir_l1);
-                        var dir_r2 = CONST.TurnRight(dir_r1);
-                        var dir_i = CONST.Inverse(dir);
+                        var dir_l1 = dir.TurnLeft();
+                        var dir_r1 = dir.TurnRight();
+                        var dir_l2 = dir_l1.TurnLeft();
+                        var dir_r2 = dir_r1.TurnRight();
+                        var dir_i = dir.Inverse();
 
                         var path = dict[node.coord].Find(i =>
                             i.facing == dir
@@ -339,12 +339,12 @@ namespace Mercs.Tactical
                 var dict = list.ToDictionary(i => i.Key, i => i.ToList());
 
                 foreach (var node in RunList)
-                    foreach (var dir in CONST.AllDirs)
+                    foreach (var dir in DirHelper.AllDirs)
                     {
                         if (token.IsCancellationRequested) return;
 
-                        var dir_l = CONST.TurnLeft(dir);
-                        var dir_r = CONST.TurnRight(dir);
+                        var dir_l = dir.TurnLeft();
+                        var dir_r = dir.TurnRight();
 
                         var path = dict[node.coord].Find(i =>
                           i.facing == dir ||
@@ -373,11 +373,11 @@ namespace Mercs.Tactical
 
 
                 // для всех секторов
-                foreach (var f_dir in CONST.AllDirs)
+                foreach (var f_dir in DirHelper.AllDirs)
                 {
                     if (token.IsCancellationRequested) return;
                     Vector2Int start = UnitPos;
-                    var l_dir = CONST.TurnLeft(CONST.TurnLeft(f_dir));
+                    var l_dir = f_dir.TurnLeft().TurnLeft();
 
                     // на глубину прыжка
                     for (int i = 1; i < Unit.Movement.JumpMP * 3 / 2 + 1; i++)
@@ -402,7 +402,7 @@ namespace Mercs.Tactical
                                         prev = start_node
                                     }
                                 };
-                                foreach (var dir in CONST.AllDirs)
+                                foreach (var dir in DirHelper.AllDirs)
                                     path.other_path.Add(dir, new path_node{ coord = point, facing = dir, mpleft = 0, prev = start_node});
                                 JumpList.Add(path);
                             }
@@ -456,9 +456,9 @@ namespace Mercs.Tactical
             //продолжаем поиск вперед
             step(source.facing, 0);
             //продолжаем поиск влево
-            step(CONST.TurnLeft(source.facing), 1);
+            step(source.facing.TurnLeft(), 1);
             //продолжаем поиск вправо
-            step(CONST.TurnRight(source.facing), 1);
+            step(source.facing.TurnRight(), 1);
             return list;
         }
 
@@ -491,7 +491,7 @@ namespace Mercs.Tactical
                 if (token.IsCancellationRequested) return;
 
                 //если есть переход по указанному направлению
-                if (this[source.coord].Links.TryGetValue(CONST.Inverse(facing), out var link)
+                if (this[source.coord].Links.TryGetValue(facing.Inverse(), out var link)
                 // и хватает очков движения
                     && link.cost + bonus <= source.mpleft)
                     //переходим
@@ -510,17 +510,17 @@ namespace Mercs.Tactical
             //продолжаем поиск вперед
             step(source.facing, 0);
             //продолжаем поиск влево
-            var dl1 = CONST.TurnLeft(source.facing);
-            var dl2 = CONST.TurnLeft(dl1);
+            var dl1 = source.facing.TurnLeft();
+            var dl2 = dl1.TurnLeft();
             step(dl1, 1);
             step(dl2, 2);
             //продолжаем поиск вперед
-            var dr1 = CONST.TurnRight(source.facing);
-            var dr2 = CONST.TurnRight(dr1);
+            var dr1 = source.facing.TurnRight();
+            var dr2 = dr1.TurnRight();
             step(dr1, 1);
             step(dr2, 2);
             //разворот
-            step(CONST.Inverse(source.facing), 3);
+            step(source.facing.Inverse(), 3);
 
             //движения назад
             step_back(source.facing, 0);

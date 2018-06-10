@@ -15,6 +15,8 @@ namespace Mercs.Tactical.Buffs
             EndNextTurn,
         }
 
+        private string tooltip;
+
         public string TAG = "";
         public BuffType Type = BuffType.None;
         public float Value = 0;
@@ -22,5 +24,11 @@ namespace Mercs.Tactical.Buffs
         public Visibility MinVision = Visibility.None;
         public bool Stackable = true;
 
+        public string ToolTip
+        {
+            set => tooltip = value;
+            get => string.Format(tooltip, Value);
+
+        }
     }
 }

@@ -25,7 +25,7 @@ namespace Mercs.Tactical.States
             dest.z = origin.z;
 
             //считаем новый поворот
-            var new_facing = CONST.GetRotation(origin, dest);
+            var new_facing = DirHelper.GetRotation(origin, dest);
 
             //если поворот доступен и изменился
             if (Allowed(new_facing) && original.Facing != new_facing)
@@ -57,13 +57,13 @@ namespace Mercs.Tactical.States
 
             //направления оверлея
             Dir Main = original.Facing;
-            Dir Left = CONST.TurnLeft(Main);
-            Dir Right = CONST.TurnRight(Main);
+            Dir Left = Main.TurnLeft();
+            Dir Right = Main.TurnRight();
             //начальная точка
             var coord_main = original.position;
             //направления по которым будем двигатся при рисовании
-            Dir left_back = CONST.Inverse(Right);
-            Dir right_back = CONST.Inverse(Left);
+            Dir left_back = Right.Inverse();
+            Dir right_back = Left.Inverse();
 
             // рисуем тайл под юнитом
             TacticalController.Instance.Overlay.ShowTile(coord_main, Color.green, MapOverlay.Sector2(Main));
@@ -72,7 +72,7 @@ namespace Mercs.Tactical.States
             for (int n = 1; n <= 25; n++)
             {
                 // сдвигаемся вдоль главного направления вперед
-                coord_main += CONST.GetDirShift(coord_main, Main);
+                coord_main += Main.GetDirShift(coord_main);
                 //левая метка
                 var c_left = coord_main;
                 //правая метка
@@ -85,8 +85,8 @@ namespace Mercs.Tactical.States
                 //уходим в стороны от неё
                 for (int i = 0; i < n; i++)
                 {
-                    c_left += CONST.GetDirShift(c_left, left_back);
-                    c_right += CONST.GetDirShift(c_right, right_back);
+                    c_left += left_back.GetDirShift(c_left);
+                    c_right += right_back.GetDirShift(c_right);
 
                     //рисуем влево
                     if (TacticalController.Instance.Map.OnMap(c_left))

@@ -10,7 +10,7 @@ namespace Mercs.Tactical
         public void SetFacing(Dir dir)
         {
             Facing = dir;
-            this.transform.rotation = Quaternion.Euler(0,0,CONST.GetAngleV(dir));
+            this.transform.rotation = Quaternion.Euler(0,0,dir.GetAngleV());
         }
     }
 }

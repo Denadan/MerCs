@@ -95,9 +95,9 @@ namespace Mercs.Tactical
                     info.Info = map[i, j];
 
                   
-                    foreach (var dir in CONST.AllDirs)
+                    foreach (var dir in DirHelper.AllDirs)
                     {
-                        var shift = CONST.GetDirShift(i, j, dir);
+                        var shift = dir.GetDirShift(i, j);
                         var neigbour = map[i + shift.x, j + shift.y];
                         if (neigbour == null)
                             continue;
