@@ -64,13 +64,14 @@ GameObject:
   - component: {fileID: 114285813899632404}
   - component: {fileID: 114585662307577290}
   - component: {fileID: 114898140824414448}
+  - component: {fileID: 114677878320546172}
   m_Layer: 9
   m_Name: PlayerMech
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &4419571389392240
 Transform:
   m_ObjectHideFlags: 1
@@ -78,7 +79,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1775771083925676}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10, y: 10, z: 0}
+  m_LocalPosition: {x: 10.512, y: 9.167, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224384552749388002}
@@ -100,6 +101,7 @@ MonoBehaviour:
   Movement: {fileID: 114233372524924754}
   PilotHP: {fileID: 114585662307577290}
   UnitHP: {fileID: 114898140824414448}
+  Buffs: {fileID: 114677878320546172}
   Vision: 4
 --- !u!114 &114233372524924754
 MonoBehaviour:
@@ -112,10 +114,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c02e297ee16437847bf8f6866ce14e9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveMp: 5
-  RunMP: 8
-  JumpMP: 4
-  Initiative: 0
 --- !u!114 &114285813899632404
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -207,6 +205,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   position: {x: 0, y: 0}
   Facing: 0
+--- !u!114 &114677878320546172
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1775771083925676}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6415f3027cc83e84eaed763cf1652f6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114766920572233782
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -313,7 +322,7 @@ SpriteRenderer:
   m_SortingLayerID: -1071795885
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 04e33e58c2a6b124ab3fe7ed231c624b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 40b3da343511ac942ac572b0e4a68d4c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -321,7 +330,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 0.85714287}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
 --- !u!222 &222897102889812940
 CanvasRenderer:

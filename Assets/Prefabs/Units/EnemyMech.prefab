@@ -27,13 +27,14 @@ GameObject:
   - component: {fileID: 114478176827078282}
   - component: {fileID: 114682303501864208}
   - component: {fileID: 114242414471348930}
+  - component: {fileID: 114521380483881922}
   m_Layer: 9
   m_Name: EnemyMech
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1290477964530028
 GameObject:
   m_ObjectHideFlags: 0
@@ -175,6 +176,17 @@ MonoBehaviour:
   ColorR: {r: 0, g: 0, b: 0, a: 0}
   ColorG: {r: 0, g: 0, b: 0, a: 0}
   ColorB: {r: 0, g: 0, b: 0, a: 0}
+--- !u!114 &114521380483881922
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1279458162175290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6415f3027cc83e84eaed763cf1652f6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114682303501864208
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -210,10 +222,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c02e297ee16437847bf8f6866ce14e9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MoveMp: 5
-  RunMP: 8
-  JumpMP: 4
-  Initiative: 0
 --- !u!114 &114882482531390628
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -241,6 +249,7 @@ MonoBehaviour:
   Movement: {fileID: 114834039150910526}
   PilotHP: {fileID: 114682303501864208}
   UnitHP: {fileID: 114242414471348930}
+  Buffs: {fileID: 114521380483881922}
   Vision: 2
 --- !u!114 &114969418616604688
 MonoBehaviour:
@@ -313,7 +322,7 @@ SpriteRenderer:
   m_SortingLayerID: -1071795885
   m_SortingLayer: 4
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 04e33e58c2a6b124ab3fe7ed231c624b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 4d43b974dd6b0a348bf946d0f7cdada1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -321,7 +330,7 @@ SpriteRenderer:
   m_Size: {x: 1, y: 0.85714287}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 0
+  m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
 --- !u!222 &222991881556934384
 CanvasRenderer:

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using Mercs.Sprites;
+using Mercs.Tactical.Buffs;
 using UnityEngine;
 
 namespace Mercs.Tactical
@@ -12,7 +13,10 @@ namespace Mercs.Tactical
         public MovementData Movement;
         public PilotHp PilotHP;
         public UnitHp UnitHP;
+        public BuffList Buffs;
+
         public Visibility Vision;
+        
 
         public Faction Faction { get; set; }
         public bool Active { get; set; }
@@ -21,11 +25,10 @@ namespace Mercs.Tactical
         public int Weight { get; set; }
         public bool Selectable { get; set; }
 
-
-
         private void Start()
         {
             var camo = GetComponent<CamoSprite>();
+            UnityEngine.Debug.Log($"{PilotName}: {camo}");
             camo.CamoTemplate = Faction.CamoTemplate;
             camo.ColorB = Faction.CamoColorB;
             camo.ColorR = Faction.CamoColorR;

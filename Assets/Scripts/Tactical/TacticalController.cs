@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using Mercs.Tactical.Buffs;
 using Mercs.Tactical.States;
 using Mercs.Tactical.UI;
 using Tools;
@@ -121,6 +122,7 @@ namespace Mercs.Tactical
 
             unit.GetComponent<SpriteRenderer>().sprite = item.Merc.Sprite;
             var info = unit.GetComponent<UnitInfo>();
+
             info.Faction = faction;
 
             info.Active = false;
@@ -144,7 +146,14 @@ namespace Mercs.Tactical
             info.Movement.MoveMp = item.Merc.MoveSpeed;
             info.Movement.JumpMP = item.Merc.Jumps;
             info.Movement.RunMP = item.Merc.RunSpeed;
-            info.Movement.Initiative = item.Merc.Initiative - (item.Pilot == null ? -1 : item.Pilot.InitiativeBonus);
+            info.Movement.Initiative = item.Merc.Initiative;
+
+            if(item.Pilot == null)
+                info.Buffs.Add(new BuffDescriptor {Type = BuffType.InitiativeBonus, Value = -1, TAG = "No Pilot", MinVision = Visibility.Scanned});
+            else if(item.Pilot.InitiativeBonus > 0)
+                info.Buffs.Add(new BuffDescriptor { Type = BuffType.InitiativeBonus, Value = item.Pilot.InitiativeBonus, TAG = "Master Pilot", MinVision = Visibility.Scanned });
+            
+
             info.gameObject.SetActive(false);
             return info;
         }

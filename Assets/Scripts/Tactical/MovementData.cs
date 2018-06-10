@@ -1,54 +1,47 @@
-﻿using UnityEngine;
+﻿using Mercs.Tactical.Buffs;
+using UnityEngine;
 
 namespace Mercs.Tactical
 {
     public class MovementData : MonoBehaviour
     {
-        public int MoveMp;
-        public int RunMP;
-        public int JumpMP;
-        public int Initiative;
+        private int move, run, jump;
+        private int initiative;
 
-        public int CurrentMP { get; private set; }
-        public bool Runnig { get; private set; }
-
-
-        private bool moved;
-        public void SetRun()
+        public int MoveMp
         {
-            if (moved)
-                return;
-            Runnig = true;
-            CurrentMP = RunMP;
+            get => move;
+            set => move = value;
+        }
+        public int RunMP
+        {
+            get => run;
+            set => run = value;
         }
 
-        public void SetMove()
+        public int JumpMP
         {
-            if (moved)
-                return;
-            Runnig = false;
-            CurrentMP = MoveMp;
+            get => jump;
+            set => jump = value;
+        }
+
+        public int Initiative
+        {
+            get => initiative - (int)unit.Buffs.SumBuffs(BuffType.InitiativeBonus);
+            set => initiative = value;
+        }
+
+        private UnitInfo unit;
+
+        private void Start()
+        {
+            unit = GetComponent<UnitInfo>();
         }
 
         public void NewTurn()
         {
-            moved = false;
-            CurrentMP = MoveMp;
-            Runnig = false;
+            
         }
 
-        public void SpendMP(int count)
-        {
-            if(count != 0)
-            {
-                moved = true;
-                CurrentMP = CurrentMP < count ? 0 : CurrentMP - count;
-            }
-        }
-
-        public void Jump()
-        {
-            CurrentMP = 0;
-        }
     }
 }
