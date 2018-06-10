@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace Mercs.Tactical.States
 {
@@ -9,14 +10,24 @@ namespace Mercs.Tactical.States
     public abstract class SelectRotationState : TacticalStateHandler
     {
         /// <summary>
-        ///  позиция вращаемого юнита
-        /// </summary>
-        private CellPosition original;
-        /// <summary>
         /// точка в мире откуда вращать
         /// </summary>
         private Vector3 origin;
 
+        private Vector2Int origin_cell;
+        private Dir cur_facing;
+
+        public override void TileClick(Vector2Int coord, PointerEventData.InputButton button)
+        {
+            if(Cancelable && button == PointerEventData.InputButton.Right)
+                Cancel();
+        }
+
+        public override void UnitClick(UnitInfo unit, PointerEventData.InputButton button)
+        {
+            if (Cancelable && button == PointerEventData.InputButton.Right)
+                Cancel();
+        }
 
         public override void Update()
         {
@@ -28,24 +39,22 @@ namespace Mercs.Tactical.States
             var new_facing = DirHelper.GetRotation(origin, dest);
 
             //если поворот доступен и изменился
-            if (Allowed(new_facing) && original.Facing != new_facing)
+            if (Allowed(new_facing) && cur_facing != new_facing)
             {
                 //вращаем юнит
-                original.SetFacing(new_facing);
+                SetFacing(new_facing);
                 //рисуем подсветку
                 ShowFacing();
             }
 
             // левая кнопка - завершить
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonUp(0))
             {
-                Done();
+                Done(cur_facing);
             }
-            // правая - отменить
-            else if (Input.GetMouseButtonDown(1))
-            {
+
+            if (Cancelable && !EventSystem.current.IsPointerOverGameObject() && Input.GetMouseButtonDown(1))
                 Cancel();
-            }
         }
 
         /// <summary>
@@ -56,11 +65,11 @@ namespace Mercs.Tactical.States
             TacticalController.Instance.Overlay.HideAll();
 
             //направления оверлея
-            Dir Main = original.Facing;
+            Dir Main = cur_facing;
             Dir Left = Main.TurnLeft();
             Dir Right = Main.TurnRight();
             //начальная точка
-            var coord_main = original.position;
+            var coord_main = origin_cell;
             //направления по которым будем двигатся при рисовании
             Dir left_back = Right.Inverse();
             Dir right_back = Left.Inverse();
@@ -114,7 +123,7 @@ namespace Mercs.Tactical.States
         {
             Color c = Color.white;
 
-            c.a = Mathf.Clamp(1 - TacticalController.Instance.Map.Distance(original.position, coord) / 10, 0, 1);
+            c.a = Mathf.Clamp(1 - TacticalController.Instance.Map.Distance(origin_cell, coord) / 10, 0, 1);
 
             //c.a = TacticalController.Instance.Map.Distance(original.position, coord) < 10 ? 0.5f : 0;
 
@@ -127,8 +136,8 @@ namespace Mercs.Tactical.States
 
         public override void OnLoad()
         {
-            original = GetOrigin();
-            origin = TacticalController.Instance.Grid.CellToWorld(original.position);
+            (origin_cell, cur_facing) = GetOrigin();
+            origin = TacticalController.Instance.Grid.CellToWorld(origin_cell);
 
             ShowFacing();
         }
@@ -136,6 +145,11 @@ namespace Mercs.Tactical.States
         public override void OnUnload()
         {
             TacticalController.Instance.Overlay.HideAll();
+        }
+
+        protected virtual void SetFacing(Dir new_facing)
+        {
+            cur_facing = new_facing;
         }
 
         /// <summary>
@@ -148,14 +162,16 @@ namespace Mercs.Tactical.States
         /// получить точку откуда считать поворот
         /// </summary>
         /// <returns></returns>
-        public abstract CellPosition GetOrigin();
+        protected abstract (Vector2Int, Dir) GetOrigin();
         /// <summary>
         /// завершить поворот
         /// </summary>
-        public abstract void Done();
+        protected abstract void Done(Dir new_dir);
         /// <summary>
         /// отменить поворот
         /// </summary>
         protected abstract void Cancel();
+
+        protected abstract bool Cancelable { get; }
     }
 }

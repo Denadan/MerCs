@@ -7,9 +7,7 @@ namespace Mercs.Tactical.States
 
     public class SelectRotationMoveState : SelectRotationState
     {
-        private Vector3 old_position_world;
-        private Vector2Int old_position_cell;
-        private Dir old_facing;
+
         private MovementStateData data;
 
         public override TacticalState State => TacticalState.SelectRotation;
@@ -24,32 +22,12 @@ namespace Mercs.Tactical.States
             return data.target.AllowedDir.Contains(newFacing);
         }
 
-        public override CellPosition GetOrigin()
+        protected override (Vector2Int, Dir) GetOrigin()
         {
-            var pos = TacticalController.Instance.SelectedUnit.Position;
-
-            old_facing = pos.Facing;
-            old_position_cell = pos.position;
-            old_position_world = pos.gameObject.transform.position;
-
-            pos.position = data.target.coord;
-            pos.transform.position = TacticalController.Instance.Grid.CellToWorld(data.target.coord);
-            pos.SetFacing(data.target.fast_path.facing);
-
-            return pos;
+            return (data.target.coord, data.target.fast_path.facing);
         }
 
-        public override void OnUnload()
-        {
-            base.OnUnload();
-            var pos = TacticalController.Instance.SelectedUnit.Position;
-            pos.position = old_position_cell;
-            pos.transform.position = old_position_world;
-            pos.SetFacing(old_facing);
-
-        }
-
-        public override void Done()
+        protected override void Done(Dir new_facing)
         {
             TacticalUIController.Instance.MoveLine.gameObject.SetActive(false);
         }
@@ -70,7 +48,6 @@ namespace Mercs.Tactical.States
         protected override void ShowFacing()
         {
             base.ShowFacing();
-            data.dir = TacticalController.Instance.SelectedUnit.Position.Facing;
             data.path = get_path();
             var line = TacticalUIController.Instance.MoveLine;
             line.startColor = Color.red;
@@ -88,5 +65,12 @@ namespace Mercs.Tactical.States
 
             TacticalUIController.Instance.MoveLine.gameObject.SetActive(false);
         }
+
+        protected override bool Cancelable => true;
+        protected override void SetFacing(Dir new_facing)
+        {
+            data.dir = new_facing;
+             base.SetFacing(new_facing);
+       }
     }
 }

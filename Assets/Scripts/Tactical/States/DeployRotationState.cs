@@ -30,32 +30,29 @@ namespace Mercs.Tactical.States
         /// начальная точка - позиция юнита
         /// </summary>
         /// <returns></returns>
-        public override CellPosition GetOrigin()
+        protected override (Vector2Int, Dir) GetOrigin()
         {
-            return state.unit_in_hand.Position;
+            return (state.unit_in_hand.Position.position, state.unit_in_hand.Position.Facing);
         }
 
-        /// <summary>
-        /// устанавливаем
-        /// </summary>
-        public override void Done()
+        protected override void Done(Dir new_dir)
         {
             state.unit_in_hand = null;
             SwitchTo(TacticalState.DeploySelectUnit);
             TacticalUIController.Instance.HideSelectedUnitWindow();
-
         }
 
-        //отменяем
+        protected override void SetFacing(Dir new_facing)
+        {
+            base.SetFacing(new_facing);
+            state.unit_in_hand.Position.SetFacing(new_facing);
+        }
+
+
         protected override void Cancel()
         {
-            GameObject.Destroy(state.unit_in_hand.info.gameObject.GetComponent<PolygonCollider2D>());
-            state.unit_in_hand.info.Reserve = true;
-            state.unit_in_hand.button.Background.color = Color.yellow;
-            state.unit_in_hand.button.BottomText.text = "RESERVE";
-            state.unit_in_hand.renderer.sortingOrder = 1;
-            state.unit_in_hand.info.gameObject.SetActive(false);
-            SwitchTo(TacticalState.DeployPlaceUnit);
         }
+
+        protected override bool Cancelable => false;
     }
 }

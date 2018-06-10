@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Mercs.Debug;
+using UnityEngine;
 using UnityEngine.EventSystems;
 
 namespace Mercs.Tactical.States
@@ -46,11 +47,13 @@ namespace Mercs.Tactical.States
         {
             if (unit_under_cursor || coord.x < 0 || coord.y < 0 || !state.DeployZone.Contains(coord))
                 return;
-            if (button != PointerEventData.InputButton.Left)
+            if (button == PointerEventData.InputButton.Right)
+            {
+                Cancel();
                 return;
+            }
             if (state.units.Find(u => u.Position.position == coord) != null)
                 return;
-
 
             state.unit_in_hand.info.gameObject.AddComponent<PolygonCollider2D>();
             state.unit_in_hand.info.Reserve = false;
@@ -67,15 +70,20 @@ namespace Mercs.Tactical.States
 
         public override void Update()
         {
-            if (Input.GetMouseButtonDown(1))
+            if (Input.GetMouseButtonDown(1) && !EventSystem.current.IsPointerOverGameObject())
             {
-                state.unit_in_hand.info.gameObject.SetActive(false);
-                state.unit_in_hand.button.Background.color = Color.white;
-                state.unit_in_hand = null;
-                TacticalUIController.Instance.HideSelectedUnitWindow();
-                SwitchTo(TacticalState.DeploySelectUnit);
+                Cancel();
             }
 
+        }
+
+        private void Cancel()
+        {
+            state.unit_in_hand.info.gameObject.SetActive(false);
+            state.unit_in_hand.button.Background.color = Color.white;
+            state.unit_in_hand = null;
+            TacticalUIController.Instance.HideSelectedUnitWindow();
+            SwitchTo(TacticalState.DeploySelectUnit);
         }
     }
 }

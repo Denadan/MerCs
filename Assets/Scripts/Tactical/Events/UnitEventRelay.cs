@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 
 namespace Mercs.Tactical.Events
 {
-    public class UnitEventRelay : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
+    public class UnitEventRelay : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
     {
         public UnitInfo OriginalUnit;
 
@@ -15,7 +15,7 @@ namespace Mercs.Tactical.Events
                 UnityEngine.Debug.Log("Не найден объеккт для прикрепленного юнита, " + gameObject.name);
         }
 
-        public void OnPointerClick(PointerEventData eventData)
+        public void OnPointerDown(PointerEventData eventData)
         {
             EventHandler.UnitPointerClick(eventData, OriginalUnit);
         }

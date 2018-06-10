@@ -28,12 +28,13 @@ namespace Mercs.Tactical
         public int Initiative
         {
             get => initiative - (int)unit.Buffs.SumBuffs(BuffType.InitiativeBonus);
+
             set => initiative = value;
         }
 
         private UnitInfo unit;
 
-        private void Start()
+        private void Awake()
         {
             unit = GetComponent<UnitInfo>();
         }
