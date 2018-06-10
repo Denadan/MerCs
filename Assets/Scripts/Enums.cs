@@ -44,7 +44,6 @@ namespace Mercs
         Reserve,
         Done
     }
-
     /// <summary>
     /// Части юнитов
     /// </summary>
