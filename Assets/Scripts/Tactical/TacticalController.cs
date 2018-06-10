@@ -270,9 +270,10 @@ namespace Mercs.Tactical
         {
             var dir = data.dir;
             var path = data.path;
+            path[0].facing = dir;
             var runninig = data.Type == MovementStateData.MoveType.Run;
             int length = path.Count - 1;
-            var speed = runninig ? 0.3f : 0.5f;
+            var speed = runninig ? 0.4f : 0.6f;
             var total_time = speed * length;
             info.Position.position = data.target.coord;
             info.Position.Facing = data.dir;
@@ -299,6 +300,22 @@ namespace Mercs.Tactical
                 
                 yield return 0;
             }
+
+            //if (data.dir != path[0].facing)
+            //{
+            //    total_time = 0.5f;
+            //    start_time = Time.realtimeSinceStartup;
+            //    var angle_start = Quaternion.Euler(0, 0, path[0].facing.GetAngleV());
+            //    var angle_end = Quaternion.Euler(0, 0, data.dir.GetAngleV());
+
+            //    while (Time.realtimeSinceStartup < start_time + total_time)
+            //    {
+            //        var t = (Time.realtimeSinceStartup - start_time) / total_time;
+            //        info.transform.rotation = Quaternion.Lerp(angle_start, angle_end, t);
+
+            //        yield return 0;
+            //    }
+            //}
 
             info.transform.position = Grid.CellToWorld(path[0].coord);
             info.Position.SetFacing(dir);
