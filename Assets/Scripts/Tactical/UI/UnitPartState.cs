@@ -1,5 +1,6 @@
 ﻿#pragma warning disable 649
 
+using Denadan.UI;
 using Mercs.Tactical.Events;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -11,23 +12,15 @@ namespace Mercs.Tactical.UI
 
     public class UnitPartState : UnitPartStateBase
     {
-        [SerializeField]
-        private Text PartText;
-        [SerializeField]
-        private Image PartStateBack;
-        [SerializeField]
-        private GameObject StructureBar;
-        [SerializeField]
-        private GameObject ArmorFullBar;
-        [SerializeField]
-        private GameObject ArmorFBar;
-        [SerializeField]
-        private GameObject ArmorBBar;
+        [SerializeField]private Text PartText;
+        [SerializeField]private Image PartStateBack;
 
-        [SerializeField] private UnitPartStateSlider StructureSlider;
-        [SerializeField] private UnitPartStateSlider ArmorFullSlider;
-        [SerializeField] private UnitPartStateSlider ArmorFSlider;
-        [SerializeField] private UnitPartStateSlider ArmorBSlider;
+
+        [SerializeField] private BasicBackSlider StructureSlider;
+        [SerializeField] private BasicBackSlider ArmorFullSlider;
+        [SerializeField] private BasicBackSlider ArmorFSlider;
+        [SerializeField] private BasicSlider ArmorBSlider;
+
 
 
         protected bool has_structure;
@@ -42,10 +35,11 @@ namespace Mercs.Tactical.UI
             if (hp.PartDestroyed(part))
             {
                 PartStateBack.color = Color.black;
-                StructureBar.SetActive(false);
-                ArmorFullBar.SetActive(false);
-                ArmorFBar.SetActive(false);
-                ArmorBBar.SetActive(false);
+                StructureSlider.Hide();
+                ArmorFSlider.Hide();
+                ArmorBSlider.Hide();
+                ArmorFullSlider.Hide();
+
             }
             else
             {
@@ -53,25 +47,25 @@ namespace Mercs.Tactical.UI
                 has_structure = max.structure > 0;
                 if (has_structure)
                 {
-                    StructureBar.SetActive(true);
+                    StructureSlider.Show();
                     StructureSlider.MaxValue = max.structure;
                 }
                 else
-                    StructureBar.SetActive(false);
+                    StructureSlider.Hide();
 
                 if (max.has_back_armor)
                 {
-                    ArmorFullBar.SetActive(false);
-                    ArmorFBar.SetActive(true);
-                    ArmorBBar.SetActive(true);
+                    ArmorFullSlider.Hide();
+                    ArmorFSlider.Show();
+                    ArmorBSlider.Show();
                     ArmorBSlider.MaxValue = max.back_armor;
                     ArmorFSlider.MaxValue = max.armor;
                 }
                 else
                 {
-                    ArmorFullBar.SetActive(true);
-                    ArmorFBar.SetActive(false);
-                    ArmorBBar.SetActive(false);
+                    ArmorFullSlider.Show();
+                    ArmorFSlider.Hide();
+                    ArmorBSlider.Hide();
                     ArmorFullSlider.MaxValue = max.armor;
                 }
                 UpdateValues(hp);
@@ -84,10 +78,10 @@ namespace Mercs.Tactical.UI
             if (hp.PartDestroyed(part))
             {
                 PartStateBack.color = Color.black;
-                StructureBar.SetActive(false);
-                ArmorFullBar.SetActive(false);
-                ArmorFBar.SetActive(false);
-                ArmorBBar.SetActive(false);
+                StructureSlider.Hide();
+                ArmorFSlider.Hide();
+                ArmorBSlider.Hide();
+                ArmorFullSlider.Hide();
             }
             else
             {

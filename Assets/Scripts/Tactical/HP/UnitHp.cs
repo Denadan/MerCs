@@ -70,6 +70,10 @@ namespace Mercs.Tactical
 
         List<(Parts place, float w)> front, back, left, right;
 
+        public float MaxShield { get; private set; }
+        public float Shield { get; private set; }
+        public float ShieldRegen { get; set; }
+
         private void Start()
         {
             EventHandler.RegisterUnitHp(GetComponent<UnitInfo>(), this);
@@ -89,6 +93,9 @@ namespace Mercs.Tactical
             left = template.PartTable.Select(i => (i.Place, (float)i.Size[1])).ToList();
             right = template.PartTable.Select(i => (i.Place, (float)i.Size[2])).ToList();
             back = template.PartTable.Select(i => (i.Place, (float)i.Size[3])).ToList();
+            MaxShield = template.Shield;
+            Shield = template.Shield;
+            ShieldRegen = template.ShieldRegen;
 
             foreach (var p in list)
             {
@@ -97,6 +104,11 @@ namespace Mercs.Tactical
                 if (p.template.TransferTo != Parts.None)
                     p.part.transfer = parts[p.template.TransferTo];
             }
+        }
+
+        public void Regen(float value)
+        {
+            Shield = Mathf.Clamp(Shield + value, 0, MaxShield);
         }
 
         public float TotalArmor => parts.Sum(i => i.Value.current_hp.y + i.Value.current_hp.z);

@@ -18,6 +18,8 @@ MonoBehaviour:
   MoveSpeed: 7
   RunSpeed: 11
   Jumps: 6
+  Shield: 5
+  ShieldRegen: 1
   PartTable:
   - Place: 2
     Structure: 3

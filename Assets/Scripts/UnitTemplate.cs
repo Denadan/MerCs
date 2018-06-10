@@ -62,6 +62,8 @@ namespace Mercs
         public int Jumps;
 
         [Header("Parts")]
+        public float Shield;
+        public float ShieldRegen;
         public UnitPart[] PartTable;
 
 #if UNITY_EDITOR

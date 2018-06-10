@@ -8,17 +8,18 @@ namespace Mercs.Tactical.UI
 {
     public class UnitToolTipWindow: MonoBehaviour, IUnitDamaged, IUnitEventReceiver, IUnitStateWindow, IPointerDownHandler
     {
+
         [SerializeField] private GameObject VissiblePartPrefab;
         [SerializeField] private GameObject HiddenPartPrefab;
 
         [SerializeField] private Transform PartsHolder;
         [SerializeField] private Text CaptionText;
 
-        [SerializeField] private SliderInfo Shield;
-        [SerializeField] private SliderInfo Armor;
-        [SerializeField] private SliderInfo ArmorF;
-        [SerializeField] private SliderInfo ArmorB;
-        [SerializeField] private SliderInfo Structure;
+        [SerializeField] private ShieldSliderInfo Shield;
+        [SerializeField] private HpSliderInfo Armor;
+        [SerializeField] private HpSliderInfo ArmorF;
+        [SerializeField] private HpSliderInfo ArmorB;
+        [SerializeField] private HpSliderInfo Structure;
 
         [SerializeField] private Transform StringContainer;
         [SerializeField] private GameObject StringPrefab;
@@ -51,7 +52,14 @@ namespace Mercs.Tactical.UI
 
             foreach (Transform child in StringContainer)
                 Destroy(child.gameObject);
+
+            if(info.Vision == Visibility.Visual)
+                Shield.ShowHidden();
+            else
+                Shield.Show();
+
             UnitDamage(info.UnitHP);
+
         }
 
         public void ShowPartDetail(Parts part)
@@ -69,9 +77,8 @@ namespace Mercs.Tactical.UI
 
         public void UnitDamage(UnitHp hp)
         {
-            Shield.Show();
-            Shield.Max = 0;
-            Shield.Hp = 0;
+            Shield.MaxValue = hp.MaxShield;
+            Shield.Value = hp.Shield;
 
             if (selected == Parts.None)
             {
@@ -90,11 +97,11 @@ namespace Mercs.Tactical.UI
                     ArmorF.Hide();
                 }
 
-                Structure.Max = hp.MaxStructure;
-                Structure.Hp = hp.TotalStructure;
+                Structure.MaxValue = hp.MaxStructure;
+                Structure.Value = hp.TotalStructure;
 
-                Armor.Max = hp.MaxArmor;
-                Armor.Hp = hp.TotalArmor;
+                Armor.MaxValue = hp.MaxArmor;
+                Armor.Value = hp.TotalArmor;
             }
             else
             {
@@ -107,19 +114,17 @@ namespace Mercs.Tactical.UI
                     Armor.ShowHidden();
                     ArmorF.Hide();
                     ArmorB.Hide();
-                    Structure.Max = max.structure;
-                    Structure.Hp = current.structure;
 
-                    Armor.Max = max.has_back_armor ? max.armor + max.back_armor : max.armor;
-                    Structure.Max = max.structure;
+                    Armor.MaxValue = max.has_back_armor ? max.armor + max.back_armor : max.armor;
+                    Structure.MaxValue = max.structure;
 
-                    Armor.Hp = current.has_back_armor ? current.armor + current.back_armor : current.armor;
-                    Structure.Hp = current.structure;
+                    Armor.Value = current.has_back_armor ? current.armor + current.back_armor : current.armor;
+                    Structure.Value = current.structure;
                 }
                 else
                 {
-                    Structure.Max = max.structure;
-                    Structure.Hp = current.structure;
+                    Structure.MaxValue = max.structure;
+                    Structure.Value = current.structure;
 
                     if (max.has_back_armor)
                     {
@@ -127,19 +132,19 @@ namespace Mercs.Tactical.UI
                         ArmorB.Show();
                         Armor.Hide();
 
-                        ArmorF.Max = max.armor;
-                        ArmorF.Hp = current.armor;
+                        ArmorF.MaxValue = max.armor;
+                        ArmorF.Value = current.armor;
 
-                        ArmorB.Max = max.back_armor;
-                        ArmorB.Hp = current.back_armor;
+                        ArmorB.MaxValue = max.back_armor;
+                        ArmorB.Value = current.back_armor;
                     }
                     else
                     {
                         ArmorF.Hide();
                         ArmorB.Hide();
                         Armor.Show();
-                        Armor.Max = max.armor;
-                        Armor.Hp = current.armor;
+                        Armor.MaxValue = max.armor;
+                        Armor.Value = current.armor;
                     }
                 }
             }
