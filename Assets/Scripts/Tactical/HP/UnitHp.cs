@@ -47,9 +47,9 @@ namespace Mercs.Tactical
                     template.Armor,
                     template.HasBackArmor ? template.BackArmor : 0);
 
-                current_hp.x *= UnityEngine.Random.Range(0f, 1f);
-                current_hp.y *= UnityEngine.Random.Range(0f, 1f);
-                current_hp.z *= UnityEngine.Random.Range(0f, 1f);
+                //current_hp.x *= UnityEngine.Random.Range(0f, 1f);
+                //current_hp.y *= UnityEngine.Random.Range(0f, 1f);
+                //current_hp.z *= UnityEngine.Random.Range(0f, 1f);
             }
 
             private List<GameObject> subscribers = new List<GameObject>();

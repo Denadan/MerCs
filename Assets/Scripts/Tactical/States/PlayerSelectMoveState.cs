@@ -16,6 +16,7 @@ namespace Mercs.Tactical.States
         public override void OnLoad()
         {
             base.OnLoad();
+            data.Type = MovementStateData.MoveType.Move;
             TacticalUIController.Instance.HighlightActionBarButton(ActionButton.Move);
         }
 

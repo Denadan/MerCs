@@ -7,6 +7,8 @@ namespace Mercs.Tactical.States
     /// </summary>
     public class MovementStateData
     {
+        public enum MoveType { Move, Run, Jump }
+        
         /// <summary>
         /// целевой тайл
         /// </summary>
@@ -19,5 +21,7 @@ namespace Mercs.Tactical.States
         /// нужное направление по окончании движения
         /// </summary>
         public Dir dir { get; set; }
+
+        public MoveType Type;
     }
 }

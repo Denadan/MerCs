@@ -21,6 +21,7 @@
         SelectJump = 42,
         SelectRotation = 43,
         ConfirmGuard = 44,
-        PlayerEndTurn = 45
+        PlayerEndTurn = 45,
+        WaitMovementComplete = 46,
     }
 }

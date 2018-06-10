@@ -48,7 +48,6 @@ namespace Mercs.Tactical.States
             state.unit_in_hand.Position.SetFacing(new_facing);
         }
 
-
         protected override void Cancel()
         {
         }

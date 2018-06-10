@@ -1,5 +1,6 @@
 ﻿#pragma warning disable 649
 
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Mercs.Tactical.Buffs;
@@ -249,6 +250,100 @@ namespace Mercs.Tactical
                 unit.Reserve = false;
 
                 Units.Add(unit);
+            }
+        }
+
+        public void StartMovement(MovementStateData data, UnitInfo unit)
+        {
+            StartMovementWait(data, unit, TacticalState.NotReady);
+        }
+
+        public void StartMovementWait(MovementStateData data, UnitInfo unit, TacticalState state)
+        {
+            if (data.Type == MovementStateData.MoveType.Jump)
+                StartCoroutine(Jump(data,unit,state));
+            else
+                StartCoroutine(Move(data, unit, state));
+        }
+
+        private IEnumerator Move(MovementStateData data, UnitInfo info, TacticalState state)
+        {
+            var dir = data.dir;
+            var path = data.path;
+            var runninig = data.Type == MovementStateData.MoveType.Run;
+            int length = path.Count - 1;
+            var speed = runninig ? 0.3f : 0.5f;
+            var total_time = speed * length;
+            info.Position.position = data.target.coord;
+            info.Position.Facing = data.dir;
+
+            var start_time = Time.realtimeSinceStartup;
+            while (Time.realtimeSinceStartup < start_time + total_time)
+            {
+                var t = (1 - (Time.realtimeSinceStartup - start_time) / total_time) * length - 0.0001f;
+
+
+                var ns = path[(int) t];
+                var ne = path[(int) t + 1];
+                var t1 = t - (int) t;
+
+                info.transform.position = Vector3.Lerp(
+                    Grid.CellToWorld(ns.coord), Grid.CellToWorld(ne.coord), t1
+                    );
+
+                if (!runninig)
+                    t1 = Mathf.Clamp(t1 * 2 - 1, 0, 1);
+                var angle_start = Quaternion.Euler(0, 0, ns.facing.GetAngleV());
+                var angle_end = Quaternion.Euler(0, 0, ne.facing.GetAngleV());
+                info.transform.rotation = Quaternion.Lerp(angle_start, angle_end, t1);
+                
+                yield return 0;
+            }
+
+            info.transform.position = Grid.CellToWorld(path[0].coord);
+            info.Position.SetFacing(dir);
+            if (state != TacticalState.NotReady)
+            {
+                yield return new WaitForSeconds(0.5f);
+                StateMachine.State = state;
+            }
+        }
+
+        private IEnumerator Jump(MovementStateData data, UnitInfo info, TacticalState state)
+        {
+            var target_dir = data.dir;
+            var source_dir = info.Position.Facing;
+            var source_coord = info.Position.position;
+            var target_coord = data.target.coord;
+            info.Position.position = target_coord;
+            info.Position.Facing = target_dir;
+
+
+            var start = Grid.CellToWorld(source_coord);
+            var end = Grid.CellToWorld(target_coord);
+
+            var start_angle = Quaternion.Euler(new Vector3(0, 0, source_dir.GetAngleV()));
+            var end_angle = Quaternion.Euler(new Vector3(0, 0, target_dir.GetAngleV()));
+
+            float total_time = 0.75f + (end - start).magnitude / 4;
+            float start_time = Time.realtimeSinceStartup;
+
+            yield return 0;
+
+            while (Time.realtimeSinceStartup < start_time + total_time)
+            {
+                float time = (Time.realtimeSinceStartup - start_time) / total_time;
+                info.transform.rotation = Quaternion.Lerp(start_angle, end_angle, time);
+                info.transform.position = Vector3.Lerp(start, end, time);
+                yield return 0;
+            }
+
+            info.transform.position = end;
+            info.Position.SetFacing(target_dir);
+            if (state != TacticalState.NotReady)
+            {
+                yield return new WaitForSeconds(0.5f);
+                StateMachine.State = state;
             }
         }
     }

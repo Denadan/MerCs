@@ -130,6 +130,7 @@ namespace Mercs.Tactical.States
             else if (button == PointerEventData.InputButton.Left &&
                      (data.target = CanMove(coord))!= null)
             {
+                data.dir = data.target.fast_path.facing;
                 SwitchTo(TacticalState.SelectRotation);
             }
         }

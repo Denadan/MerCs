@@ -7,14 +7,16 @@ namespace Mercs.Tactical.States
 
     public class SelectRotationMoveState : SelectRotationState
     {
-
         private MovementStateData data;
+        private PhasePrepareState state;
+
 
         public override TacticalState State => TacticalState.SelectRotation;
 
-        public SelectRotationMoveState(MovementStateData data)
+        public SelectRotationMoveState(PhasePrepareState state, MovementStateData data)
         {
             this.data = data;
+            this.state = state;
         }
 
         protected override bool Allowed(Dir newFacing)
@@ -30,6 +32,17 @@ namespace Mercs.Tactical.States
         protected override void Done(Dir new_facing)
         {
             TacticalUIController.Instance.MoveLine.gameObject.SetActive(false);
+            TacticalUIController.Instance.HideActionBar();
+            TacticalController.Instance.SelectedUnit.Active = false;
+            TacticalController.Instance.SelectedUnit.Selectable = false;
+            state.ActiveUnits.Remove(TacticalController.Instance.SelectedUnit);
+
+            TacticalController.Instance.StartMovementWait(data, TacticalController.Instance.SelectedUnit,
+                state.ActiveUnits.Count > 0 ? TacticalState.PhaseSelectFaction : TacticalState.PhasePrepare);
+           TacticalController.Instance.SelectedUnit = null;
+
+            SwitchTo(TacticalState.WaitMovementComplete);
+
         }
 
         private List<PathMap.path_node> get_path()
@@ -70,7 +83,7 @@ namespace Mercs.Tactical.States
         protected override void SetFacing(Dir new_facing)
         {
             data.dir = new_facing;
-             base.SetFacing(new_facing);
-       }
+            base.SetFacing(new_facing);
+        }
     }
 }
