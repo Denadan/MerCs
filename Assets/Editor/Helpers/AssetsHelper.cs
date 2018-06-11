@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEditor;
 using System.IO;
+using Mercs.Items;
 
 namespace Mercs.Editor
 {
@@ -94,19 +95,5 @@ namespace Mercs.Editor
             t.SetType(UnitType.Vehicle);
             CreateCustomAsset(t);
         }
-
-
-        [MenuItem("Assets/Create/MerCs/Module/WeaponTemplate")]
-        public static void CreateWeaponTemplate()
-        {
-
-            CreateAssets<WeaponTemplate>();
-        }
-        [MenuItem("Assets/Create/MerCs/Module/Weapon")]
-        public static void CreateWeapon()
-        {
-            CreateAssets<Weapon>();
-        }
     }
-
 }

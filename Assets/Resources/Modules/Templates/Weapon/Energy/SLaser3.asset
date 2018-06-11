@@ -8,26 +8,55 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f8771e3399c8442429d5f922662c2226, type: 3}
+  m_Script: {fileID: 11500000, guid: 289e21266edd5ce4884871e8bc9cefbd, type: 3}
   m_Name: SLaser3
   m_EditorClassIdentifier: 
-  Type: 0
-  DamageType: 2
-  descriptin: 
+  Name: Triple Small Laser
+  ShortName: SLaser3
   Icon: {fileID: 0}
+  Upgrades:
+  - Type: 0
+    AddPercent: -0.1
+    SubPercent: -0.1
+    AddValue: 0
+    SubValue: 0
+    Max: 3
+    Min: 3
+  - Type: 1
+    AddPercent: 0.1
+    SubPercent: 0.1
+    AddValue: 0
+    SubValue: 0
+    Max: 3
+    Min: 3
+  - Type: 11
+    AddPercent: -0.1
+    SubPercent: -0.1
+    AddValue: 0
+    SubValue: 0
+    Max: 3
+    Min: 3
+  - Type: 10
+    AddPercent: -0.1
+    SubPercent: -0.1
+    AddValue: 0
+    SubValue: 0
+    Max: 3
+    Min: 3
   Weight: 1.5
   slots: 1
-  EnergyForShot: 3
-  HeatForShot: 3
+  Type: 0
+  DamageType: 2
+  StockAmmo: {fileID: 11400000, guid: 7a415dfa519605540b345e2153fbfe89, type: 2}
+  Ammo: 0
+  EnergyForShot: 9
+  HeatForShot: 3.5
   VariableShots: 0
   Shots: 3
-  Damage: 3
-  Heat: 0.5
-  Stability: 0
+  DamageMult: 3
   MinRange: 0
   Optimal: 2
   Falloff: 3
   DirectFire: 1
   IndirectFire: 0
-  Ammo: 0
-  Upgrades: []
+  SupportFire: 1
