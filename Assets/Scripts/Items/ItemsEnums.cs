@@ -79,7 +79,7 @@
         Improved,
         Advanced
     }
-    
+
     public enum GuidanceSystem
     {
         None = 0, Termal = 1, Laser = 2, Beacon = 3, Telemetry = 4

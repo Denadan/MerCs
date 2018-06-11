@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd9bb2244bebcf14b8f42d10616cab8b, type: 3}
+  m_Name: StandartReactor
+  m_EditorClassIdentifier: 
+  Name: Standart Reactor %SIZE%
+  ShortName: Std Reactor %SIZE%
+  Icon: {fileID: 0}
+  Upgrades: []
+  Weight: 0
+  slots: 5
+  BaseSize: 3
+  BaseEngineRating: 100
+  BaseHeatSink: 0
+  BaseCapacitator: 0
+  BaseRegen: 0
+  BaseWeight: 3
+  BaseExtend: 0
+  SlotEngineRating: 25
+  SlotHeatSink: 0
+  SlotCapacitator: 0
+  SlotRegen: 0
+  SlotWeight: 1
+  SlotAddWeight: 0.15
+  SlotSubEr: 0
+  SlotExtend: 0

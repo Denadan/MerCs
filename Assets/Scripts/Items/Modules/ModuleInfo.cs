@@ -4,14 +4,15 @@ namespace Mercs.Items
     public class ModuleInfo<T> : ItemInfo<T>
         where T : ModuleTemplate
     {
+        private float weight;
 
-        public float Weight { get; private set; }
+        public virtual float Weight => weight;
         public SlotSize Slot => Template.slots;
 
         public override void ApplyUpgrade()
         {
             base.ApplyUpgrade();
-            Weight = upgrade(UpgradeType.Weight, Template.Weight);
+            weight = upgrade(UpgradeType.Weight, Template.Weight);
         }
 #if UNITY_EDITOR
         public override string ToString()
