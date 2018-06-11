@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8771e3399c8442429d5f922662c2226, type: 3}
+  m_Name: ArtS
+  m_EditorClassIdentifier: 
+  Type: 3
+  DamageType: 1
+  descriptin: 
+  Icon: {fileID: 0}
+  Weight: 3
+  slots: 0
+  EnergyForShot: 0
+  HeatForShot: 1
+  VariableShots: 0
+  Shots: 1
+  Damage: 2
+  Heat: 0
+  Stability: 1
+  MinRange: 4
+  Optimal: 12
+  Falloff: 16
+  DirectFire: 1
+  IndirectFire: 1
+  Ammo: 3
+  Upgrades: []

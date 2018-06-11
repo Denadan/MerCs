@@ -86,7 +86,6 @@ namespace Mercs
 
     public static class CONST
     {
-
         public static readonly Dictionary<TileFeature, int> MoveCost = new Dictionary<TileFeature, int>
         {
             [TileFeature.None] = 1,
