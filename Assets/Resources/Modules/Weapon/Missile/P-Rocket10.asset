@@ -8,10 +8,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8f4444af17fe4048bd6927cd0962693, type: 3}
-  m_Name: APMissile2
+  m_Script: {fileID: 11500000, guid: 3338bbbcb2f57f0448d3608f236d4b22, type: 3}
+  m_Name: P-Rocket10
   m_EditorClassIdentifier: 
-  Template: {fileID: 11400000, guid: 9e08373ed7d2b4b4c9b116ee763436d8, type: 2}
-  Upgrade: {fileID: 11400000, guid: 9c7ebcc40c0d9f54395544234e2c0f29, type: 2}
+  Template: {fileID: 11400000, guid: fb2193bac91965d4a897b9e665cd2530, type: 2}
+  Upgrade: {fileID: 11400000, guid: bdf7a78fe4e75ed46a2c5f36a2066fd3, type: 2}
   ItemName: 
   ItemShortName: 

@@ -9,9 +9,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b8f4444af17fe4048bd6927cd0962693, type: 3}
-  m_Name: MissileAP
+  m_Name: APMissile
   m_EditorClassIdentifier: 
-  Template: {fileID: 0}
+  Template: {fileID: 11400000, guid: 7d7b5af79b9aeab4598a14c90ef71156, type: 2}
   Upgrade: {fileID: 11400000, guid: 9c7ebcc40c0d9f54395544234e2c0f29, type: 2}
   ItemName: 
   ItemShortName: 
