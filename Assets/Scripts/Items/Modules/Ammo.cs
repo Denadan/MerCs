@@ -10,6 +10,8 @@ namespace Mercs.Items
     [CreateAssetMenu(fileName = "Ammo", menuName = "MerCs/Module/Ammo")]
     public class Ammo : ItemInfo<AmmoTemplate>
     {
+        public AmmoType Type => Template.Type;
+
         public float Damage => EDamage + MDamage + BDamage;
 
         public float EDamage { get; private set; }
@@ -22,6 +24,9 @@ namespace Mercs.Items
         public float RangeMod { get; private set; }
         public float AimMod { get; private set; }
 
+        public GuidanceSystem Guidance { get; private set; }
+        public float GuidanceBonus { get; private set; }
+
         public override void ApplyUpgrade()
         {
             base.ApplyUpgrade();
@@ -33,7 +38,11 @@ namespace Mercs.Items
 
             RangeMod = upgrade(UpgradeType.Range, Template.RangeMod);
             AimMod = upgrade(UpgradeType.Accuracy, Template.AimMod);
+
+            Guidance = upgrade<GuidanceSystem>(UpgradeType.GuidanceSystem);
+            GuidanceBonus = upgrade(UpgradeType.GuidanceBonus);
         }
+
 
 #if UNITY_EDITOR
         public override string ToString()
@@ -42,11 +51,17 @@ namespace Mercs.Items
                 return "NO TEMPLATE!";
 
             StringBuilder sb = new StringBuilder();
-            sb.Append("Ammo\n");
+            sb.Append($"Ammo ({Type})\n");
             sb.Append(base.ToString());
             sb.Append($"\nDamage: {Damage:F2} (E:{EDamage:F2} B:{BDamage:F2} M:{MDamage:F2})\n");
             sb.Append($"Heat: {HeatDamage:F2}  Stab:{StabDamage:F2}\n");
+            if(Type == AmmoType.Rocket || Type == AmmoType.Missile)
+            {
+                sb.Append($"GuidanceSystem: {Guidance} {GuidanceBonus:+0.00;-0.00}\n");
+            }
+
             sb.Append($"RangeMod: {RangeMod:P}  AimMod:{AimMod:P}");
+
 
             return sb.ToString();
         }

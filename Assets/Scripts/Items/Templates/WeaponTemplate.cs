@@ -7,7 +7,7 @@ namespace Mercs.Items
     {
         public WeaponType Type;
         public DamageType DamageType;
-        public AmmoTemplate StockAmmo;
+        public Ammo StockAmmo;
 
         public AmmoType Ammo;
 

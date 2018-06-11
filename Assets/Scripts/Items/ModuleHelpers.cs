@@ -39,5 +39,35 @@ namespace Mercs.Items
 
             return base_value;
         }
+
+        public static float Sum(this IEnumerable<UpgradeTemplate> list, Upgrade.UItem upgrade)
+        {
+
+            float val = 0;
+
+            if (list == null || upgrade == null)
+                return 0;
+            var item = list.FirstOrDefault(i => i.Type == upgrade.type);
+
+            if (item == null)
+                return 0;
+
+            int value = upgrade.value < -item.Min ? -item.Min : upgrade.value;
+            value = value > item.Max ? item.Max : value;
+
+
+            if (value > 0)
+            {
+                if (item.AddValue != 0)
+                    val += item.AddValue * value;
+            }
+            else if (value < 0)
+            {
+                if (item.SubValue != 0)
+                    val += item.SubValue * value;
+            }
+
+            return val;
+        }
     }
 }

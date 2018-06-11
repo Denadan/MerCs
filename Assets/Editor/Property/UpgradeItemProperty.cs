@@ -19,10 +19,23 @@ namespace Mercs.Editor
             var style = GUI.skin.GetStyle("label");
             style.alignment = TextAnchor.LowerRight;
 
-            EditorGUI.PropertyField(p.Next(3), property.FindPropertyRelative("type"), GUIContent.none);
-            EditorGUI.PropertyField(p.Next(1), property.FindPropertyRelative("value"), GUIContent.none);
+            var type = property.FindPropertyRelative("type");
+            var value = property.FindPropertyRelative("value");
 
-            EditorGUI.indentLevel = indent;
+            EditorGUI.PropertyField(p.Next(3), property.FindPropertyRelative("type"), GUIContent.none);
+            var selected = (UpgradeType)type.intValue;
+            switch(selected)
+            {
+                case UpgradeType.GuidanceSystem:
+                    value.intValue = (int)(GuidanceSystem)EditorGUI.EnumPopup(p.Next(1), (GuidanceSystem)value.intValue);
+                    break;
+                default:
+                    EditorGUI.PropertyField(p.Next(1), value, GUIContent.none);
+                    break;
+            }
+
+
+        EditorGUI.indentLevel = indent;
 
             EditorGUI.EndProperty();
         }

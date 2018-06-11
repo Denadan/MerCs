@@ -20,6 +20,8 @@ namespace Mercs.Items
         public float Optimal { get; private set; }
         public float Falloff { get; private set; }
 
+        public int Shots { get; private set; }
+
         public float HeatForShot { get; private set; }
         public float EnergyForShot { get; private set; }
 
@@ -35,6 +37,10 @@ namespace Mercs.Items
             Falloff = upgrade(UpgradeType.Range, Template.Falloff);
             HeatForShot = upgrade(UpgradeType.HeatPerShot, Template.HeatForShot);
             EnergyForShot = upgrade(UpgradeType.EnergyPerShot, Template.EnergyForShot);
+            Shots = (int)upgrade(UpgradeType.Shots, Template.Shots);
+
+            Name = Name.Replace("%SHOT%", Shots.ToString());
+            ShortName = ShortName.Replace("%SHOT%", Shots.ToString());
         }
 #if UNITY_EDITOR
         public override string ToString()
@@ -47,17 +53,18 @@ namespace Mercs.Items
             sb.Append("Weapon\n");
             sb.Append(base.ToString());
             sb.Append($"\nClass: {Template.Type}({Template.DamageType})\n");
-            if (Template.Ammo != AmmoType.None)
-            {
-                sb.Append($"Ammo: {Template.Ammo}\n");
-                sb.Append($"Stock Ammo: {Template.StockAmmo}\n");
-            }
+            //if (Template.Ammo != AmmoType.None)
+            //{
+            sb.Append($"================ AMMO =============\n");
+            sb.Append(Template.StockAmmo.ToString());
+            sb.Append($"\n==================================\n");
+            //}
 
             sb.Append($"Damage multuplier: {DamageMult:F2}\n");
             sb.Append($"Damage: {Damage:F2} (E:{EDamage:F2} B:{BDamage:F2} M:{MDamage:F2})\n");
             sb.Append($"Heat: {HeatDamage:F2}  Stab:{StabDamage:F2}\n");
-            sb.Append($"Shots: {Template.Shots} {(Template.VariableShots ? '~' : ' ')}\n");
-            sb.Append($"Heat Generate:{HeatForShot} Energy:{EnergyForShot}\n");
+            sb.Append($"Shots: {Shots} {(Template.VariableShots ? '~' : ' ')}\n");
+            sb.Append($"Heat Generate:{HeatForShot:F2} Energy:{EnergyForShot:F2}\n");
             sb.Append($"Range: {MinRange}/{Optimal}/{Falloff}\n");
             sb.Append($"FireMode:");
             if (Template.DirectFire)

@@ -12,22 +12,26 @@
 
     public enum UpgradeType
     {
-        Weight,
+        Weight = 0,
 
-        Damage,
-        StabDamage,
-        HeatDamage,
+        Damage = 1,
+        StabDamage = 2,
+        HeatDamage =3,
 
-        Capacity,
-        DamageTransfer,
-        DamageToHeat,
-        DamageToStab,
+        Capacity = 4,
+        DamageTransfer =5,
+        DamageToHeat = 6,
+        DamageToStab = 7,
 
-        Range,
-        Accuracy,
+        Range = 8,
+        Accuracy = 9,
 
-        EnergyPerShot,
-        HeatPerShot
+        EnergyPerShot = 10,
+        HeatPerShot = 11,
+
+        GuidanceSystem = 12,
+        GuidanceBonus = 13,
+        Shots = 14
     }
 
     public enum DamageType
@@ -68,5 +72,10 @@
         Normal,
         Improved,
         Advanced
+    }
+    
+    public enum GuidanceSystem
+    {
+        None = 0, Termal = 1, Laser = 2, Beacon = 3, Telemetry = 4
     }
 }

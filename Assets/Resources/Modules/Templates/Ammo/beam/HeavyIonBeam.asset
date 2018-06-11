@@ -9,17 +9,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 805c35482056b9446b7c4874324d70c1, type: 3}
-  m_Name: LaserBeam
+  m_Name: HeavyIonBeam
   m_EditorClassIdentifier: 
-  Name: '-'
+  Name: Heavy Ion Beam
   ShortName: '-'
   Icon: {fileID: 0}
   Upgrades: []
   Type: 0
-  EDamage: 1
+  EDamage: 5
   MDamage: 0
-  BDamage: 0
-  HeatDamage: 0.3
-  StabDamage: 0
+  BDamage: 5
+  HeatDamage: 0
+  StabDamage: 3
   RangeMod: 1
   AimMod: 1

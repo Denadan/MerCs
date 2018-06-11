@@ -47,7 +47,7 @@ MonoBehaviour:
   slots: 0
   Type: 0
   DamageType: 2
-  StockAmmo: {fileID: 11400000, guid: 7a415dfa519605540b345e2153fbfe89, type: 2}
+  StockAmmo: {fileID: 11400000, guid: 966d96e75820dd247a885ef991749a67, type: 2}
   Ammo: 0
   EnergyForShot: 5
   HeatForShot: 3

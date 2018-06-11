@@ -8,18 +8,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 805c35482056b9446b7c4874324d70c1, type: 3}
-  m_Name: IonBeam
+  m_Script: {fileID: 11500000, guid: b51fb8679eb307242be8c3cd9ea3b961, type: 3}
+  m_Name: MissilePodDouble
   m_EditorClassIdentifier: 
-  Name: 
-  ShortName: 
+  Name: Double Missile Ammo Pod
+  ShortName: MAmmo2
   Icon: {fileID: 0}
   Upgrades: []
-  Type: 0
-  EDamage: 7
-  MDamage: 0
-  BDamage: 3
-  HeatDamage: 1
-  StabDamage: 2
-  RangeMod: 1
-  AimMod: 1
+  Weight: 2
+  slots: 1
+  Type: 1
+  Capacity: 250
+  DamageTransfer: 1
+  DamageToHeat: 0
+  DamageToStability: 0

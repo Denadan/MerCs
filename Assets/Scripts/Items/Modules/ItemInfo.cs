@@ -13,13 +13,11 @@ namespace Mercs.Items
         public T Template;
         public Upgrade Upgrade;
 
-        public string Name { get; private set; }
-        public string ShortName { get; private set; }
+        public string Name { get; protected set; }
+        public string ShortName { get; protected set; }
 
         public string ItemName;
         public string ItemShortName;
-
-        private string _name, _short_name;
 
         public virtual void ApplyUpgrade()
         {
@@ -35,6 +33,22 @@ namespace Mercs.Items
 
         }
 
+        protected TEnum upgrade<TEnum>(UpgradeType type)
+        {
+            if (!Template.Upgrades.Any(i => i.Type == type))
+                return default(TEnum);
+
+            var item = Upgrade[type];
+            if (item == null)
+                return default(TEnum);
+
+            return  (TEnum)(object)(item.value);
+        }
+
+        protected float upgrade(UpgradeType type)
+        {
+            return Template.Upgrades.Sum(Upgrade[type]);
+        }
 
 
 #if UNITY_EDITOR
