@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 289e21266edd5ce4884871e8bc9cefbd, type: 3}
+  m_Name: Small Artillery
+  m_EditorClassIdentifier: 
+  Name: Small Artillery
+  ShortName: ArtS
+  Icon: {fileID: 0}
+  Upgrades: []
+  Weight: 4
+  slots: 1
+  Type: 3
+  DamageType: 1
+  StockAmmo: {fileID: 11400000, guid: fcd6c5b6b7d07944ab87f4e9a3c0417c, type: 2}
+  Ammo: 3
+  EnergyForShot: 0
+  HeatForShot: 1
+  VariableShots: 0
+  Shots: 1
+  DamageMult: 1
+  MinRange: 4
+  Optimal: 9
+  Falloff: 18
+  DirectFire: 1
+  IndirectFire: 1
+  SupportFire: 0

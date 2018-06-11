@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 289e21266edd5ce4884871e8bc9cefbd, type: 3}
+  m_Name: Large Artillery
+  m_EditorClassIdentifier: 
+  Name: Large Artillery
+  ShortName: ArtL
+  Icon: {fileID: 0}
+  Upgrades: []
+  Weight: 10
+  slots: 4
+  Type: 3
+  DamageType: 1
+  StockAmmo: {fileID: 11400000, guid: c4ce06a18a5d8f344bc4499bdf1a2a0a, type: 2}
+  Ammo: 4
+  EnergyForShot: 0
+  HeatForShot: 2
+  VariableShots: 0
+  Shots: 1
+  DamageMult: 1
+  MinRange: 6
+  Optimal: 12
+  Falloff: 24
+  DirectFire: 1
+  IndirectFire: 1
+  SupportFire: 0

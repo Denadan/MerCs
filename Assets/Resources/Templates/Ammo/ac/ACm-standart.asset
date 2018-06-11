@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 805c35482056b9446b7c4874324d70c1, type: 3}
+  m_Name: ACm-standart
+  m_EditorClassIdentifier: 
+  Name: Standart Medium AC ammo
+  ShortName: ACm
+  Icon: {fileID: 0}
+  Upgrades: []
+  Type: 8
+  EDamage: 0
+  MDamage: 0
+  BDamage: 4
+  HeatDamage: 0
+  StabDamage: 3
+  RangeMod: 1
+  AimMod: 1
+  BallisticArmorDamage: 0.5

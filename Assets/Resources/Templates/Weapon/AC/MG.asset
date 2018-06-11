@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 289e21266edd5ce4884871e8bc9cefbd, type: 3}
+  m_Name: MG
+  m_EditorClassIdentifier: 
+  Name: Machine Gun
+  ShortName: MG
+  Icon: {fileID: 0}
+  Upgrades: []
+  Weight: 2
+  slots: 0
+  Type: 4
+  DamageType: 1
+  StockAmmo: {fileID: 11400000, guid: aadaab93330431942bb1b826a8716f9c, type: 2}
+  Ammo: 11
+  EnergyForShot: 0
+  HeatForShot: 0.5
+  VariableShots: 0
+  Shots: 10
+  DamageMult: 1
+  MinRange: 0
+  Optimal: 1
+  Falloff: 3
+  DirectFire: 1
+  IndirectFire: 0
+  SupportFire: 1

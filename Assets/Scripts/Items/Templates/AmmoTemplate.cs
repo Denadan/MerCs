@@ -18,5 +18,7 @@ namespace Mercs.Items
         public float RangeMod = 1;
         [Range(0.5f, 2f)]
         public float AimMod = 1;
+        [Range(0.5f, 2f)]
+        public float BallisticArmorDamage = 0.5f;
     }
 }

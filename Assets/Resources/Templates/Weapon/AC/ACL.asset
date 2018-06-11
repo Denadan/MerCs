@@ -1,0 +1,62 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 289e21266edd5ce4884871e8bc9cefbd, type: 3}
+  m_Name: ACL
+  m_EditorClassIdentifier: 
+  Name: Large Auto Cannon
+  ShortName: ACL
+  Icon: {fileID: 0}
+  Upgrades:
+  - Type: 14
+    AddPercent: 0
+    SubPercent: 0
+    AddValue: 1
+    SubValue: 0
+    Max: 1
+    Min: 0
+  - Type: 0
+    AddPercent: -0.1
+    SubPercent: -0.1
+    AddValue: 0
+    SubValue: 0
+    Max: 3
+    Min: 3
+  - Type: 11
+    AddPercent: -0.1
+    SubPercent: -0.1
+    AddValue: 0
+    SubValue: 0
+    Max: 3
+    Min: 3
+  - Type: 8
+    AddPercent: 0
+    SubPercent: 0
+    AddValue: 1
+    SubValue: 1
+    Max: 1
+    Min: 1
+  Weight: 12
+  slots: 4
+  Type: 4
+  DamageType: 1
+  StockAmmo: {fileID: 11400000, guid: f89582889fe533a4f8959431c7ce07d5, type: 2}
+  Ammo: 9
+  EnergyForShot: 0
+  HeatForShot: 4
+  VariableShots: 0
+  Shots: 3
+  DamageMult: 1
+  MinRange: 0
+  Optimal: 5
+  Falloff: 10
+  DirectFire: 1
+  IndirectFire: 0
+  SupportFire: 0

@@ -23,6 +23,7 @@ namespace Mercs.Items
 
         public float RangeMod { get; private set; }
         public float AimMod { get; private set; }
+        public float BallisticArmorDamage => Template.BallisticArmorDamage;
 
         public GuidanceSystem Guidance { get; private set; }
         public float GuidanceBonus { get; private set; }
@@ -60,7 +61,7 @@ namespace Mercs.Items
                 sb.Append($"GuidanceSystem: {Guidance} {GuidanceBonus:+0.00;-0.00}\n");
             }
 
-            sb.Append($"RangeMod: {RangeMod:P}  AimMod:{AimMod:P}");
+            sb.Append($"RangeMod: {RangeMod:P}  AimMod:{AimMod:P}  BvsArmor:{BallisticArmorDamage:P}");
 
 
             return sb.ToString();

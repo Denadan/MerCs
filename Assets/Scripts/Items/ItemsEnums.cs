@@ -43,11 +43,17 @@
 
     public enum SlotSize
     {
-        One,
-        Two,
-        Three,
-        ThreeLine,
-        Four
+        One = 0,
+        Two = 1,
+        Three = 2,
+        ThreeLine = 3,
+        Four = 4,
+        Reactor = 5,
+        IOne = 6,
+        ITwo = 7,
+        IThree = 8,
+        IThreeLine = 9,
+        IFour = 10
     }
 
     public enum AmmoType
