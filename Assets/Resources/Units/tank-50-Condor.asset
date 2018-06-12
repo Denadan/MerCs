@@ -87,5 +87,27 @@ MonoBehaviour:
     - 2
     - 5
   Items:
-  - place: 32768
-    Module: {fileID: 0}
+  - place: 16384
+    Module: {fileID: 11400000, guid: 1af9196b44d37c24f98abbc6c4f6aece, type: 2}
+    Ammo: {fileID: 0}
+  - place: 16384
+    Module: {fileID: 11400000, guid: 1af9196b44d37c24f98abbc6c4f6aece, type: 2}
+    Ammo: {fileID: 0}
+  - place: 16384
+    Module: {fileID: 11400000, guid: eb72d443cc42acf419e420c63b4d0445, type: 2}
+    Ammo: {fileID: 0}
+  - place: 16384
+    Module: {fileID: 11400000, guid: 7e2d061fe331eb84cac1f012707d59c1, type: 2}
+    Ammo: {fileID: 0}
+  - place: 16384
+    Module: {fileID: 11400000, guid: 7e2d061fe331eb84cac1f012707d59c1, type: 2}
+    Ammo: {fileID: 0}
+  - place: 16384
+    Module: {fileID: 11400000, guid: 42f57849e4a22744bb9cdb2021aee517, type: 2}
+    Ammo: {fileID: 11400000, guid: aadaab93330431942bb1b826a8716f9c, type: 2}
+  - place: 16384
+    Module: {fileID: 11400000, guid: e16a2f03e93ca4546a13c383ac699d0f, type: 2}
+    Ammo: {fileID: 11400000, guid: 10e25b48064d27c42b9ef28975ce3023, type: 2}
+  - place: 16384
+    Module: {fileID: 11400000, guid: ae21a6c4e30b7da409889d6ac1fbb60e, type: 2}
+    Ammo: {fileID: 0}

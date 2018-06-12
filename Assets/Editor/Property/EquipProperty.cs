@@ -13,13 +13,17 @@ namespace Mercs.Editor
             var indent = EditorGUI.indentLevel;
             EditorGUI.indentLevel = 0;
 
-            var p = new SizeRect(position, 4);
+            var p = new SizeRect(position, 9);
 
 
             EditorGUI.PropertyField(p.Next(1), property.FindPropertyRelative("place"), GUIContent.none);
             var obj = property.FindPropertyRelative("Module");
-            obj.objectReferenceValue = EditorGUI.ObjectField(p.Next(3), GUIContent.none, obj.objectReferenceValue, typeof(IModuleInfo), false);
-
+            obj.objectReferenceValue = EditorGUI.ObjectField(p.Next(5), GUIContent.none, obj.objectReferenceValue, typeof(IModuleInfo), false);
+            var obj_value = obj.objectReferenceValue as IModuleInfo;
+            if (obj_value != null && obj_value.ModType == ModuleType.AmmoPod)
+            {
+                EditorGUI.PropertyField(p.Next(3), property.FindPropertyRelative("Ammo"), GUIContent.none);
+            }
             EditorGUI.indentLevel = indent;
 
             EditorGUI.EndProperty();

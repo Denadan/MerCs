@@ -14,9 +14,31 @@ MonoBehaviour:
   Name: Small JumpJet
   ShortName: JumpJetS
   Icon: {fileID: 0}
-  Upgrades: []
-  Weight: 1
+  Upgrades:
+  - Type: 11
+    AddPercent: -0.1
+    SubPercent: -0.1
+    AddValue: 0
+    SubValue: 0
+    Max: 3
+    Min: 3
+  - Type: 15
+    AddPercent: 0.2
+    SubPercent: 0.2
+    AddValue: 0
+    SubValue: 0
+    Max: 2
+    Min: 2
+  - Type: 0
+    AddPercent: -0.1
+    SubPercent: -0.1
+    AddValue: 0
+    SubValue: 0
+    Max: 3
+    Min: 3
+  Weight: 2
   slots: 7
   Crits: 2
-  EngineRating: 25
-  Heat: 1
+  EngineRating: 50
+  Heat: 2
+  HeatCapacity: 0

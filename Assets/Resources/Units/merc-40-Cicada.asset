@@ -125,4 +125,19 @@ MonoBehaviour:
     - 0
     - 7
     - 4
-  Items: []
+  Items:
+  - place: 16
+    Module: {fileID: 11400000, guid: 3dcdd3ace7c3774479c536490b4e1808, type: 2}
+    Ammo: {fileID: 0}
+  - place: 32
+    Module: {fileID: 11400000, guid: 46ce151585add4c4ab5c273b70b43a6d, type: 2}
+    Ammo: {fileID: 0}
+  - place: 128
+    Module: {fileID: 11400000, guid: 1af9196b44d37c24f98abbc6c4f6aece, type: 2}
+    Ammo: {fileID: 0}
+  - place: 64
+    Module: {fileID: 11400000, guid: 1af9196b44d37c24f98abbc6c4f6aece, type: 2}
+    Ammo: {fileID: 0}
+  - place: 8
+    Module: {fileID: 11400000, guid: 42f57849e4a22744bb9cdb2021aee517, type: 2}
+    Ammo: {fileID: 11400000, guid: aadaab93330431942bb1b826a8716f9c, type: 2}

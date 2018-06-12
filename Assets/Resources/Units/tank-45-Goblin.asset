@@ -18,6 +18,8 @@ MonoBehaviour:
   MoveSpeed: 4
   RunSpeed: 6
   Jumps: 0
+  Shield: 0
+  ShieldRegen: 0
   PartTable:
   - Place: 16384
     Structure: 2
@@ -84,3 +86,16 @@ MonoBehaviour:
     - 2
     - 2
     - 5
+  Items:
+  - place: 16384
+    Module: {fileID: 11400000, guid: 43225ecd2a017d945be48e61838b1011, type: 2}
+    Ammo: {fileID: 0}
+  - place: 16384
+    Module: {fileID: 11400000, guid: fed5491a03efc56419d289d90418673e, type: 2}
+    Ammo: {fileID: 0}
+  - place: 16384
+    Module: {fileID: 11400000, guid: 1af9196b44d37c24f98abbc6c4f6aece, type: 2}
+    Ammo: {fileID: 0}
+  - place: 16384
+    Module: {fileID: 11400000, guid: 42f57849e4a22744bb9cdb2021aee517, type: 2}
+    Ammo: {fileID: 11400000, guid: aadaab93330431942bb1b826a8716f9c, type: 2}

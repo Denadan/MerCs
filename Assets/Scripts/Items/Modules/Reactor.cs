@@ -5,7 +5,7 @@ using UnityEngine;
 namespace Mercs.Items
 {
     [CreateAssetMenu(fileName = "Reactor", menuName = "MerCs/Module/Reactor")]
-    public class Reactor : ModuleInfo<ReactorTemplate>
+    public class Reactor : ModuleInfo<ReactorTemplate>, IHeatContainer, IHeatDissipator
     {
         public int Size;
 

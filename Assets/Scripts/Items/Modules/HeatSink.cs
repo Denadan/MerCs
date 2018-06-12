@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Mercs.Items
 {
     [CreateAssetMenu(fileName = "HeatSink", menuName = "MerCs/Module/HeatSink")]
-    public class HeatSink : ModuleInfo<HeatSinkTemplate>
+    public class HeatSink : ModuleInfo<HeatSinkTemplate>, IHeatDissipator, IHeatContainer
     {
         public override ModuleType ModType => ModuleType.HeatSink;
 

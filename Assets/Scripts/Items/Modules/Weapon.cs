@@ -4,7 +4,7 @@ using UnityEngine;
 namespace Mercs.Items
 {
     [CreateAssetMenu(fileName = "Weapon", menuName = "MerCs/Module/Weapon")]
-    public partial class Weapon : ModuleInfo<WeaponTemplate>
+    public partial class Weapon : ModuleInfo<WeaponTemplate>, IHeatProducer
     {
         public override ModuleType ModType => ModuleType.Weapon;
 
@@ -25,6 +25,8 @@ namespace Mercs.Items
         public int Shots { get; private set; }
 
         public float HeatForShot { get; private set; }
+
+        public float Heat => Template.VariableShots ? Shots * HeatForShot : HeatForShot;
 
         public override void ApplyUpgrade()
         {

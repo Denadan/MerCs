@@ -14,9 +14,31 @@ MonoBehaviour:
   Name: Medium JumpJet
   ShortName: JumpJetM
   Icon: {fileID: 0}
-  Upgrades: []
-  Weight: 2
-  slots: 7
+  Upgrades:
+  - Type: 11
+    AddPercent: -0.1
+    SubPercent: -0.1
+    AddValue: 0
+    SubValue: 0
+    Max: 3
+    Min: 3
+  - Type: 15
+    AddPercent: 0.2
+    SubPercent: 0.2
+    AddValue: 0
+    SubValue: 0
+    Max: 2
+    Min: 2
+  - Type: 0
+    AddPercent: -0.1
+    SubPercent: -0.1
+    AddValue: 0
+    SubValue: 0
+    Max: 3
+    Min: 3
+  Weight: 3
+  slots: 8
   Crits: 2
-  EngineRating: 50
-  Heat: 2
+  EngineRating: 75
+  Heat: 2.8
+  HeatCapacity: 0

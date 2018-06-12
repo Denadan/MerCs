@@ -12,6 +12,7 @@ namespace Mercs.Items
         public float DamageTransfer { get; private set; }
         public float DamageToHeat { get; private set; }
         public float DamageToStab { get; private set; }
+        public AmmoType Type => Template.Type;
 
         public override void ApplyUpgrade()
         {

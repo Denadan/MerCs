@@ -8,5 +8,6 @@ namespace Mercs.Items
     {
         public int EngineRating;
         public float Heat;
+        public float HeatCapacity;
     }
 }
