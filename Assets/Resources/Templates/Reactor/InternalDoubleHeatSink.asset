@@ -8,18 +8,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b51fb8679eb307242be8c3cd9ea3b961, type: 3}
-  m_Name: AcSPod2
+  m_Script: {fileID: 11500000, guid: 106b14aadfe297e4cae16491886dc689, type: 3}
+  m_Name: InternalDoubleHeatSink
   m_EditorClassIdentifier: 
-  Name: Double Small AC Ammo Pod
-  ShortName: ACSAmmo2
+  Name: Internal Double HeatSink
+  ShortName: IHeatSink2
   Icon: {fileID: 0}
   Upgrades: []
-  Weight: 2
-  slots: 1
+  Weight: 1.5
+  slots: 8
   Crits: 1
-  Type: 7
-  Capacity: 350
-  DamageTransfer: 1
-  DamageToHeat: 0
-  DamageToStability: 0
+  HeatDissipation: 2.5
+  HeatCapacity: 3

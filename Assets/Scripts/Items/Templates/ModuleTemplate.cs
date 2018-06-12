@@ -10,5 +10,6 @@ namespace Mercs.Items
     {
         public float Weight;
         public SlotSize slots;
+        public int Crits = 2;
     }
 }

@@ -17,6 +17,7 @@ MonoBehaviour:
   Upgrades: []
   Weight: 1
   slots: 0
+  Crits: 1
   Type: 7
   Capacity: 160
   DamageTransfer: 1

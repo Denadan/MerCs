@@ -8,6 +8,7 @@ namespace Mercs.Items
 
         public virtual float Weight => weight;
         public SlotSize Slot => Template.slots;
+        public virtual int Crit { get => Template.Crits; }
 
         public override void ApplyUpgrade()
         {
@@ -18,7 +19,7 @@ namespace Mercs.Items
         public override string ToString()
         {
             var name = base.ToString();
-            return name + $"\nWeight: {Weight:F2} Size:{Slot}";
+            return name + $"\nWeight: {Weight:F2} Size:{Slot} Crit:{Crit}";
         }
 #endif 
     }

@@ -35,4 +35,9 @@ namespace Mercs.Editor
     public class ReactorEditor : ItemEditor
     {
     }
+    [CanEditMultipleObjects]
+    [CustomEditor(typeof(HeatSink))]
+    public class HeatSinkEditor : ItemEditor
+    {
+    }
 }

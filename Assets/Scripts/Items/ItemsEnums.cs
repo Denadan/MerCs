@@ -16,10 +16,10 @@
 
         Damage = 1,
         StabDamage = 2,
-        HeatDamage =3,
+        HeatDamage = 3,
 
         Capacity = 4,
-        DamageTransfer =5,
+        DamageTransfer = 5,
         DamageToHeat = 6,
         DamageToStab = 7,
 
@@ -34,7 +34,7 @@
         Shots = 14,
 
         EngineRating = 15,
-        EngineHeat = 16,
+        HeatCapacity = 16
     }
 
     public enum DamageType
@@ -51,12 +51,14 @@
         Three = 2,
         ThreeLine = 3,
         Four = 4,
-        Reactor = 5,
-        IOne = 6,
-        ITwo = 7,
-        IThree = 8,
-        IThreeLine = 9,
-        IFour = 10
+        Five = 5,
+        Reactor = 6,
+        IOne = 7,
+        ITwo = 8,
+        IThree = 9,
+        IThreeLine = 10,
+        IFour = 11,
+        IFive = 12
     }
 
     public enum AmmoType

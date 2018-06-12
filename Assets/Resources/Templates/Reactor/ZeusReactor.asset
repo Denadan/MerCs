@@ -9,10 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dd9bb2244bebcf14b8f42d10616cab8b, type: 3}
-  m_Name: StandartReactor
+  m_Name: ZeusReactor
   m_EditorClassIdentifier: 
-  Name: Standart Reactor %SIZE%
-  ShortName: Reactor %SIZE%
+  Name: Zeus Reactor %SIZE%
+  ShortName: ZReactor %SIZE%
   Icon: {fileID: 0}
   Upgrades:
   - Type: 0
@@ -46,19 +46,19 @@ MonoBehaviour:
   Weight: 0
   slots: 6
   Crits: 2
-  BaseSize: 3
+  BaseSize: 5
   BaseEngineRating: 100
   BaseHeatSink: 8
   BaseHeatCapacity: 20
-  BaseWeight: 3
-  BaseExtend: 0
-  BaseCrit: 3
-  SlotEngineRating: 30
+  BaseWeight: 2
+  BaseExtend: 1
+  BaseCrit: 1
+  SlotEngineRating: 25
   SlotSubEr: 0.5
-  SlotHeatSink: 0.15
-  SlotHeatCapacity: 1
-  SlotExtend: 0
-  ExtendSlotCrit: 0
-  CentralSlotCrit: 0.2
-  SlotWeight: 1
-  SlotAddWeight: 0.15
+  SlotHeatSink: 0.1
+  SlotHeatCapacity: 0.75
+  SlotExtend: 0.15
+  ExtendSlotCrit: 1
+  CentralSlotCrit: 0.1
+  SlotWeight: 0.5
+  SlotAddWeight: 0.05
