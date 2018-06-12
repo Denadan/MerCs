@@ -1,9 +1,12 @@
 ﻿
+using System;
+
 namespace Mercs.Items
 {
     public abstract class ModuleInfo<T> : ItemInfo<T>, IModuleInfo
         where T : ModuleTemplate
     {
+        [NonSerialized]
         private float weight;
 
         public virtual float Weight => weight;

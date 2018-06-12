@@ -34,7 +34,14 @@
         Shots = 14,
 
         EngineRating = 15,
-        HeatCapacity = 16
+        HeatCapacity = 16,
+        Stability = 17,
+        StabilityRestore = 18,
+        Shield = 19,
+        ShieldRegen = 20,
+        RunMod = 21,
+        MoveMod = 22,
+        JumpMod = 23
     }
 
     public enum DamageType
@@ -58,7 +65,8 @@
         IThree = 9,
         IThreeLine = 10,
         IFour = 11,
-        IFive = 12
+        IFive = 12,
+        Gyro = 20
     }
 
     public enum AmmoType
@@ -97,5 +105,7 @@
         AmmoPod = 2,
         HeatSink = 3,
         JumpJet = 4,
+        Gyro = 5,
+        Shield = 6,
     }
 }

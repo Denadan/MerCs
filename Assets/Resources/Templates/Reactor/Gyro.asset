@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8409af965a14491438629e799e6a2855, type: 3}
+  m_Name: Gyro
+  m_EditorClassIdentifier: 
+  Name: '%CLASS% class Gyroscope'
+  ShortName: Gyro
+  Icon: {fileID: 0}
+  Upgrades: []
+  Weight: 0
+  slots: 20
+  Crits: 3
+  Stability: 30
+  StabilityAdd: 2.5
+  StabilityRestore: 0.2
+  MoveMod: 1
+  RunMod: 1

@@ -48,14 +48,14 @@ MonoBehaviour:
   Crits: 2
   BaseSize: 3
   BaseEngineRating: 100
-  BaseHeatSink: 6
+  BaseHeatSink: 7
   BaseHeatCapacity: 20
   BaseWeight: 3
   BaseExtend: 0
   BaseCrit: 3
   SlotEngineRating: 30
   SlotSubEr: 0.5
-  SlotHeatSink: 0.2
+  SlotHeatSink: 0.25
   SlotHeatCapacity: 1
   SlotExtend: 0
   ExtendSlotCrit: 0

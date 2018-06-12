@@ -144,10 +144,6 @@ namespace Mercs.Tactical
             info.Weight = item.Merc.Weight;
             info.Reserve = true;
             info.Position.position = new Vector2Int(-1, -1);
-            info.Movement.MoveMp = item.Merc.MoveSpeed;
-            info.Movement.JumpMP = item.Merc.Jumps;
-            info.Movement.RunMP = item.Merc.RunSpeed;
-            info.Movement.Initiative = item.Merc.Initiative;
 
             if (item.Pilot == null)
                 info.Buffs.Add(new BuffDescriptor

@@ -15,11 +15,6 @@ MonoBehaviour:
   Sprite: {fileID: 21300000, guid: 4d43b974dd6b0a348bf946d0f7cdada1, type: 3}
   AddHp: 0
   Type: 0
-  MoveSpeed: 0
-  RunSpeed: 0
-  Jumps: 0
-  Shield: 45
-  ShieldRegen: 5
   PartTable:
   - Place: 2
     Structure: 3
@@ -176,4 +171,7 @@ MonoBehaviour:
     Ammo: {fileID: 0}
   - place: 128
     Module: {fileID: 11400000, guid: 2979dddafaefda84780c36b7cc2d69a1, type: 2}
+    Ammo: {fileID: 0}
+  - place: 16
+    Module: {fileID: 11400000, guid: f3a6497e7a63d87449d06bd102dc2fa9, type: 2}
     Ammo: {fileID: 0}

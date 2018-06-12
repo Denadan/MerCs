@@ -1,4 +1,6 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
+using Mercs.Items;
 using Mercs.Sprites;
 using Mercs.Tactical.Buffs;
 using UnityEngine;
@@ -24,6 +26,9 @@ namespace Mercs.Tactical
         public string PilotName { get; set; }
         public int Weight { get; set; }
         public bool Selectable { get; set; }
+        public List<IModuleInfo> Modules { get; set; }
+        public Reactor Engine { get; set; }
+        public MercClass Class => CONST.Class(Weight);
 
         private void Start()
         {

@@ -20,6 +20,7 @@ namespace Mercs.Editor
     public class AmmoPodEditor : ItemEditor
     {
     }
+
     [CanEditMultipleObjects]
     [CustomEditor(typeof(Weapon))]
     public class WeaponEditor : ItemEditor
@@ -43,6 +44,16 @@ namespace Mercs.Editor
     [CanEditMultipleObjects]
     [CustomEditor(typeof(JumpJet))]
     public class JumpJetEditor : ItemEditor
+    {
+    }
+    [CanEditMultipleObjects]
+    [CustomEditor(typeof(ShieldGenerator))]
+    public class ShieldGeneratorEditor : ItemEditor
+    {
+    }
+    [CanEditMultipleObjects]
+    [CustomEditor(typeof(Gyro))]
+    public class GyroEditor : ItemEditor
     {
     }
 }

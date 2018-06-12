@@ -41,7 +41,7 @@ namespace Mercs.Tactical.UI
 
             Events.EventHandler.SubscribeUnitHp(info, this.gameObject);
 
-            CaptionText.text = info.PilotName;
+            CaptionText.text = $"{info.PilotName}({CONST.Class(info.Weight)} Mech)";
 
             foreach (var part in info.UnitHP.AllParts)
             {

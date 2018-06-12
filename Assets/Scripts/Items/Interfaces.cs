@@ -25,4 +25,37 @@
     {
         float Heat { get; }
     }
+
+    public interface IShield
+    {
+        float Shield { get; }
+    }
+
+    public interface IShieldRegenerator
+    {
+        float ShieldRegen { get; }
+    }
+
+    public interface IStability
+    {
+        float Stability { get; }
+    }
+
+    public interface IStabilityRestore
+    {
+        float StabilityRestore { get; }
+    }
+
+    public interface IRunMod
+    {
+        float RunMod { get; }
+    }
+    public interface IMoveMod
+    {
+        float MoveMod { get; }
+    }
+    public interface IJumpMod
+    {
+        float JumpMod { get; }
+    }
 }

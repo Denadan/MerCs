@@ -18,11 +18,19 @@ namespace Mercs
 
     public enum MercClass
     {
-        Recon,  //25-40
-        Light,  //45-60
-        Medium, //65-80
-        Heavy,  //85-100
-        Behemot //105-120
+        Scout = 0,      // 25- 34
+        Recon = 1,      // 35- 44
+        Light = 2,      // 45- 54
+
+        Medium1 = 3,    // 55- 64
+        Medium2 = 4,    // 65- 74
+
+        Heavy1 = 5,     // 75- 84
+        Heavy2 = 6,     // 85- 94
+
+        Assault = 7,    // 96-104
+        Dreadnought = 8,//105-114
+        Behemot = 9     //115-125
     }
 
     /// <summary>
@@ -71,7 +79,7 @@ namespace Mercs
         TC = 1 << 14,
         LM = 1 << 15,
         VC = 1 << 16,
-        
+
         //Турель
         TT = 1 << 17
     }
@@ -121,6 +129,30 @@ namespace Mercs
                 default:
                     return Color.red;
             }
+        }
+
+        public static MercClass Class(int Weight)
+        {
+            return (MercClass)((Weight - 25) / 10);
+        }
+
+
+        public static int Initiative(MercClass Class)
+        {
+            switch (Class)
+            {
+                case MercClass w when w <= MercClass.Recon:
+                    return 1;
+                case MercClass w when w <= MercClass.Medium1:
+                    return 2;
+                case MercClass w when w <= MercClass.Heavy1:
+                    return 3;
+                case MercClass w when w <= MercClass.Assault:
+                    return 4;
+                default:
+                    return 5;
+            }
+
         }
     }
 }

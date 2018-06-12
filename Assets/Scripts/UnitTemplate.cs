@@ -22,64 +22,13 @@ namespace Mercs
             public IModuleInfo module => Module as IModuleInfo;
         }
 
-        [Range(25, 120)]
+        [Range(25, 125)]
         public int Weight;
         public Sprite Sprite;
         public int AddHp;
 
         public UnitType Type;
-
-        public MercClass Class
-        {
-            get
-            {
-                switch (Weight)
-                {
-                    case int w when w <= 40:
-                        return MercClass.Recon;
-                    case int w when w <= 60:
-                        return MercClass.Light;
-                    case int w when w <= 80:
-                        return MercClass.Medium;
-                    case int w when w <= 100:
-                        return MercClass.Heavy;
-                    default:
-                        return MercClass.Behemot;
-                }
-            }
-        }
-
-        public int Initiative
-        {
-            get
-            {
-                switch (Weight)
-                {
-                    case int w when w <= 40:
-                        return 2;
-                    case int w when w <= 60:
-                        return 2;
-                    case int w when w <= 80:
-                        return 3;
-                    case int w when w <= 100:
-                        return 3;
-                    default:
-                        return 4;
-                }
-            }
-        }
-
-        [Header("Movement")]
-        public int MoveSpeed;
-        public int RunSpeed;
-        public int Jumps;
-
-        [Header("Parts")]
-        public float Shield;
-        public float ShieldRegen;
         public UnitPart[] PartTable;
-
-        [Header("Items")]
         public Equip[] Items;
 
 #if UNITY_EDITOR
@@ -131,20 +80,10 @@ namespace Mercs
         }
         public bool NeedUpdate
         {
-            get => true;
+            get => false;
         }
         public void Update()
         {
-            if (PartTable == null || PartTable.Length == 0)
-                SetType(Type);
-            foreach (var part in PartTable.Where(i => i.Size.All(p => p == 0)))
-                part.SetDefaultSize();
-            if (Type == UnitType.MerC)
-            {
-                MoveSpeed = 0;
-                Jumps = 0;
-                RunSpeed = 0;
-            }
         }
 
         public override string ToString()
@@ -160,37 +99,45 @@ namespace Mercs
                     if (item.Ammo != null)
                         item.Ammo.ApplyUpgrade();
                 }
-                    var w = Items.Where(i => i.module != null).Sum(i => i.module.Weight);
-                sb.Append($"Fit Weight:{w:F2}\n");
+                var w = Items.Where(i => i.module != null).Sum(i => i.module.Weight);
+                var items = Items.Where(i => i.module != null).Select(i => i.module).ToList();
 
-                //w = 0;
-                //foreach(var item in Items.Where(i => i.module != null))
-                //{
-                //    sb.Append($"{item.module.ShortName}:{item.module.Weight:F2}\n");
-                //}
-                //sb.Append($"Fit Weight:{w:F2}\n");
+                sb.Append($"Class: {CONST.Class(Weight).ToString()}({Weight}) Fit Weight:{w:F2}\n");
 
-                var engine = Items
-                    .Where(i => i.module != null && i.module.ModType == ModuleType.Reactor)
-                    .Select(i => i.module as Reactor)
-                    .FirstOrDefault();
+                var gyro = items.OfType<Gyro>().FirstOrDefault();
+                if (gyro == null)
+                    sb.Append("Gyro not installed\n");
+                else if (gyro.Class != CONST.Class(Weight))
+                    sb.Append("Wrong Gyro!\n");
+
+
+                var engine = items.OfType<Reactor>().FirstOrDefault();
 
                 if (engine != null)
                 {
-                    sb.Append($"Move: {engine.EngineRating / Weight}\n");
-                    sb.Append($"Run: {engine.EngineRating * 3 / Weight / 2}\n");
+                    var mmod = items.OfType<IMoveMod>().Aggregate(1f, (t, c) => t * c.MoveMod);
+                    var rmod = items.OfType<IRunMod>().Aggregate(1f, (t, c) => t * c.RunMod);
+                    var jmod = items.OfType<IJumpMod>().Aggregate(1f, (t, c) => t * c.JumpMod);
 
-                    var jump = Items
-                        .Where(i => i.module != null && i.module.ModType == ModuleType.JumpJet)
-                        .Select(i => i.module as JumpJet)
+                    sb.Append($"Move: {(int)(engine.EngineRating * mmod / Weight) }\n");
+                    sb.Append($"Run: {(int)(engine.EngineRating * 1.5f * rmod / Weight)}\n");
+
+                    var jump = items
+                        .OfType<JumpJet>()
                         .Select(i => (er: i.EngineRating, h: i.Heat))
                         .Aggregate(
                             (er: 0, h: 0f),
                             (total, next) => (total.Item1 + next.er, total.Item2 + next.h)
                         );
 
+                    var jump_leg = Items
+                        .Where(i => i.place == Parts.LL || i.place == Parts.RL)
+                        .Select(i => i.module)
+                        .OfType<JumpJet>()
+                        .Sum(i => i.EngineRating);
+
                     if (jump.er > 0)
-                        sb.Append($"Jump: {jump.er / Weight}\n");
+                        sb.Append($"Jump: {(int)(jump.er *jmod / Weight)}({(int)(jump_leg * jmod / Weight)})\n");
 
                     var heatc = Items
                         .Where(i => i.Module is IHeatContainer)
@@ -218,6 +165,7 @@ namespace Mercs
                             i => i.pod.Capacity,
                             (key, item) => new { ammo = key, sum = item.Sum() })
                         .GroupBy(i => i.ammo.Type);
+
                     sb.Append("============== AMMO =============\n");
                     foreach(var item in ammo_list)
                     {

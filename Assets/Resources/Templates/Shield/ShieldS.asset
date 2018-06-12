@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9ebeedf611145841beb51dfe109572a, type: 3}
+  m_Name: ShieldS
+  m_EditorClassIdentifier: 
+  Name: Small Shield
+  ShortName: ShieldS
+  Icon: {fileID: 0}
+  Upgrades: []
+  Weight: 1
+  slots: 7
+  Crits: 2
+  Shield: 10
+  ShieldRegen: 1
+  Heat: 1
