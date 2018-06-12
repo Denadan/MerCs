@@ -12,6 +12,8 @@ namespace Mercs.Items
         private float _weight;
         private int _crit;
 
+        public override ModuleType ModType => ModuleType.Reactor;
+
         public override float Weight => _weight;
         public int FullSize => Size + Template.BaseSize;
         public int EngineRating { get; private set; }

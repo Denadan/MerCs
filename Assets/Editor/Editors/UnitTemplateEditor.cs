@@ -18,6 +18,11 @@ namespace Mercs.Editor
                 }
 
             base.OnInspectorGUI();
+
+            if(targets.Length == 1)
+            {
+                EditorGUILayout.TextArea(targets[0].ToString());
+            }
         }
     }
 }

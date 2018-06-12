@@ -15,9 +15,9 @@ MonoBehaviour:
   Sprite: {fileID: 21300000, guid: 4d43b974dd6b0a348bf946d0f7cdada1, type: 3}
   AddHp: 0
   Type: 0
-  MoveSpeed: 4
-  RunSpeed: 6
-  Jumps: 4
+  MoveSpeed: 0
+  RunSpeed: 0
+  Jumps: 0
   Shield: 45
   ShieldRegen: 5
   PartTable:
@@ -125,3 +125,4 @@ MonoBehaviour:
     - 0
     - 7
     - 4
+  Items: []

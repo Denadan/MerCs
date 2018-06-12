@@ -8,11 +8,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f7e31c54165a724bbe7b9d714afd109, type: 3}
-  m_Name: Reactor1
+  m_Script: {fileID: 11500000, guid: 3338bbbcb2f57f0448d3608f236d4b22, type: 3}
+  m_Name: Double Medium Laser
   m_EditorClassIdentifier: 
-  Template: {fileID: 11400000, guid: 9064238b9fb2a954a9fe820dc0c2ecdf, type: 2}
+  Template: {fileID: 11400000, guid: a0fb45cf1c67e2a4bbf6fa5e7ca50c0a, type: 2}
   Upgrade: {fileID: 11400000, guid: 9c7ebcc40c0d9f54395544234e2c0f29, type: 2}
   ItemName: 
   ItemShortName: 
-  Size: 8

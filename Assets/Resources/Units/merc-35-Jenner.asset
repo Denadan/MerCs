@@ -15,9 +15,9 @@ MonoBehaviour:
   Sprite: {fileID: 21300000, guid: 54de049198835db46b09c4dc084b1948, type: 3}
   AddHp: 0
   Type: 0
-  MoveSpeed: 7
-  RunSpeed: 11
-  Jumps: 6
+  MoveSpeed: 0
+  RunSpeed: 0
+  Jumps: 0
   Shield: 5
   ShieldRegen: 1
   PartTable:
@@ -125,3 +125,24 @@ MonoBehaviour:
     - 0
     - 7
     - 4
+  Items:
+  - place: 16
+    Module: {fileID: 11400000, guid: bb43e4cccf4314043aac174d808da359, type: 2}
+  - place: 16
+    Module: {fileID: 11400000, guid: c2cec842d771f9a4ba2061f1e17ded48, type: 2}
+  - place: 8
+    Module: {fileID: 11400000, guid: ac3f79bcd908378428689616a402cc78, type: 2}
+  - place: 32
+    Module: {fileID: 11400000, guid: ac3f79bcd908378428689616a402cc78, type: 2}
+  - place: 64
+    Module: {fileID: 11400000, guid: 6762650558c351c4db86e1e4c8296031, type: 2}
+  - place: 128
+    Module: {fileID: 11400000, guid: 6762650558c351c4db86e1e4c8296031, type: 2}
+  - place: 32
+    Module: {fileID: 11400000, guid: b488b5abe8efb314ebe26f5c75aa461f, type: 2}
+  - place: 32
+    Module: {fileID: 11400000, guid: 7d3c1e86128ebc8469537ec724668c9e, type: 2}
+  - place: 8
+    Module: {fileID: 11400000, guid: 7089a20035ea13544afbfb3db2d3a7c0, type: 2}
+  - place: 32
+    Module: {fileID: 11400000, guid: 0665bbeb5185fb94a8d9f81b7153f838, type: 2}

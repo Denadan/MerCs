@@ -89,4 +89,13 @@
     {
         None = 0, Termal = 1, Laser = 2, Beacon = 3, Telemetry = 4
     }
+
+    public enum ModuleType
+    {
+        Reactor = 0,
+        Weapon = 1,
+        AmmoPod = 2,
+        HeatSink = 3,
+        JumpJet = 4,
+    }
 }

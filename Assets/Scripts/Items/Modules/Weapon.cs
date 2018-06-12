@@ -6,6 +6,8 @@ namespace Mercs.Items
     [CreateAssetMenu(fileName = "Weapon", menuName = "MerCs/Module/Weapon")]
     public partial class Weapon : ModuleInfo<WeaponTemplate>
     {
+        public override ModuleType ModType => ModuleType.Weapon;
+
         public float DamageMult { get; private set; }
         public float Damage => EDamage + BDamage + MDamage;
 

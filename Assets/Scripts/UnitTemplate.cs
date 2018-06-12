@@ -1,15 +1,28 @@
 ﻿using Mercs.Tactical;
 using UnityEngine;
+using System;
+using Mercs.Items;
 
 #if UNITY_EDITOR
 using System.Linq;
+using System.Text;
 #endif
 
 namespace Mercs
 {
     public class UnitTemplate : ScriptableObject
     {
-        [Range(25,120)]
+        [Serializable]
+        public class Equip
+        {
+            public Parts place;
+            [SerializeField]
+            public ScriptableObject Module;
+
+            public IModuleInfo module => Module as IModuleInfo;
+        }
+
+        [Range(25, 120)]
         public int Weight;
         public Sprite Sprite;
         public int AddHp;
@@ -20,7 +33,7 @@ namespace Mercs
         {
             get
             {
-                switch(Weight)
+                switch (Weight)
                 {
                     case int w when w <= 40:
                         return MercClass.Recon;
@@ -66,11 +79,14 @@ namespace Mercs
         public float ShieldRegen;
         public UnitPart[] PartTable;
 
+        [Header("Items")]
+        public Equip[] Items;
+
 #if UNITY_EDITOR
         public void SetType(UnitType type)
         {
             Type = type;
-            switch(type)
+            switch (type)
             {
                 case UnitType.Turret:
                     PartTable = new UnitPart[] {
@@ -113,21 +129,63 @@ namespace Mercs
             foreach (var part in PartTable)
                 part.SetDefaultSize();
         }
-
-
         public bool NeedUpdate
         {
-            get => PartTable == null
-                    || PartTable.Length == 0
-                    || PartTable.Any(i => i.Size.All(p => p == 0));
+            get => true;
         }
-
         public void Update()
         {
             if (PartTable == null || PartTable.Length == 0)
                 SetType(Type);
             foreach (var part in PartTable.Where(i => i.Size.All(p => p == 0)))
                 part.SetDefaultSize();
+            if (Type == UnitType.MerC)
+            {
+                MoveSpeed = 0;
+                Jumps = 0;
+                RunSpeed = 0;
+            }
+        }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append(base.ToString() + "\n");
+
+            if (Items != null)
+            {
+                var w = Items.Where(i => i.module != null).Sum(i => i.module.Weight);
+                sb.Append($"Fit Weight:{w}\n");
+
+                var engine = Items
+                    .Where(i => i.module != null && i.module.ModType == ModuleType.Reactor)
+                    .Select(i => i.module as Reactor)
+                    .FirstOrDefault();
+
+                if (engine != null)
+                {
+                    sb.Append($"Move: {engine.EngineRating / Weight}\n");
+                    sb.Append($"Run: {engine.EngineRating * 3 / Weight / 2}\n");
+
+                    var jump = Items
+                        .Where(i => i.module != null && i.module.ModType == ModuleType.JumpJet)
+                        .Select(i => (i.module as JumpJet).EngineRating)
+                        //.DefaultIfEmpty()
+                        .Sum();
+                    if (jump > 0)
+                        sb.Append($"Jump: {jump / Weight}\n");
+                }
+                else
+                    sb.Append("No Engine!");
+
+
+            }
+            else
+            {
+                sb.Append("EMPTY!");
+            }
+
+            return sb.ToString();
         }
 #endif
     }

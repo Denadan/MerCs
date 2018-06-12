@@ -6,6 +6,8 @@ namespace Mercs.Items
     [CreateAssetMenu(fileName = "HeatSink", menuName = "MerCs/Module/HeatSink")]
     public class HeatSink : ModuleInfo<HeatSinkTemplate>
     {
+        public override ModuleType ModType => ModuleType.HeatSink;
+
         public float HeatDissipation { get; private set; }
         public float HeatCapacity { get; private set; }
 

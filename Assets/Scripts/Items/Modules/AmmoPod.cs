@@ -6,6 +6,8 @@ namespace Mercs.Items
     [CreateAssetMenu(fileName = "AmmoPod", menuName = "MerCs/Module/AmmoPod")]
     public class AmmoPod : ModuleInfo<AmmoPodTemplate>
     {
+        public override ModuleType ModType => ModuleType.AmmoPod;
+
         public float Capacity { get; private set; }
         public float DamageTransfer { get; private set; }
         public float DamageToHeat { get; private set; }

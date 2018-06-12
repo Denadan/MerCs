@@ -1,7 +1,7 @@
 ﻿
 namespace Mercs.Items
 {
-    public class ModuleInfo<T> : ItemInfo<T>
+    public abstract class ModuleInfo<T> : ItemInfo<T>, IModuleInfo
         where T : ModuleTemplate
     {
         private float weight;
@@ -9,6 +9,8 @@ namespace Mercs.Items
         public virtual float Weight => weight;
         public SlotSize Slot => Template.slots;
         public virtual int Crit { get => Template.Crits; }
+
+        public abstract ModuleType ModType { get; }
 
         public override void ApplyUpgrade()
         {

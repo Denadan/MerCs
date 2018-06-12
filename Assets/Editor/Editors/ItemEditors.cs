@@ -40,4 +40,9 @@ namespace Mercs.Editor
     public class HeatSinkEditor : ItemEditor
     {
     }
+    [CanEditMultipleObjects]
+    [CustomEditor(typeof(JumpJet))]
+    public class JumpJetEditor : ItemEditor
+    {
+    }
 }

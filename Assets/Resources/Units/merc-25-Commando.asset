@@ -15,8 +15,8 @@ MonoBehaviour:
   Sprite: {fileID: 21300000, guid: 92bf2a67e77638847a4da1c95556a856, type: 3}
   AddHp: 0
   Type: 0
-  MoveSpeed: 6
-  RunSpeed: 9
+  MoveSpeed: 0
+  RunSpeed: 0
   Jumps: 0
   Shield: 10
   ShieldRegen: 1
@@ -125,3 +125,20 @@ MonoBehaviour:
     - 0
     - 7
     - 4
+  Items:
+  - place: 16
+    Module: {fileID: 11400000, guid: e34cb109ca042a640a7e2ca4f64e7693, type: 2}
+  - place: 8
+    Module: {fileID: 0}
+  - place: 8
+    Module: {fileID: 0}
+  - place: 32
+    Module: {fileID: 0}
+  - place: 128
+    Module: {fileID: 0}
+  - place: 64
+    Module: {fileID: 0}
+  - place: 8
+    Module: {fileID: 0}
+  - place: 32
+    Module: {fileID: 0}
