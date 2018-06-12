@@ -11,7 +11,6 @@ namespace Mercs.Items
 
         public AmmoType Ammo;
 
-        public float EnergyForShot;
         public float HeatForShot;
         public bool VariableShots;
 

@@ -23,7 +23,6 @@ namespace Mercs.Items
         public int Shots { get; private set; }
 
         public float HeatForShot { get; private set; }
-        public float EnergyForShot { get; private set; }
 
         public override void ApplyUpgrade()
         {
@@ -35,8 +34,7 @@ namespace Mercs.Items
             MinRange = upgrade(UpgradeType.Range, Template.MinRange);
             Optimal = upgrade(UpgradeType.Range, Template.Optimal);
             Falloff = upgrade(UpgradeType.Range, Template.Falloff);
-            HeatForShot = upgrade(UpgradeType.HeatPerShot, Template.HeatForShot);
-            EnergyForShot = upgrade(UpgradeType.EnergyPerShot, Template.EnergyForShot);
+            HeatForShot = upgrade(UpgradeType.Heat, Template.HeatForShot);
             Shots = (int)upgrade(UpgradeType.Shots, Template.Shots);
 
             Name = Name.Replace("%SHOT%", Shots.ToString());
@@ -64,7 +62,7 @@ namespace Mercs.Items
             sb.Append($"Damage: {Damage:F2} (E:{EDamage:F2} B:{BDamage:F2} M:{MDamage:F2})\n");
             sb.Append($"Heat: {HeatDamage:F2}  Stab:{StabDamage:F2}\n");
             sb.Append($"Shots: {Shots} {(Template.VariableShots ? '~' : ' ')}\n");
-            sb.Append($"Heat Generate:{HeatForShot:F2} Energy:{EnergyForShot:F2}\n");
+            sb.Append($"Heat Generate:{HeatForShot:F2}\n");
             sb.Append($"Range: {MinRange}/{Optimal}/{Falloff}\n");
             sb.Append($"FireMode:");
             if (Template.DirectFire)

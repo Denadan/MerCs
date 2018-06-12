@@ -26,12 +26,15 @@
         Range = 8,
         Accuracy = 9,
 
-        EnergyPerShot = 10,
-        HeatPerShot = 11,
+        RESERVED0 = 10, //!
+        Heat = 11,
 
         GuidanceSystem = 12,
         GuidanceBonus = 13,
-        Shots = 14
+        Shots = 14,
+
+        EngineRating = 15,
+        EngineHeat = 16,
     }
 
     public enum DamageType

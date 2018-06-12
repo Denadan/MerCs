@@ -30,4 +30,9 @@ namespace Mercs.Editor
     public class AmmoEditor : ItemEditor
     {
     }
+    [CanEditMultipleObjects]
+    [CustomEditor(typeof(Reactor))]
+    public class ReactorEditor : ItemEditor
+    {
+    }
 }

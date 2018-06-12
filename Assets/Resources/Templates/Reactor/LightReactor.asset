@@ -9,22 +9,22 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dd9bb2244bebcf14b8f42d10616cab8b, type: 3}
-  m_Name: StandartReactor
+  m_Name: LightReactor
   m_EditorClassIdentifier: 
-  Name: Standart Reactor %SIZE%
-  ShortName: Std Reactor %SIZE%
+  Name: Light Reactor %SIZE%
+  ShortName: LReactor %SIZE%
   Icon: {fileID: 0}
   Upgrades: []
   Weight: 0
   slots: 5
-  BaseSize: 3
+  BaseSize: 5
   BaseEngineRating: 100
   BaseHeatSink: 4
-  BaseWeight: 3
-  BaseExtend: 0
-  SlotEngineRating: 30
-  SlotHeatSink: 0.5
-  SlotWeight: 1
-  SlotAddWeight: 0.15
+  BaseWeight: 2
+  BaseExtend: 1
+  SlotEngineRating: 25
+  SlotHeatSink: 0.3
+  SlotWeight: 0.5
+  SlotAddWeight: 0.05
   SlotSubEr: 0.5
-  SlotExtend: 0
+  SlotExtend: 0.15
