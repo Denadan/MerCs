@@ -33,6 +33,13 @@ namespace Mercs.Items
         public string ShortName { get; protected set; }
 
         /// <summary>
+        /// имя темплейта для неопределенных модулей
+        /// </summary>
+        public string BaseName { get; protected set; }
+
+        public virtual Sprite Icon => Template.Icon;
+
+        /// <summary>
         /// если не равно "" - игнорирование сгенерированного имени
         /// </summary>
         public string ItemName;
@@ -51,6 +58,7 @@ namespace Mercs.Items
                 return;
             Name = ItemName != "" ? ItemName : string.Format(Upgrade.NameTemplate, Template.Name);
             ShortName = ItemShortName != "" ? ItemShortName : string.Format(Upgrade.ShortNameTemplate, Template.ShortName);
+            BaseName = Template.ShortName;
         }
         /// <summary>
         /// посчтиать улучшения параметра

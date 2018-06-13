@@ -133,11 +133,11 @@ MonoBehaviour:
   - place: 512
     Module: {fileID: 11400000, guid: f81fb84b52a1c354abece0b2c8b88310, type: 2}
     Ammo: {fileID: 0}
-  - place: 256
+  - place: 512
     Module: {fileID: 11400000, guid: 205341f5ce4fac04a9f4d9c9639eced9, type: 2}
     Ammo: {fileID: 0}
   - place: 8
-    Module: {fileID: 11400000, guid: fed5491a03efc56419d289d90418673e, type: 2}
+    Module: {fileID: 11400000, guid: a3e6020e97653fe4f9e1ea5e9b9a88b1, type: 2}
     Ammo: {fileID: 0}
   - place: 8
     Module: {fileID: 11400000, guid: 7e2d061fe331eb84cac1f012707d59c1, type: 2}

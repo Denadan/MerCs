@@ -57,6 +57,7 @@ namespace Mercs.Items
 
             weight = upgrade(UpgradeType.Weight, (int) Class + 3);
             Name = Name.Replace("%CLASS%", Class.ToString());
+            BaseName = BaseName.Replace("%CLASS%", Class.ToString());
         }
 
 #if UNITY_EDITOR

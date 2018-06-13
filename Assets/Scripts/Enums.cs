@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Mercs.Items;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Mercs
@@ -153,6 +154,11 @@ namespace Mercs
                     return 5;
             }
 
+        }
+
+        public static bool Visible(IModuleInfo module)
+        {
+            return module.Slot <= SlotSize.Five;
         }
     }
 }

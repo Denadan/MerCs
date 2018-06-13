@@ -41,7 +41,7 @@ namespace Mercs.Tactical.UI
 
             Events.EventHandler.SubscribeUnitHp(info, this.gameObject);
 
-            CaptionText.text = $"{info.PilotName}({CONST.Class(info.Weight)} Mech)";
+            CaptionText.text = $"{info.PilotName}({CONST.Class(info.Weight)} {info.Type})";
 
             foreach (var part in info.UnitHP.AllParts)
             {
@@ -61,6 +61,36 @@ namespace Mercs.Tactical.UI
             UnitDamage(info.UnitHP);
 
         }
+
+        private void ShowPart(Parts part)
+        {
+            foreach (Transform child in StringContainer)
+                Destroy(child.gameObject);
+
+            var list = part == Parts.None ? info.UnitHP.Modules() : info.UnitHP.Modules(part);
+            foreach(var module in list)
+            {
+                if (info.Vision == Visibility.Visual)
+                {
+                    if (CONST.Visible(module))
+                    {
+                        var str = Instantiate(StringPrefab, StringContainer).GetComponent<IconText>();
+                        str.Icon = module.Icon;
+                        str.Text = module.BaseName;
+                    }
+                }
+                else
+                {
+                    if (selected != Parts.None || module.ModType == Items.ModuleType.Weapon || module.ModType == Items.ModuleType.AmmoPod)
+                    {
+                        var str = Instantiate(StringPrefab, StringContainer).GetComponent<IconText>();
+                        str.Icon = module.Icon;
+                        str.Text = module.ShortName;
+                    }
+                }
+            }
+        }
+        
 
         public void ShowPartDetail(Parts part)
         {
@@ -148,6 +178,8 @@ namespace Mercs.Tactical.UI
                     }
                 }
             }
+
+            ShowPart(selected);
         }
 
         public void MouseUnitEnter(UnitInfo unit)

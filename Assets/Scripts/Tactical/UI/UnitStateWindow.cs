@@ -36,8 +36,6 @@ namespace Mercs.Tactical.UI
             if (this.info != null)
                 Events.EventHandler.UnsubscribeUnitHp(info, this.gameObject);
 
-
-
             parts.Clear();
             foreach (Transform child in PartsHolder)
                 Destroy(child.gameObject);
@@ -46,7 +44,7 @@ namespace Mercs.Tactical.UI
             {
                 Armor.Hide();
                 Shield.Hide();
-                ArmorB.Hide(); 
+                ArmorB.Hide();
                 ArmorF.Hide();
                 Structure.Hide();
 
@@ -55,7 +53,7 @@ namespace Mercs.Tactical.UI
 
             Events.EventHandler.SubscribeUnitHp(info, this.gameObject);
 
-            CaptionText.text = $"{info.PilotName}({CONST.Class(info.Weight)} Mech)";
+            CaptionText.text = $"{info.PilotName}({CONST.Class(info.Weight)} {info.Type})";
             this.info = info;
 
             foreach (var part in info.UnitHP.AllParts)
@@ -65,6 +63,24 @@ namespace Mercs.Tactical.UI
                 parts.Add(part, p);
             }
 
+            UnitDamage(info.UnitHP);
+        }
+
+        private void ShowPartData()
+        {
+            foreach (Transform child in StringContainer)
+                Destroy(child.gameObject);
+
+            foreach(var module in info.UnitHP.Modules(selected))
+            {
+                var str = Instantiate(StringPrefab, StringContainer).GetComponent<IconText>();
+                str.Icon = module.Icon;
+                str.Text = module.ShortName;
+            }
+        }
+
+        private void ShowMovementData()
+        {
             foreach (Transform child in StringContainer)
                 Destroy(child.gameObject);
             if (info.Movement.MoveMp > 0)
@@ -87,8 +103,6 @@ namespace Mercs.Tactical.UI
                 item.Icon = JumpSprite;
                 item.Text = info.Movement.JumpMP.ToString();
             }
-
-            UnitDamage(info.UnitHP);
         }
 
         private void OnDisable()
@@ -132,6 +146,8 @@ namespace Mercs.Tactical.UI
 
                 Armor.MaxValue = hp.MaxArmor;
                 Armor.Value = hp.TotalArmor;
+
+                ShowMovementData();
             }
             else
             {
@@ -161,7 +177,7 @@ namespace Mercs.Tactical.UI
                     Armor.MaxValue = max.armor;
                     Armor.Value = current.armor;
                 }
-
+                ShowPartData();
             }
         }
     }

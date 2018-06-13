@@ -43,6 +43,7 @@ namespace Mercs.Items
 
             Name = Name.Replace("%SHOT%", Shots.ToString());
             ShortName = ShortName.Replace("%SHOT%", Shots.ToString());
+            BaseName = BaseName.Replace("%SHOT%", Shots.ToString());
         }
 #if UNITY_EDITOR
         public override string ToString()

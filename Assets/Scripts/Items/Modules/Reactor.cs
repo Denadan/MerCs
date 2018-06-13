@@ -32,6 +32,9 @@ namespace Mercs.Items
 
             Name = Name.Replace("%SIZE%", (Size + Template.BaseSize).ToString());
             ShortName = ShortName.Replace("%SIZE%", (Size + Template.BaseSize).ToString());
+            BaseName = BaseName.Replace("%SIZE%", (Size + Template.BaseSize).ToString());
+
+
             var er = Template.BaseEngineRating + Size * (Template.SlotEngineRating - Template.SlotSubEr * Size);
             EngineRating = (int)upgrade(UpgradeType.EngineRating, er);
 

@@ -14,6 +14,7 @@ namespace Mercs.Tactical
                 throw new ArgumentException($"{prefab} is not Unit!");
 
             info.gameObject.SetActive(true);
+            info.Type = template.Type;
 
             info.GetComponent<SpriteRenderer>().sprite = template.Sprite;
             

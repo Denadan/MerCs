@@ -17,6 +17,7 @@ namespace Mercs.Tactical
         public UnitHp UnitHP;
         public BuffList Buffs;
 
+
         public Visibility Vision;
         
 
@@ -29,6 +30,7 @@ namespace Mercs.Tactical
         public List<IModuleInfo> Modules { get; set; }
         public Reactor Engine { get; set; }
         public MercClass Class => CONST.Class(Weight);
+        public UnitType Type { get; set; }
 
         private void Start()
         {

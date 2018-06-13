@@ -131,6 +131,10 @@ namespace Mercs.Tactical
             right = template.PartTable.Select(i => (i.Place, (float)i.Size[2])).ToList();
             back = template.PartTable.Select(i => (i.Place, (float)i.Size[3])).ToList();
 
+#if UNITY_EDITOR
+            string s = template.name;
+#endif
+
             foreach (var item_info in template.Items)
             {
                 //UnityEngine.Debug.Log($"{template.name}  {item_info.place}\n{item_info.Module}");
@@ -138,6 +142,11 @@ namespace Mercs.Tactical
                 module.ApplyUpgrade();
                 modules.Add(module);
 
+#if UNITY_EDITOR
+                s += $"\n{item_info.place} - {module.ShortName}";
+                if (module.ModType == ModuleType.AmmoPod)
+                    s += $"({item_info.Ammo.ShortName})";
+#endif
                 if (module.ModType == ModuleType.Reactor)
                 {
                     var reactor = module as Reactor;
@@ -175,11 +184,19 @@ namespace Mercs.Tactical
                         case SlotSize.Five:
                             size = 5;
                             break;
+                        case SlotSize.Gyro:
+                            size = 3 + (int)(module as Gyro).Class / 2;
+                            break;
                     }
+
                     if(size > 0)
                         parts[item_info.place].crit_table.Add(new crit(size, module));
                 }
             }
+
+#if UNITY_EDITOR
+            UnityEngine.Debug.Log(s);
+#endif
 
             MaxShield = modules.OfType<IShield>().Sum(i => i.Shield);
             Shield = MaxShield;

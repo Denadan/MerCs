@@ -1,12 +1,16 @@
-﻿namespace Mercs.Items
+﻿using UnityEngine;
+
+namespace Mercs.Items
 {
     public interface IModuleInfo
     {
         string Name { get; }
         string ShortName { get; }
+        string BaseName { get; }
         float Weight { get; }
         SlotSize Slot { get; }
         ModuleType ModType { get; }
+        Sprite Icon { get; }
 
         void ApplyUpgrade();
     }
