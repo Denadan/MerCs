@@ -98,7 +98,10 @@ namespace Mercs.Tactical
             Units.Clear();
             foreach (var item in GameController.Instance.Mechs)
             {
-                UnitInfo info = CreateUnit(item, GameController.Instance.PlayerFaction);
+                UnitInfo info = UnitContructor.Build(PlayerMechPrefab, item.Merc, item.Pilot);
+                info.transform.SetParent(Grid.UnitsParent, false);
+                info.gameObject.SetActive(false);
+                info.Faction = GameController.Instance.PlayerFaction;
 
                 Units.Add(info);
             }
@@ -113,61 +116,6 @@ namespace Mercs.Tactical
 
         }
 
-        private UnitInfo CreateUnit(StartMechInfo item, Faction faction)
-        {
-            GameObject unit;
-            if (faction == GameController.Instance.PlayerFaction)
-                unit = Instantiate(PlayerMechPrefab, Grid.UnitsParent, false);
-            else
-                unit = Instantiate(EnemyMechPrefab, Grid.UnitsParent, false);
-
-            unit.GetComponent<SpriteRenderer>().sprite = item.Merc.Sprite;
-            var info = unit.GetComponent<UnitInfo>();
-
-            info.Faction = faction;
-
-            info.Active = false;
-            if (item.Pilot == null)
-            {
-                info.PilotName = "DroneAI";
-                Destroy(info.PilotHP);
-                info.PilotHP = null;
-            }
-            else
-            {
-                info.PilotName = item.Pilot.name;
-                info.PilotHP.Init(item);
-            }
-
-
-            info.UnitHP.Build(item.Merc);
-            info.Weight = item.Merc.Weight;
-            info.Reserve = true;
-            info.Position.position = new Vector2Int(-1, -1);
-
-            if (item.Pilot == null)
-                info.Buffs.Add(new BuffDescriptor
-                {
-                    Type = BuffType.InitiativeBonus,
-                    Value = -1,
-                    TAG = "No Pilot",
-                    MinVision = Visibility.Scanned,
-                    ToolTip = "Initiative {0}"
-                });
-            else if (item.Pilot.InitiativeBonus > 0)
-                info.Buffs.Add(new BuffDescriptor
-                {
-                    Type = BuffType.InitiativeBonus,
-                    Value = item.Pilot.InitiativeBonus,
-                    TAG = "Master Pilot",
-                    MinVision = Visibility.Scanned,
-                    ToolTip = "Initiative {0}"
-                });
-
-
-            info.gameObject.SetActive(false);
-            return info;
-        }
 
 
         public void HighlightUnit(UnitInfo info)
@@ -227,16 +175,18 @@ namespace Mercs.Tactical
 
             foreach (var item in GameController.Instance.EnemyMechs)
             {
-                var unit = CreateUnit(item, GameController.Instance.EnemyFaction);
-                unit.gameObject.SetActive(true);
+                var unit = UnitContructor.Build(EnemyMechPrefab, item.Merc, item.Pilot);
+                unit.transform.SetParent(Grid.UnitsParent, false);
+                unit.Faction = GameController.Instance.EnemyFaction;
+                // TODO: VISIBILITY!
+                unit.Vision = Visibility.Visual;
+
                 var coord = unit.GetComponent<CellPosition>();
                 Vector2Int c = new Vector2Int();
                 do
                 {
                     c.x = UnityEngine.Random.Range(deploy_zone.xMin, deploy_zone.xMax);
                     c.y = UnityEngine.Random.Range(deploy_zone.yMin, deploy_zone.yMax);
-
-
                 } while (Units.Find(u => u.Position.position == c));
 
                 unit.Position.position = c;

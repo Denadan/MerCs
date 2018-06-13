@@ -8,7 +8,6 @@ namespace Mercs.Tactical
     {
         public TileInfo Info { get; set; }
         public Map Map;
-
     }
 }
 

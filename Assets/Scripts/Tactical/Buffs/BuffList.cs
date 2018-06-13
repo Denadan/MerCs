@@ -7,8 +7,6 @@ namespace Mercs.Tactical.Buffs
 {
     public class BuffList : MonoBehaviour, IEnumerable<BuffDescriptor>
     {
-
-        
         private List<BuffDescriptor> buffs = new List<BuffDescriptor>();
 
         public void EndPhase()

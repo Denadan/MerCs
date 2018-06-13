@@ -60,21 +60,6 @@ namespace Mercs.Tactical
 
         }
 
-        // TODO: убрать? 
-        /// <summary>
-        /// ? непригодилось?
-        /// </summary>
-        public enum move
-        {
-            step_forward,
-            step_back,
-            turn_left,
-            turn_left2,
-            turn_right,
-            turn_right2,
-            turn_left3
-        }
-
         /// <summary>
         /// Узел маршрута
         /// </summary>

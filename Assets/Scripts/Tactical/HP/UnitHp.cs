@@ -121,6 +121,8 @@ namespace Mercs.Tactical
 
         public List<IModuleInfo> Build(UnitTemplate template)
         {
+            modules = new List<IModuleInfo>();
+
             var list = (from item in template.PartTable select (part: new part(item), template: item)).ToList();
             parts = list.ToDictionary(i => i.template.Place, i => i.part);
 
@@ -131,6 +133,7 @@ namespace Mercs.Tactical
 
             foreach (var item_info in template.Items)
             {
+                //UnityEngine.Debug.Log($"{template.name}  {item_info.place}\n{item_info.Module}");
                 var module = Instantiate(item_info.Module) as IModuleInfo;
                 module.ApplyUpgrade();
                 modules.Add(module);

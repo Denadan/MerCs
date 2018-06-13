@@ -17,14 +17,14 @@ namespace Mercs.Tactical
         private List<GameObject> subscribers = new List<GameObject>();
 
 
-        public void Init(StartMechInfo info)
+        public void Init(PilotInfo info, int addhp)
         {
-            MaxHp = info.Pilot.Hp;
+            MaxHp = info.Hp;
             Hp = MaxHp;
-            AddHp = info.Merc.AddHp;
+            AddHp = addhp;
         }
 
-        public void Start()
+       public void Start()
         {
             unit = GetComponent<UnitInfo>();
             EventHandler.RegisterPilotHp(unit, this);

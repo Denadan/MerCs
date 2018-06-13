@@ -55,6 +55,7 @@ namespace Mercs.Tactical.UI
             UnitDamage(Unit.UnitHP);
         }
 
+
         public void PilotDamaged(PilotHp hp)
         {
 
