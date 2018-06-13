@@ -7,27 +7,67 @@ using UnityEngine;
 
 namespace Mercs.Items
 {
+    /// <summary>
+    /// Боеприпасы
+    /// </summary>
     [CreateAssetMenu(fileName = "Ammo", menuName = "MerCs/Module/Ammo")]
     public class Ammo : ItemInfo<AmmoTemplate>
     {
         public AmmoType Type => Template.Type;
 
+        /// <summary>
+        /// базовый урон 
+        /// </summary>
         public float Damage => EDamage + MDamage + BDamage;
 
+        /// <summary>
+        /// энергетический урон
+        /// </summary>
         public float EDamage { get; private set; }
+        /// <summary>
+        /// взрывной урон
+        /// </summary>
         public float MDamage { get; private set; }
+        /// <summary>
+        /// кинетический урон
+        /// </summary>
         public float BDamage { get; private set; }
 
+        /// <summary>
+        /// нагрев при попадании
+        /// </summary>
         public float HeatDamage { get; private set; }
+        /// <summary>
+        /// урон стабильности
+        /// </summary>
         public float StabDamage { get; private set; }
 
+        /// <summary>
+        /// модификация дальности
+        /// </summary>
         public float RangeMod { get; private set; }
+        /// <summary>
+        /// модификация точности
+        /// </summary>
         public float AimMod { get; private set; }
+        /// <summary>
+        /// поглощение кинетического урона броней
+        /// </summary>
         public float BallisticArmorDamage => Template.BallisticArmorDamage;
 
+        /// <summary>
+        /// система наведения для ракет
+        /// </summary>
         public GuidanceSystem Guidance { get; private set; }
+        /// <summary>
+        /// бонус системы наведения
+        /// </summary>
         public float GuidanceBonus { get; private set; }
 
+        /// <summary>
+        /// применение апгрейда
+        /// ВАЖНО: до использования этого метода инфа модуля не верна!
+        /// </summary>
         public override void ApplyUpgrade()
         {
             base.ApplyUpgrade();

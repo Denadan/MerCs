@@ -3,17 +3,39 @@ using UnityEngine;
 
 namespace Mercs.Items
 {
+    /// <summary>
+    /// контейнер для боеприпасов
+    /// </summary>
     [CreateAssetMenu(fileName = "AmmoPod", menuName = "MerCs/Module/AmmoPod")]
     public class AmmoPod : ModuleInfo<AmmoPodTemplate>
     {
         public override ModuleType ModType => ModuleType.AmmoPod;
 
+        /// <summary>
+        /// вместимость контейнера
+        /// </summary>
         public float Capacity { get; private set; }
+        /// <summary>
+        /// процент урона при взрыве 
+        /// </summary>
         public float DamageTransfer { get; private set; }
+        /// <summary>
+        /// процент урона переводимый в перегрев
+        /// </summary>
         public float DamageToHeat { get; private set; }
+        /// <summary>
+        /// процент урона переводимый в стабильность
+        /// </summary>
         public float DamageToStab { get; private set; }
+        /// <summary>
+        /// тип боеприпасов
+        /// </summary>
         public AmmoType Type => Template.Type;
 
+        /// <summary>
+        /// применение апгрейда
+        /// ВАЖНО: до использования этого метода инфа модуля не верна!
+        /// </summary>
         public override void ApplyUpgrade()
         {
             base.ApplyUpgrade();

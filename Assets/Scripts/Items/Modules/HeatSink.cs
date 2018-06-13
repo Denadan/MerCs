@@ -3,15 +3,27 @@ using UnityEngine;
 
 namespace Mercs.Items
 {
+    /// <summary>
+    /// Охладитель
+    /// </summary>
     [CreateAssetMenu(fileName = "HeatSink", menuName = "MerCs/Module/HeatSink")]
     public class HeatSink : ModuleInfo<HeatSinkTemplate>, IHeatDissipator, IHeatContainer
     {
         public override ModuleType ModType => ModuleType.HeatSink;
 
+        /// <summary>
+        /// рассеивание тепла в ход
+        /// </summary>
         public float HeatDissipation { get; private set; }
+        /// <summary>
+        /// бонусная емкость тепла
+        /// </summary>
         public float HeatCapacity { get; private set; }
 
-
+        /// <summary>
+        /// применение апгрейда
+        /// ВАЖНО: до использования этого метода инфа модуля не верна!
+        /// </summary>
         public override void ApplyUpgrade()
         {
             base.ApplyUpgrade();

@@ -4,22 +4,47 @@ using UnityEngine;
 
 namespace Mercs.Items
 {
-
+    /// <summary>
+    /// Гироскоп
+    /// </summary>
     [CreateAssetMenu(fileName = "Gyro", menuName = "MerCs/Module/Gyro")]
     public class Gyro : ModuleInfo<GyroTemplate>, IStability, IStabilityRestore, IMoveMod, IRunMod
     {
         [NonSerialized]
         private float weight;
 
-
+        /// <summary>
+        /// Класс меха для которого гироскоп предназначен
+        /// </summary>
         public MercClass Class;
         public override ModuleType ModType => ModuleType.Gyro;
+        /// <summary>
+        /// базовая стабильность
+        /// </summary>
         public float Stability { get; private set; }
+        /// <summary>
+        /// восстановление стабильности при движении
+        /// бег = /2
+        /// стоять = *2
+        /// </summary>
         public float StabilityRestore { get; private set; }
+        /// <summary>
+        /// модификациия скорости ходьбы
+        /// </summary>
         public float MoveMod { get; private set; }
+        /// <summary>
+        /// модификация скорости бега
+        /// </summary>
         public float RunMod { get; private set; }
+        /// <summary>
+        /// Вес зависит от класса
+        /// </summary>
         public override float Weight => weight;
-
+        
+        /// <summary>
+        /// применение апгрейда
+        /// ВАЖНО: до использования этого метода инфа модуля не верна!
+        /// </summary>
         public override void ApplyUpgrade()
         {
             base.ApplyUpgrade();
