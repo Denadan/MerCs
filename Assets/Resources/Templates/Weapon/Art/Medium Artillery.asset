@@ -13,15 +13,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Medium Artillery
   ShortName: ArtM
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300152, guid: 6d1c14462e604a1469e33d3b1472600d, type: 3}
   Upgrades: []
   Weight: 7
   slots: 2
+  Crits: 2
   Type: 3
   DamageType: 1
   StockAmmo: {fileID: 11400000, guid: c93ffc39dac5d124d8827d0aef9d7fa6, type: 2}
   Ammo: 4
-  EnergyForShot: 0
   HeatForShot: 1.5
   VariableShots: 0
   Shots: 1

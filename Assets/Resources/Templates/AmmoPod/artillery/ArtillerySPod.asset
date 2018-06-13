@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Small Artillery Ammo Pod
   ShortName: ArtSAmmo
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300168, guid: 6d1c14462e604a1469e33d3b1472600d, type: 3}
   Upgrades: []
   Weight: 1
   slots: 0

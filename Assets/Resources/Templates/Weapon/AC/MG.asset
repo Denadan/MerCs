@@ -13,15 +13,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Machine Gun
   ShortName: MG
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300156, guid: 6d1c14462e604a1469e33d3b1472600d, type: 3}
   Upgrades: []
   Weight: 2
   slots: 0
+  Crits: 2
   Type: 4
   DamageType: 1
   StockAmmo: {fileID: 11400000, guid: aadaab93330431942bb1b826a8716f9c, type: 2}
   Ammo: 11
-  EnergyForShot: 0
   HeatForShot: 0.5
   VariableShots: 0
   Shots: 10

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Missile Launcher x%SHOT%
   ShortName: Missile%SHOT%
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300158, guid: 6d1c14462e604a1469e33d3b1472600d, type: 3}
   Upgrades:
   - Type: 0
     AddPercent: -0.1
@@ -45,11 +45,11 @@ MonoBehaviour:
     Min: 3
   Weight: 9
   slots: 2
+  Crits: 2
   Type: 1
   DamageType: 0
   StockAmmo: {fileID: 11400000, guid: 5fa4c492fba637f44b4d5c713ea297ef, type: 2}
   Ammo: 1
-  EnergyForShot: 3.5
   HeatForShot: 8
   VariableShots: 0
   Shots: 16

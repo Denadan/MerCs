@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Double Small Laser
   ShortName: SLaser2
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300162, guid: 6d1c14462e604a1469e33d3b1472600d, type: 3}
   Upgrades:
   - Type: 0
     AddPercent: -0.1
@@ -45,11 +45,11 @@ MonoBehaviour:
     Min: 3
   Weight: 1.2
   slots: 0
+  Crits: 2
   Type: 0
   DamageType: 2
   StockAmmo: {fileID: 11400000, guid: 966d96e75820dd247a885ef991749a67, type: 2}
   Ammo: 0
-  EnergyForShot: 6
   HeatForShot: 2.5
   VariableShots: 0
   Shots: 2

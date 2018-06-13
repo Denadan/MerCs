@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Double Missile Ammo Pod
   ShortName: MAmmo2
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300174, guid: 6d1c14462e604a1469e33d3b1472600d, type: 3}
   Upgrades: []
   Weight: 2
   slots: 1

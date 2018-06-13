@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Standart Large Artillery ammo
   ShortName: Al
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300168, guid: 6d1c14462e604a1469e33d3b1472600d, type: 3}
   Upgrades: []
   Type: 5
   EDamage: 0
@@ -23,3 +23,4 @@ MonoBehaviour:
   StabDamage: 8
   RangeMod: 1
   AimMod: 1
+  BallisticArmorDamage: 0.5

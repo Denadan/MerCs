@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Rocket Launcher x%SHOT%
   ShortName: Rocket%SHOT%
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300160, guid: 6d1c14462e604a1469e33d3b1472600d, type: 3}
   Upgrades:
   - Type: 0
     AddPercent: -0.1
@@ -45,11 +45,11 @@ MonoBehaviour:
     Min: 2
   Weight: 3.5
   slots: 2
+  Crits: 2
   Type: 2
   DamageType: 0
   StockAmmo: {fileID: 11400000, guid: b3b9b8244897704408988e513bca043a, type: 2}
   Ammo: 2
-  EnergyForShot: 1.75
   HeatForShot: 5
   VariableShots: 0
   Shots: 7

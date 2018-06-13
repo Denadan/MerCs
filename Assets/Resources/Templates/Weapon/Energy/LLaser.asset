@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Large Laser
   ShortName: LLaser
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300162, guid: 6d1c14462e604a1469e33d3b1472600d, type: 3}
   Upgrades:
   - Type: 0
     AddPercent: -0.1
@@ -45,11 +45,11 @@ MonoBehaviour:
     Min: 3
   Weight: 5
   slots: 2
+  Crits: 2
   Type: 0
   DamageType: 2
   StockAmmo: {fileID: 11400000, guid: 966d96e75820dd247a885ef991749a67, type: 2}
   Ammo: 0
-  EnergyForShot: 8
   HeatForShot: 8
   VariableShots: 0
   Shots: 1

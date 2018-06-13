@@ -13,15 +13,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Small Artillery
   ShortName: ArtS
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300152, guid: 6d1c14462e604a1469e33d3b1472600d, type: 3}
   Upgrades: []
   Weight: 4
   slots: 1
+  Crits: 2
   Type: 3
   DamageType: 1
   StockAmmo: {fileID: 11400000, guid: fcd6c5b6b7d07944ab87f4e9a3c0417c, type: 2}
   Ammo: 3
-  EnergyForShot: 0
   HeatForShot: 1
   VariableShots: 0
   Shots: 1

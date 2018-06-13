@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Small Auto Cannon
   ShortName: ACS
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300154, guid: 6d1c14462e604a1469e33d3b1472600d, type: 3}
   Upgrades:
   - Type: 14
     AddPercent: 0
@@ -45,11 +45,11 @@ MonoBehaviour:
     Min: 1
   Weight: 5
   slots: 1
+  Crits: 2
   Type: 4
   DamageType: 1
   StockAmmo: {fileID: 11400000, guid: 10e25b48064d27c42b9ef28975ce3023, type: 2}
   Ammo: 7
-  EnergyForShot: 0
   HeatForShot: 2
   VariableShots: 0
   Shots: 3

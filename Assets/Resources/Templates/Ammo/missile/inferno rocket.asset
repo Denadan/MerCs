@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Inferno Rocket
   ShortName: IR
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300176, guid: 6d1c14462e604a1469e33d3b1472600d, type: 3}
   Upgrades:
   - Type: 1
     AddPercent: 0.1
@@ -51,3 +51,4 @@ MonoBehaviour:
   StabDamage: 1
   RangeMod: 0.75
   AimMod: 1
+  BallisticArmorDamage: 0.5

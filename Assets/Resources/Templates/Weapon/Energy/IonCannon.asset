@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Name: Ion Cannon
   ShortName: Ion
-  Icon: {fileID: 0}
+  Icon: {fileID: 21300164, guid: 6d1c14462e604a1469e33d3b1472600d, type: 3}
   Upgrades:
   - Type: 0
     AddPercent: -0.1
@@ -45,11 +45,11 @@ MonoBehaviour:
     Min: 3
   Weight: 7
   slots: 2
+  Crits: 2
   Type: 5
   DamageType: 2
   StockAmmo: {fileID: 11400000, guid: cdf4d84ec9dfbd840996ed6c06f74720, type: 2}
   Ammo: 0
-  EnergyForShot: 10
   HeatForShot: 10
   VariableShots: 0
   Shots: 1
