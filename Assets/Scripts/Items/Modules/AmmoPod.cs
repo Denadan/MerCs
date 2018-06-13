@@ -31,6 +31,22 @@ namespace Mercs.Items
         /// тип боеприпасов
         /// </summary>
         public AmmoType Type => Template.Type;
+        
+        #region game_data
+        /// <summary>
+        /// боеприпасы в поде
+        /// </summary>
+        public Ammo LoadedAmmo { get; set; }
+        /// <summary>
+        /// оставшиеся боеприпасы
+        /// </summary>
+        public int Count { get; set; }
+
+        /// <summary>
+        /// приоритет использования одинаковых подов
+        /// </summary>
+        public int Priority { get; set; }
+        #endregion
 
         /// <summary>
         /// применение апгрейда

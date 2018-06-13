@@ -157,14 +157,15 @@ namespace Mercs.Tactical.Events
 
         public static void UnRegisterPilotHp(UnitInfo unit)
         {
-            if (Instance == null)
+            if (Instance == null || unit == null)
                 return;
+
             Instance.pilotHps.Remove(unit);
         }
 
         public static void RegisterUnitHp(UnitInfo unit, UnitHp hp)
         {
-            if (Instance == null)
+            if (Instance == null || unit == null)
                 return;
 
             Instance.UnitHPs.Add(unit, hp);
