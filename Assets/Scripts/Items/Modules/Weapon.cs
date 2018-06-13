@@ -22,6 +22,7 @@ namespace Mercs.Items
         /// </summary>
         public float Damage => EDamage + BDamage + MDamage;
 
+        public AmmoType AmmoType => Template.Ammo;
 
         /// <summary>
         /// балистический урон
@@ -101,7 +102,8 @@ namespace Mercs.Items
             Name = Name.Replace("%SHOT%", Shots.ToString());
             ShortName = ShortName.Replace("%SHOT%", Shots.ToString());
             BaseName = BaseName.Replace("%SHOT%", Shots.ToString());
-
+            if(Template.StockAmmo != null)
+                Template.StockAmmo.ApplyUpgrade();
 
             apply = true;
             LoadAmmo(LoadedAmmo);
@@ -123,7 +125,7 @@ namespace Mercs.Items
             apply = false;
 
 
-            LoadedAmmo = (ammo != null && ammo.Type == Template.Ammo) ? ammo : null;
+            LoadedAmmo = (ammo != null && ammo.Type == AmmoType) ? ammo : null;
             if(LoadedAmmo != null)
             {
                 MinRange *= LoadedAmmo.RangeMod;

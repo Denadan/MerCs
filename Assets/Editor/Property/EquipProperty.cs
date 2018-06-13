@@ -19,8 +19,9 @@ namespace Mercs.Editor
             EditorGUI.PropertyField(p.Next(1), property.FindPropertyRelative("place"), GUIContent.none);
             var obj = property.FindPropertyRelative("Module");
             obj.objectReferenceValue = EditorGUI.ObjectField(p.Next(5), GUIContent.none, obj.objectReferenceValue, typeof(IModuleInfo), false);
-            var obj_value = obj.objectReferenceValue as IModuleInfo;
-            if (obj_value != null && obj_value.ModType == ModuleType.AmmoPod)
+            if (obj.objectReferenceValue is IModuleInfo obj_value && (obj_value.ModType == ModuleType.AmmoPod ||
+                                      (obj_value is Weapon weapon  &&
+                                       weapon.AmmoType != AmmoType.None))) 
             {
                 EditorGUI.PropertyField(p.Next(3), property.FindPropertyRelative("Ammo"), GUIContent.none);
             }

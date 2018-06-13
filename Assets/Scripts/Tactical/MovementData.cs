@@ -40,28 +40,35 @@ namespace Mercs.Tactical
 
         public int Initiative
         {
-            get => initiative - (int) unit.Buffs.SumBuffs(BuffType.InitiativeBonus);
+            get => initiative - (int)info.Buffs.SumBuffs(BuffType.InitiativeBonus);
             set => initiative = value;
         }
 
-        private UnitInfo unit;
+        public bool CanMove { get; private set; }
+
+        private UnitInfo info;
 
         private void Awake()
         {
-            unit = GetComponent<UnitInfo>();
+            info = GetComponent<UnitInfo>();
         }
 
         public void NewTurn()
         {
-            
+            CanMove = true;
         }
 
-        public void Build(UnitInfo info)
+        public void MoveDone()
         {
-            move = (int)(info.Engine.EngineRating *
+            CanMove = false;
+        }
+
+        public void Build()
+        {
+            move = (int)(info.Modules.Reactor.EngineRating *
                         info.Modules.OfType<IMoveMod>().Aggregate(1f, (i, mod) => i * mod.MoveMod)
                          / info.Weight);
-            run = (int)(info.Engine.EngineRating *
+            run = (int)(info.Modules.Reactor.EngineRating *
                         info.Modules.OfType<IRunMod>().Aggregate(1f, (i, mod) => i * mod.RunMod)
                         * 1.5f / info.Weight);
 
@@ -70,10 +77,10 @@ namespace Mercs.Tactical
 
             if(info.UnitHP.AllParts.Contains(Parts.LL) && info.UnitHP.AllParts.Contains(Parts.RL))
             {
-                var jump_in_legs = info.UnitHP.Modules(Parts.LL)
-                    .Concat(info.UnitHP.Modules(Parts.RL)).OfType<JumpJet>();
+                var jump_in_legs = info.Modules[Parts.LL].OfType<JumpJet>().Sum(i => i.EngineRating)
+                    + info.Modules[Parts.RL].OfType<JumpJet>().Sum(i => i.EngineRating);
 
-                leg_jump = (int) (jump_in_legs.Sum(i => i.EngineRating) * jump_mod / info.Weight);
+                leg_jump = (int)(jump_in_legs * jump_mod / info.Weight);
             }
             else
             {

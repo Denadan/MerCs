@@ -67,7 +67,8 @@ namespace Mercs.Tactical.UI
             foreach (Transform child in StringContainer)
                 Destroy(child.gameObject);
 
-            var list = part == Parts.None ? info.UnitHP.Modules() : info.UnitHP.Modules(part);
+            var list = part == Parts.None ? info.Modules : info.Modules[part];
+
             foreach(var module in list)
             {
                 if (info.Vision == Visibility.Visual)

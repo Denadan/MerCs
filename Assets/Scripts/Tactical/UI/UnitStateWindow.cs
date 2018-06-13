@@ -71,7 +71,7 @@ namespace Mercs.Tactical.UI
             foreach (Transform child in StringContainer)
                 Destroy(child.gameObject);
 
-            foreach(var module in info.UnitHP.Modules(selected))
+            foreach(var module in info.Modules[selected])
             {
                 var str = Instantiate(StringPrefab, StringContainer).GetComponent<IconText>();
                 str.Icon = module.Icon;

@@ -14,7 +14,7 @@ namespace Mercs.Items
         /// <summary>
         /// вместимость контейнера
         /// </summary>
-        public float Capacity { get; private set; }
+        public int Capacity { get; private set; }
         /// <summary>
         /// процент урона при взрыве 
         /// </summary>
@@ -56,7 +56,7 @@ namespace Mercs.Items
         {
             base.ApplyUpgrade();
 
-            Capacity = upgrade(UpgradeType.Capacity, Template.Capacity);
+            Capacity = (int)upgrade(UpgradeType.Capacity, Template.Capacity);
             DamageTransfer = upgrade(UpgradeType.DamageTransfer, Template.DamageTransfer);
             DamageToHeat = upgrade(UpgradeType.DamageToHeat, Template.DamageToHeat);
             DamageToStab = upgrade(UpgradeType.DamageToStab, Template.DamageToStability);

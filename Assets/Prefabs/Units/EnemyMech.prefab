@@ -28,6 +28,8 @@ GameObject:
   - component: {fileID: 114682303501864208}
   - component: {fileID: 114242414471348930}
   - component: {fileID: 114521380483881922}
+  - component: {fileID: 114279926498575174}
+  - component: {fileID: 114412546015500476}
   m_Layer: 9
   m_Name: EnemyMech
   m_TagString: Untagged
@@ -97,6 +99,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfb8e2ec8a77dc64fbea9c4590dcb523, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114279926498575174
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1279458162175290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edc30e1844879af44afca0b231dc1b1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114305832587320640
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -161,6 +174,17 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
+--- !u!114 &114412546015500476
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1279458162175290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23d8a4815347baa41ae1113331476406, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114478176827078282
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -250,6 +274,8 @@ MonoBehaviour:
   PilotHP: {fileID: 114682303501864208}
   UnitHP: {fileID: 114242414471348930}
   Buffs: {fileID: 114521380483881922}
+  Weapons: {fileID: 114412546015500476}
+  Modules: {fileID: 114279926498575174}
   Vision: 2
 --- !u!114 &114969418616604688
 MonoBehaviour:

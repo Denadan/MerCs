@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Mercs.Items;
 using Mercs.Tactical.Buffs;
 using UnityEngine;
@@ -14,6 +15,7 @@ namespace Mercs.Tactical
                 throw new ArgumentException($"{prefab} is not Unit!");
 
             info.gameObject.SetActive(true);
+
             info.Type = template.Type;
 
             info.GetComponent<SpriteRenderer>().sprite = template.Sprite;
@@ -22,10 +24,11 @@ namespace Mercs.Tactical
             info.Reserve = true;
             info.Position.position = new Vector2Int(-1, -1);
 
-            // TODO: НЕ ЗАБЫТЬ ПЕРЕДЕЛАТЬ БЕЗ ИНСТАНИЦИИ
-            info.Modules = info.UnitHP.Build(template);
-            info.Engine = info.Modules.Find(i => i.ModType == ModuleType.Reactor) as Reactor;
-            info.Movement.Build(info);
+            info.Modules.Build(template);
+            info.UnitHP.Build(template, info.Modules);
+            info.Weapons.Build();
+
+            info.Movement.Build();
 
             AddPilot(info, pilot, template.AddHp);
               

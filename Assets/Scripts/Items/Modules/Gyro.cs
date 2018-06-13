@@ -40,7 +40,9 @@ namespace Mercs.Items
         /// Вес зависит от класса
         /// </summary>
         public override float Weight => weight;
-        
+
+        public int CritSize => (int) (Template.BaseCrit + Template.SizeCrit * (int) Class);
+
         /// <summary>
         /// применение апгрейда
         /// ВАЖНО: до использования этого метода инфа модуля не верна!
@@ -72,6 +74,7 @@ namespace Mercs.Items
             sb.Append(base.ToString());
             sb.Append($"\nStability: {Stability:F2} + {StabilityRestore:P}");
             sb.Append($"\nMove: {MoveMod:P}, Run: {RunMod:P}\n");
+            sb.Append($"\nCrit: {CritSize}");
 
 
             return sb.ToString();

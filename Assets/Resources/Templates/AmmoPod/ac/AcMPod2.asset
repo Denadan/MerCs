@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: AcMPod2
   m_EditorClassIdentifier: 
   Name: Double AC Artillery Ammo Pod
-  ShortName: ArtMAmmo2
+  ShortName: ACMAmmo2
   Icon: {fileID: 21300170, guid: 6d1c14462e604a1469e33d3b1472600d, type: 3}
   Upgrades: []
   Weight: 2

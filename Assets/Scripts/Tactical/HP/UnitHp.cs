@@ -84,30 +84,15 @@ namespace Mercs.Tactical
             #endregion
         }
 
-        
-
         private Dictionary<Parts, part> parts;
         private List<GameObject> subscribers = new List<GameObject>();
-        private List<IModuleInfo> modules;
+        //private List<IModuleInfo> modules;
 
         List<(Parts place, float w)> front, back, left, right;
 
         public float MaxShield { get; private set; }
         public float Shield { get; private set; }
         public float ShieldRegen { get; set; }
-
-        public IEnumerable<IModuleInfo> Modules()
-        {
-            return modules;
-        }
-
-        public IEnumerable<IModuleInfo> Modules(Parts part)
-        {
-            if (parts.TryGetValue(part, out var p))
-                return p.crit_table.Select(i => i.module);
-
-            return null;
-        }
 
         private void Start()
         {
@@ -119,9 +104,8 @@ namespace Mercs.Tactical
             EventHandler.UnRegisterUnitHp(GetComponent<UnitInfo>());
         }
 
-        public List<IModuleInfo> Build(UnitTemplate template)
+        public void Build(UnitTemplate template, ModulesData modules)
         {
-            modules = new List<IModuleInfo>();
 
             var list = (from item in template.PartTable select (part: new part(item), template: item)).ToList();
             parts = list.ToDictionary(i => i.template.Place, i => i.part);
@@ -131,72 +115,59 @@ namespace Mercs.Tactical
             right = template.PartTable.Select(i => (i.Place, (float)i.Size[2])).ToList();
             back = template.PartTable.Select(i => (i.Place, (float)i.Size[3])).ToList();
 
-#if UNITY_EDITOR
-            string s = template.name;
-#endif
 
-            foreach (var item_info in template.Items)
+            foreach (var part in parts.Keys)
             {
-                //UnityEngine.Debug.Log($"{template.name}  {item_info.place}\n{item_info.Module}");
-                var module = Instantiate(item_info.Module) as IModuleInfo;
-                module.ApplyUpgrade();
-                modules.Add(module);
-
-#if UNITY_EDITOR
-                s += $"\n{item_info.place} - {module.ShortName}";
-                if (module.ModType == ModuleType.AmmoPod)
-                    s += $"({item_info.Ammo.ShortName})";
-#endif
-                if (module.ModType == ModuleType.Reactor)
+                foreach (var module in modules)
                 {
-                    var reactor = module as Reactor;
-                    if (reactor.SideSlot > 0)
+                    if (module.ModType == ModuleType.Reactor)
                     {
-                        parts[Parts.LT].crit_table.Add(new crit(reactor.SideSlot, module));
-                        parts[Parts.RT].crit_table.Add(new crit(reactor.SideSlot, module));
-                    }
-                    parts[item_info.place].crit_table.Add(new crit(reactor.CentralSlot, module));
-                }
-                else
-                {
-                    int size = 0;
-                    switch (item_info.module.Slot)
-                    {
-                        case SlotSize.IOne:
-                        case SlotSize.One:
-                            size = 1;
-                            break;
-                        case SlotSize.ITwo:
-                        case SlotSize.Two:
-                            size = 2;
-                            break;
-                        case SlotSize.IThree:
-                        case SlotSize.Three:
-                        case SlotSize.IThreeLine:
-                        case SlotSize.ThreeLine:
-                            size = 3;
-                            break;
-                        case SlotSize.Four:
-                        case SlotSize.IFour:
-                            size = 4;
-                            break;
-                        case SlotSize.IFive:
-                        case SlotSize.Five:
-                            size = 5;
-                            break;
-                        case SlotSize.Gyro:
-                            size = 3 + (int)(module as Gyro).Class / 2;
-                            break;
-                    }
+                        var reactor = module as Reactor;
+                        if (reactor.SideSlot > 0)
+                        {
+                            parts[Parts.LT].crit_table.Add(new crit(reactor.SideSlot, module));
+                            parts[Parts.RT].crit_table.Add(new crit(reactor.SideSlot, module));
+                        }
 
-                    if(size > 0)
-                        parts[item_info.place].crit_table.Add(new crit(size, module));
+                        parts[part].crit_table.Add(new crit(reactor.CentralSlot, module));
+                    }
+                    else
+                    {
+                        int size = 0;
+                        switch (module.Slot)
+                        {
+                            case SlotSize.IOne:
+                            case SlotSize.One:
+                                size = 1;
+                                break;
+                            case SlotSize.ITwo:
+                            case SlotSize.Two:
+                                size = 2;
+                                break;
+                            case SlotSize.IThree:
+                            case SlotSize.Three:
+                            case SlotSize.IThreeLine:
+                            case SlotSize.ThreeLine:
+                                size = 3;
+                                break;
+                            case SlotSize.Four:
+                            case SlotSize.IFour:
+                                size = 4;
+                                break;
+                            case SlotSize.IFive:
+                            case SlotSize.Five:
+                                size = 5;
+                                break;
+                            case SlotSize.Gyro:
+                                size = 3 + (int) (module as Gyro).CritSize;
+                                break;
+                        }
+
+                        if (size > 0)
+                            parts[part].crit_table.Add(new crit(size, module));
+                    }
                 }
             }
-
-#if UNITY_EDITOR
-            UnityEngine.Debug.Log(s);
-#endif
 
             MaxShield = modules.OfType<IShield>().Sum(i => i.Shield);
             Shield = MaxShield;
@@ -210,7 +181,7 @@ namespace Mercs.Tactical
                     p.part.transfer = parts[p.template.TransferTo];
             }
 
-            return modules;
+            return;
         }
 
         public void Regen(float value)

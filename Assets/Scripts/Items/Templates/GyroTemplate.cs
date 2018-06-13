@@ -10,5 +10,7 @@ namespace Mercs.Items
         [Range(0.1f, 0.5f)] public float StabilityRestore;
         [Range(0.5f, 1.5f)] public float MoveMod = 1;
         [Range(0.5f, 1.5f)] public float RunMod = 1;
+        public float BaseCrit;
+        public float SizeCrit;
     }
 }

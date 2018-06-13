@@ -16,46 +16,30 @@ namespace Mercs.Tactical
         private Image highlated_abb;
 
         [Header("UnitListMenu")]
-        [SerializeField]
-        private GameObject UnitListMenu;
-        [SerializeField]
-        private GameObject UnitListItemPrefab;
+        [SerializeField]private GameObject UnitListMenu;
+        [SerializeField]private GameObject UnitListItemPrefab;
         [Header("TopButtons")]
-        [SerializeField]
-        private Button StartButton;
-        [SerializeField]
-        private Button DoneButton;
-        [SerializeField]
-        private Button ReserveButton;
-        [SerializeField]
-        private Button ConfirmButton;
+        [SerializeField]private Button StartButton;
+        [SerializeField]private Button DoneButton;
+        [SerializeField]private Button ReserveButton;
+        [SerializeField]private Button ConfirmButton;
         [Header("Action Bar")]
-        [SerializeField]
-        private RectTransform ActionBar;
+        [SerializeField]private RectTransform ActionBar;
 
-        [SerializeField]
-        private Image ABB_Move;
-        [SerializeField]
-        private Image ABB_Run;
-        [SerializeField]
-        private Image ABB_Evade;
-        [SerializeField]
-        private Image ABB_Jump;
-        [SerializeField]
-        private Image ABB_Fire;
-        [SerializeField]
-        private Image ABB_Guard;
-        [SerializeField]
-        private Image ABB_Cancel;
+        [SerializeField]private Image ABB_Move;
+        [SerializeField]private Image ABB_Run;
+        [SerializeField]private Image ABB_Evade;
+        [SerializeField]private Image ABB_Jump;
+        [SerializeField]private Image ABB_Fire;
+        [SerializeField]private Image ABB_Guard;
+        [SerializeField]private Image ABB_Cancel;
 
 
         [Header("Other")]
-        [SerializeField]
-        private DeployInfoMenu DeployWindow;
-        [SerializeField]
-        private UnitStateWindow SelectedUnitStateWindow;
-        [SerializeField]
-        private Text roundText;
+        [SerializeField] private DeployInfoMenu DeployWindow;
+        [SerializeField] private UnitStateWindow SelectedUnitStateWindow;
+        [SerializeField] private Text roundText;
+        [SerializeField] private WeaponList Weapons;
 
         [SerializeField]
         public DebugMapMenu DebugMenu;
@@ -221,12 +205,16 @@ namespace Mercs.Tactical
         public void HideSelectedUnitWindow()
         {
             SelectedUnitStateWindow.gameObject.SetActive(false);
+            Weapons.gameObject.SetActive(false);
         }
 
         public void ShowSelectedUnitWindow(UnitInfo value)
         {
             SelectedUnitStateWindow.gameObject.SetActive(true);
             SelectedUnitStateWindow.SetUnit(value);
+            Weapons.gameObject.SetActive(true);
+            Weapons.Set(value);
+
         }
     }
 }

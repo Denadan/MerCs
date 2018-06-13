@@ -16,6 +16,8 @@ namespace Mercs.Tactical
         public PilotHp PilotHP;
         public UnitHp UnitHP;
         public BuffList Buffs;
+        public WeaponsData Weapons;
+        public ModulesData Modules;
 
 
         public Visibility Vision;
@@ -27,8 +29,6 @@ namespace Mercs.Tactical
         public string PilotName { get; set; }
         public int Weight { get; set; }
         public bool Selectable { get; set; }
-        public List<IModuleInfo> Modules { get; set; }
-        public Reactor Engine { get; set; }
         public MercClass Class => CONST.Class(Weight);
         public UnitType Type { get; set; }
 
