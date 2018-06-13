@@ -42,9 +42,10 @@ namespace Mercs
         Move,
         Run,
         Jump,
-        Attack,
+        Fire,
         Guard,
-        Cancel
+        Cancel,
+        Evade
     }
 
     public enum TacticalButton

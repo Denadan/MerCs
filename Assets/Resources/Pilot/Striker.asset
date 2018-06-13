@@ -14,3 +14,4 @@ MonoBehaviour:
   Name: Striker
   InitiativeBonus: 0
   Hp: 4
+  Evasive: 0

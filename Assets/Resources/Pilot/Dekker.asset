@@ -14,3 +14,4 @@ MonoBehaviour:
   Name: Dekker
   InitiativeBonus: 1
   Hp: 3
+  Evasive: 1

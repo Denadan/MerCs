@@ -7,7 +7,7 @@ namespace Mercs.Tactical.States
     /// </summary>
     public class MovementStateData
     {
-        public enum MoveType { Move, Run, Jump }
+        public enum MoveType { Move, Run, Jump, Evasive }
         
         /// <summary>
         /// целевой тайл

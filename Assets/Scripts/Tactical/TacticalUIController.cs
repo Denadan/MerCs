@@ -38,7 +38,11 @@ namespace Mercs.Tactical
         [SerializeField]
         private Image ABB_Run;
         [SerializeField]
+        private Image ABB_Evade;
+        [SerializeField]
         private Image ABB_Jump;
+        [SerializeField]
+        private Image ABB_Fire;
         [SerializeField]
         private Image ABB_Guard;
         [SerializeField]
@@ -46,8 +50,6 @@ namespace Mercs.Tactical
 
 
         [Header("Other")]
-        [SerializeField]
-        private GameObject TileInfoMenu;
         [SerializeField]
         private DeployInfoMenu DeployWindow;
         [SerializeField]
@@ -75,6 +77,8 @@ namespace Mercs.Tactical
                 [ActionButton.Run] = ABB_Run,
                 [ActionButton.Guard] = ABB_Guard,
                 [ActionButton.Cancel] = ABB_Cancel,
+                [ActionButton.Evade] = ABB_Evade,
+                [ActionButton.Fire] = ABB_Fire,
             };
             tactical_button = new Dictionary<TacticalButton, Button>
             {
@@ -86,7 +90,7 @@ namespace Mercs.Tactical
 
         public void ClearUnitList()
         {
-            foreach(Transform child in UnitListMenu.transform)
+            foreach (Transform child in UnitListMenu.transform)
             {
                 Destroy(child.gameObject);
             }
@@ -137,7 +141,7 @@ namespace Mercs.Tactical
             DeployWindow.gameObject.SetActive(false);
             DeployWindow.InitDeployInfo(GameController.Instance.DeployLimit);
         }
-        
+
         public void ShowActionBar()
         {
             ActionBar.gameObject.SetActive(true);
@@ -161,9 +165,18 @@ namespace Mercs.Tactical
                 HideActionBarButton(ActionButton.Move);
 
             if (unit.Movement.RunMP > 0)
+            {
                 ShowActionBarButton(ActionButton.Run);
+                if (unit.Movement.CanDoEvasive)
+                    ShowActionBarButton(ActionButton.Evade);
+                else
+                    HideActionBarButton(ActionButton.Evade);
+            }
             else
+            {
                 HideActionBarButton(ActionButton.Run);
+                HideActionBarButton(ActionButton.Evade);
+            }
 
             if (unit.Movement.JumpMP > 0)
                 ShowActionBarButton(ActionButton.Jump);
@@ -171,6 +184,7 @@ namespace Mercs.Tactical
                 HideActionBarButton(ActionButton.Jump);
 
             ShowActionBarButton(ActionButton.Guard);
+            HideActionBarButton(ActionButton.Fire);
         }
 
         public void HideActionBarButton(ActionButton button)

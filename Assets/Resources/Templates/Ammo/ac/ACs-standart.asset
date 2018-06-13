@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: ACs-standart
   m_EditorClassIdentifier: 
   Name: Standart Small AC ammo
-  ShortName: AC
+  ShortName: ACs
   Icon: {fileID: 21300170, guid: 6d1c14462e604a1469e33d3b1472600d, type: 3}
   Upgrades: []
   Type: 7

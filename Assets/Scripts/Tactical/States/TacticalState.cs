@@ -23,5 +23,6 @@
         ConfirmGuard = 44,
         PlayerEndTurn = 45,
         WaitMovementComplete = 46,
+        SelectEvasive = 47
     }
 }

@@ -14,3 +14,4 @@ MonoBehaviour:
   Name: Medusa
   InitiativeBonus: 0
   Hp: 4
+  Evasive: 1

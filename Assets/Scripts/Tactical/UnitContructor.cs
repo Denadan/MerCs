@@ -49,6 +49,7 @@ namespace Mercs.Tactical
                     MinVision = Visibility.Scanned,
                     ToolTip = "Initiative {0}"
                 });
+                info.Movement.CanDoEvasive = false;
                 return true;
             }
             else
@@ -65,6 +66,8 @@ namespace Mercs.Tactical
                         MinVision = Visibility.Scanned,
                         ToolTip = "Initiative {0}"
                     });
+
+                info.Movement.CanDoEvasive = pilot.Evasive;
                 return false;
             }
         }

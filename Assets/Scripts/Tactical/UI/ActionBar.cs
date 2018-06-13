@@ -20,6 +20,17 @@ namespace Mercs.Tactical.UI
                 TacticalController.Instance.StateMachine.State = States.TacticalState.SelectRun;
         }
 
+        public void B_Evasive()
+        {
+            if (TacticalController.Instance.StateMachine.State != States.TacticalState.SelectEvasive)
+                TacticalController.Instance.StateMachine.State = States.TacticalState.SelectEvasive;
+        }
+
+        public void B_Fire()
+        {
+
+        }
+
         public void B_Jump()
         {
             if (TacticalController.Instance.StateMachine.State != States.TacticalState.SelectJump)

@@ -7,5 +7,6 @@ namespace Mercs
         public string Name;
         public int InitiativeBonus;
         public int Hp;
+        public bool Evasive;
     }
 }

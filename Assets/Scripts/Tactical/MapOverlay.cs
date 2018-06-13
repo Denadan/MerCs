@@ -252,6 +252,19 @@ namespace Mercs.Tactical
         }
 
         /// <summary>
+        /// нарисовать карту путей для уклонения
+        /// </summary>
+        public void ShowMoveMapEvade()
+        {
+            if (TacticalController.Instance.Path.EvasiveList != null)
+                foreach (var item in TacticalController.Instance.Path.EvasiveList)
+                {
+                    sprites[item.coord.x, item.coord.y].Mask = get_tex(item);
+                    sprites[item.coord.x, item.coord.y].MaskColor = RunColor;
+                }
+        }
+
+        /// <summary>
         /// нарисовать карту путей для бега
         /// </summary>
         public void ShowMoveMapMove()

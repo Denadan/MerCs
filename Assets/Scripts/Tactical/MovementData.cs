@@ -9,6 +9,17 @@ namespace Mercs.Tactical
     {
         private int move, run, jump, leg_jump;
         private int initiative;
+        private bool evasive;
+
+        // TODO: сделать проверки пилота!
+        /// <summary>
+        /// может ли в уклонение 
+        /// </summary>
+        public bool CanDoEvasive
+        {
+            get => evasive;
+            set => evasive = value;
+        }
 
         public int MoveMp
         {

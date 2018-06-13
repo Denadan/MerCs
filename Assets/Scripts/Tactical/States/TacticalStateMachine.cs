@@ -65,6 +65,7 @@ namespace Mercs.Tactical.States
 
             addState(new PlayerSelectMoveState(prepare, movement));
             addState(new PlayerSelectRunState(prepare, movement));
+            addState(new PlayerSelectEvasiveState(prepare, movement));
             addState(new PlayerSelectJumpState(prepare, movement));
             addState(new PlayerEndTurnState(prepare));
             addState(new SelectRotationMoveState(prepare, movement));

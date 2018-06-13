@@ -79,6 +79,11 @@ namespace Mercs.Tactical
             public int mpleft;
 
             /// <summary>
+            /// длина пути в тайлах
+            /// </summary>
+            public int length;
+
+            /// <summary>
             /// прошлый узел пути
             /// </summary>
             public path_node prev;
@@ -132,6 +137,7 @@ namespace Mercs.Tactical
         public List<path_target> RunList { get; private set; }
         public List<path_target> MoveList { get; private set; }
         public List<path_target> JumpList { get; private set; }
+        public List<path_target> EvasiveList { get; private set; }
 
         /// <summary>
         /// поиск пути завершен
@@ -220,6 +226,11 @@ namespace Mercs.Tactical
             }
 
             //запускаем поиск
+            RunList = null;
+            MoveList = null;
+            EvasiveList = null;
+            JumpList = null;
+
             DEBUG_TimeStart = Time.realtimeSinceStartup;
             Ready = false;
             Unit = unit;
@@ -240,6 +251,40 @@ namespace Mercs.Tactical
         /// <param name="token">токен отмены</param>
         private void calc_path(CancellationToken token)
         {
+            List<path_target> calc_run(List<IGrouping<Vector2Int, path_node>> list)
+            {
+                if (token.IsCancellationRequested) return null;
+
+                var res = list
+                    .Select(c => new path_target
+                    {
+                        coord = c.Key,
+                        fast_path = c.First()
+                    })
+                    .ToList();
+
+                if (token.IsCancellationRequested) return null;
+
+                var dict = list.ToDictionary(i => i.Key, i => i.ToList());
+
+                foreach (var node in res)
+                    foreach (var dir in DirHelper.AllDirs)
+                    {
+                        if (token.IsCancellationRequested) return null;
+
+                        var dir_l = dir.TurnLeft();
+                        var dir_r = dir.TurnRight();
+
+                        var path = dict[node.coord].Find(i =>
+                          i.facing == dir ||
+                          (i.facing == dir_l || i.facing == dir_r) && i.mpleft >= 1);
+                        if (path != null)
+                            node.other_path.Add(dir, path);
+                    }
+
+                return res;
+            }
+
             //поиск пути для движения пешком
             if (Unit.Movement.MoveMp > 0)
             {
@@ -249,6 +294,7 @@ namespace Mercs.Tactical
                     coord = UnitPos,
                     facing = Unit.Position.Facing,
                     mpleft = Unit.Movement.MoveMp,
+                    length = 0,
                     prev = null
                 },
                 new List<path_node>(), token)
@@ -301,42 +347,27 @@ namespace Mercs.Tactical
                     coord = UnitPos,
                     facing = Unit.Position.Facing,
                     mpleft = Unit.Movement.RunMP,
+                    length = 0,
                     prev = null
                 },
-                new List<path_node>(), token)
+                new List<path_node>(), token);
+
+                if (token.IsCancellationRequested) return;
+
+                RunList = calc_run(list
                     .OrderByDescending(item => item.mpleft)
                     .GroupBy(i => i.coord)
-                    .ToList();
+                    .ToList());
 
                 if (token.IsCancellationRequested) return;
+
+                if(Unit.Movement.CanDoEvasive)
+                    EvasiveList = calc_run(list
+                        .OrderByDescending(item => item.length)
+                        .GroupBy(i => i.coord)
+                        .ToList());
 
                 //список всех доступных конечных точек
-                RunList = list
-                    .Select(c => new path_target
-                    {
-                        coord = c.Key,
-                        fast_path = c.First()
-                    })
-                    .ToList();
-
-                if (token.IsCancellationRequested) return;
-
-                var dict = list.ToDictionary(i => i.Key, i => i.ToList());
-
-                foreach (var node in RunList)
-                    foreach (var dir in DirHelper.AllDirs)
-                    {
-                        if (token.IsCancellationRequested) return;
-
-                        var dir_l = dir.TurnLeft();
-                        var dir_r = dir.TurnRight();
-
-                        var path = dict[node.coord].Find(i =>
-                          i.facing == dir ||
-                          (i.facing == dir_l || i.facing == dir_r) && i.mpleft >= 1);
-                        if (path != null)
-                            node.other_path.Add(dir, path);
-                    }
 
             }
 
@@ -432,6 +463,7 @@ namespace Mercs.Tactical
                         coord = link.target,
                         facing = facing,
                         mpleft = source.mpleft - link.cost - bonus,
+                        length = source.length + 1,
                         prev = source
                     }, list ,token);
             }
@@ -467,6 +499,7 @@ namespace Mercs.Tactical
                         coord = link.target,
                         facing = facing,
                         mpleft = source.mpleft - link.cost - bonus,
+                        length = source.length + 1,
                         prev = source
                     }, list, token);
             }
@@ -485,6 +518,7 @@ namespace Mercs.Tactical
                         coord = link.target,
                         facing = facing,
                         mpleft = source.mpleft - link.cost - bonus,
+                        length = source.length + 1,
                         prev = source
                     }, list, token);
             }
