@@ -17,7 +17,7 @@ namespace Mercs.Items
         /// <summary>
         /// шаблон предмета
         /// </summary>
-        public T Template;
+        [SerializeField]protected T Template;
         /// <summary>
         /// список модификаций
         /// </summary>

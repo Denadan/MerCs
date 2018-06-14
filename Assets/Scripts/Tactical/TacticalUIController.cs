@@ -16,35 +16,36 @@ namespace Mercs.Tactical
         private Image highlated_abb;
 
         [Header("UnitListMenu")]
-        [SerializeField]private GameObject UnitListMenu;
-        [SerializeField]private GameObject UnitListItemPrefab;
+        [SerializeField] private GameObject UnitListMenu;
+        [SerializeField] private GameObject UnitListItemPrefab;
         [Header("TopButtons")]
-        [SerializeField]private Button StartButton;
-        [SerializeField]private Button DoneButton;
-        [SerializeField]private Button ReserveButton;
-        [SerializeField]private Button ConfirmButton;
+        [SerializeField] private Button StartButton;
+        [SerializeField] private Button DoneButton;
+        [SerializeField] private Button ReserveButton;
+        [SerializeField] private Button ConfirmButton;
         [Header("Action Bar")]
-        [SerializeField]private RectTransform ActionBar;
+        [SerializeField] private RectTransform ActionBar;
 
-        [SerializeField]private Image ABB_Move;
-        [SerializeField]private Image ABB_Run;
-        [SerializeField]private Image ABB_Evade;
-        [SerializeField]private Image ABB_Jump;
-        [SerializeField]private Image ABB_Fire;
-        [SerializeField]private Image ABB_Guard;
-        [SerializeField]private Image ABB_Cancel;
-
+        [SerializeField] private Image ABB_Move;
+        [SerializeField] private Image ABB_Run;
+        [SerializeField] private Image ABB_Evade;
+        [SerializeField] private Image ABB_Jump;
+        [SerializeField] private Image ABB_Fire;
+        [SerializeField] private Image ABB_Guard;
+        [SerializeField] private Image ABB_Cancel;
 
         [Header("Other")]
         [SerializeField] private DeployInfoMenu DeployWindow;
         [SerializeField] private UnitStateWindow SelectedUnitStateWindow;
         [SerializeField] private Text roundText;
         [SerializeField] private WeaponList Weapons;
+        [SerializeField] private GameObject TargetLinePrefab;
 
-        [SerializeField]
-        public DebugMapMenu DebugMenu;
+
 
         public LineRenderer MoveLine;
+
+        private List<LineRenderer> target_lines = new List<LineRenderer>();
 
 
         public string RoundText
@@ -70,6 +71,8 @@ namespace Mercs.Tactical
                 [TacticalButton.Done] = DoneButton,
                 [TacticalButton.Reserve] = ReserveButton,
             };
+
+            target_lines = new List<LineRenderer>();
         }
 
         public void ClearUnitList()
@@ -214,7 +217,25 @@ namespace Mercs.Tactical
             SelectedUnitStateWindow.SetUnit(value);
             Weapons.gameObject.SetActive(true);
             Weapons.Set(value);
+        }
 
+        public LineRenderer GetLine(int n)
+        {
+            if (n <= 0 || n >= 10)
+                return null;
+            while (n >= target_lines.Count)
+            {
+                var line = Instantiate(TargetLinePrefab, transform, false).GetComponent<LineRenderer>();
+                line.gameObject.SetActive(false);
+                target_lines.Add(line);
+            }
+            return target_lines[n];
+        }
+
+        public void HideTargetLines()
+        {
+            foreach (var item in target_lines)
+                item.gameObject.SetActive(false);
         }
     }
 }

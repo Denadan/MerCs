@@ -18,7 +18,7 @@ namespace Mercs.Tactical
             public Weapon Weapon { get;  internal set; }
 
             public Ammo Ammo { get; internal set; }
-            public bool UseAmmo => Weapon.Template.Ammo != AmmoType.None;
+            public bool UseAmmo => Weapon.AmmoType != AmmoType.None;
             public int AmmoLeft { get; internal set; }
             public bool Destroyed { get; internal set; }
 

@@ -45,7 +45,12 @@ namespace Mercs.Tactical
                     SelectionMark.SetParent(selected.transform, false);
                     SelectionMark.gameObject.SetActive(true);
                     if (value.Faction == GameController.Instance.PlayerFaction)
+                    {
                         TacticalUIController.Instance.ShowSelectedUnitWindow(value);
+                        TacticalUIController.Instance.MoveCameraTo(value);
+                    }
+                    else if(value.Vision >= Visibility.Sensor)
+                        TacticalUIController.Instance.MoveCameraTo(value);
                 }
             }
         }

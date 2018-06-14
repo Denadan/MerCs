@@ -21,7 +21,6 @@ namespace Mercs.Tactical.States
             TacticalController.Instance.SelectedUnit = state.ActiveUnits.Find(
                 unit => unit.Faction == TacticalController.Instance.CurrentFaction);
             TacticalController.Instance.StateMachine.StartCoroutine(Switch());
-            TacticalUIController.Instance.MoveCameraTo(TacticalController.Instance.SelectedUnit);
 
             foreach(var button in TacticalController.Instance.PlayerUnits.Select(unit => TacticalController.Instance[unit]).Where(item => item != null))
             {

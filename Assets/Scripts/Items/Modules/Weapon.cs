@@ -47,6 +47,16 @@ namespace Mercs.Items
         public float StabDamage => (LoadedAmmo ?? Template.StockAmmo).StabDamage * DamageMult;
 
         /// <summary>
+        /// для каждого выстрела проводится отдельный рассчет попадания
+        /// </summary>
+        public bool IndepedndedShots => Template.IndependedShots;
+
+        /// <summary>
+        /// Можно лли изменять количество выстрелов
+        /// </summary>
+        public bool VariableShots => Template.VariableShots;
+
+        /// <summary>
         /// минимальное расстояние стрельбы
         /// артилерия - нет урона
         /// автопушки - уменьшена точность

@@ -4,25 +4,59 @@ using UnityEngine;
 
 namespace Mercs.Items
 {
+    /// <summary>
+    /// Реаткор - обязательная часть юнита
+    /// </summary>
     [CreateAssetMenu(fileName = "Reactor", menuName = "MerCs/Module/Reactor")]
     public class Reactor : ModuleInfo<ReactorTemplate>, IHeatContainer, IHeatDissipator
     {
+        /// <summary>
+        /// количество доп слотов
+        /// </summary>
         public int Size;
 
         private float _weight;
         private int _crit;
 
         public override ModuleType ModType => ModuleType.Reactor;
-
+        /// <summary>
+        /// вес реактора
+        /// </summary>
         public override float Weight => _weight;
+
+        /// <summary>
+        /// полный размер реактора
+        /// </summary>
         public int FullSize => Size + Template.BaseSize;
+        /// <summary>
+        /// мощность 
+        /// </summary>
         public int EngineRating { get; private set; }
+        /// <summary>
+        /// рассеивание тепла
+        /// </summary>
         public float HeatDissipation { get; private set; }
+        /// <summary>
+        /// количество занимаемых слотов в центральном торсе
+        /// </summary>
         public int CentralSlot { get; private set; }
+        /// <summary>
+        /// каличество занимаемых слотов в  боковом торсе
+        /// </summary>
         public int SideSlot { get; private set; }
+        /// <summary>
+        /// количество накопляемого тепла
+        /// </summary>
         public float HeatCapacity { get; private set; }
+        /// <summary>
+        /// количество критов до разрушения
+        /// </summary>
         public override int Crit => _crit;
 
+        /// <summary>
+        /// применение апгрейда
+        /// ВАЖНО: до использования этого метода инфа модуля не верна!
+        /// </summary>
         public override void ApplyUpgrade()
         {
             base.ApplyUpgrade();

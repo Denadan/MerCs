@@ -53,7 +53,7 @@ namespace Mercs.Tactical.UI
             Name.text = info.Weapon.ShortName;
             Icon.sprite = info.Weapon.Icon;
             if (info.Weapon.Shots > 1)
-                if (info.Weapon.Template.VariableShots)
+                if (info.Weapon.VariableShots)
                 {
                     Damage.text = $"{info.Weapon.Damage:##0.##}x{shots}";
                 }

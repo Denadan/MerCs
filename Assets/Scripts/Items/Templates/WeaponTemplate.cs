@@ -13,6 +13,7 @@ namespace Mercs.Items
 
         public float HeatForShot;
         public bool VariableShots;
+        public bool IndependedShots = true;
 
         public int Shots;
         public float DamageMult;
