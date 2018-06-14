@@ -133,12 +133,21 @@ namespace Mercs
             }
         }
 
+        /// <summary>
+        /// класс по весу
+        /// </summary>
+        /// <param name="Weight"></param>
+        /// <returns></returns>
         public static MercClass Class(int Weight)
         {
             return (MercClass)((Weight - 25) / 10);
         }
 
-
+        /// <summary>
+        /// инциатитва по классу
+        /// </summary>
+        /// <param name="Class"></param>
+        /// <returns></returns>
         public static int Initiative(MercClass Class)
         {
             switch (Class)
@@ -157,11 +166,24 @@ namespace Mercs
 
         }
 
+        /// <summary>
+        /// видимость модуля снаружи
+        /// </summary>
+        /// <param name="module"></param>
+        /// <returns></returns>
         public static bool Visible(IModuleInfo module)
         {
             return module.Slot <= SlotSize.Five;
         }
 
+        /// <summary>
+        /// точка пересечения прямых
+        /// </summary>
+        /// <param name="a1"></param>
+        /// <param name="b1"></param>
+        /// <param name="a2"></param>
+        /// <param name="b2"></param>
+        /// <returns></returns>
         public static (bool intersect, Vector2 point) Inersect(Vector2 a1, Vector2 b1, Vector2 a2, Vector2 b2)
         {
             float px1 = a1.x - b1.x;
@@ -180,6 +202,13 @@ namespace Mercs
             return (true, new Vector2((d1 * px2 - d2 * px1) / d, (d1 * py2 - d2 * py1) / d));
         }
 
+        /// <summary>
+        /// возвращает параметрическое положение точки на прямой между a(t=0) и b(t=1)
+        /// </summary>
+        /// <param name="point"></param>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
         public static float T(Vector2 point, Vector2 a, Vector2 b)
         {
             if (b.x - a.x == 0)
@@ -192,6 +221,16 @@ namespace Mercs
 
         }
 
-        public static float i() { return 0; }
+        /// <summary>
+        /// возвращает положение точки на прямой между a(t=0) и b(t=1)
+        /// </summary>
+        /// <param name="t"></param>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        public static Vector2 T(float t,Vector2 a, Vector2 b)
+        {
+            return a + (b - a) * t;
+        }
     }
 }

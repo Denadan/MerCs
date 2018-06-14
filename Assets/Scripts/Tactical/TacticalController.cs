@@ -1,5 +1,6 @@
 ﻿#pragma warning disable 649
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -308,6 +309,11 @@ namespace Mercs.Tactical
                 yield return new WaitForSeconds(0.5f);
                 StateMachine.State = state;
             }
+        }
+
+        internal UnitInfo UnitAt(Vector2Int p)
+        {
+            return Units.Find(i => i.Position.position == p);
         }
     }
 }

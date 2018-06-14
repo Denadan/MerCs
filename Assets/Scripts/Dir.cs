@@ -111,6 +111,13 @@ namespace Mercs
             return Dir.N;
         }
 
+
+        /// <summary>
+        /// Возвращает направления которые перекрывает линия 
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="dest"></param>
+        /// <returns></returns>
         public static (Dir main, Dir second) GetLineDirs(Vector2 source, Vector2 dest)
         {
             var vector = dest - source;

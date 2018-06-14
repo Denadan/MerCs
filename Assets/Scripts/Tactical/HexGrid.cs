@@ -5,30 +5,58 @@ using UnityEngine;
 
 namespace Mercs.Tactical
 {
+    /// <summary>
+    /// базовый класс для преобразования координат по хексагональной сетке
+    /// </summary>
     public abstract class HexGrid : MonoBehaviour
     {
+        /// <summary>
+        /// переводит кооринаты тайла в координаты сцены
+        /// </summary>
+        /// <param name="tile_coord"></param>
+        /// <returns></returns>
         public abstract Vector3 CellToWorld(Vector3Int tile_coord);
+        /// <summary>
+        /// переводит координаты тайла в ортогональные координаты на карте 
+        /// </summary>
+        /// <param name="tile_coord"></param>
+        /// <returns></returns>
         public abstract Vector2 CellToMap(Vector2Int tile_coord);
-        private float sx, sy;
-        
 
-
+        /// <summary>
+        /// заполняет карту тайлами
+        /// </summary>
         protected abstract void MakeTiles();
 
+        /// <summary>
+        /// карта
+        /// </summary>
         protected Map map;
+        /// <summary>
+        /// маршруты
+        /// </summary>
         protected PathMap path;
 
-        [SerializeField]
-        protected Transform TilesParent;
-        [SerializeField]
-        protected Transform PathCostParent;
-        [SerializeField]
-        protected Transform LinksCostParent;
-        public Transform UnitsParent;
+        /// <summary>
+        /// контейнер для тайлов
+        /// </summary>
+        [SerializeField] protected Transform TilesParent;
+        /// <summary>
+        /// контейнер для юнитов
+        /// </summary>
+        [SerializeField] public Transform UnitsParent;
 
-               
+        /// <summary>
+        /// тайлы 
+        /// </summary>
         protected GameObject[,] tile_map;
 
+        /// <summary>
+        /// получить тайл по кординатам
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         public GameObject this[int x, int y]
         {
             get
@@ -39,6 +67,11 @@ namespace Mercs.Tactical
             }
         }
 
+        /// <summary>
+        /// получить тайл по координатам
+        /// </summary>
+        /// <param name="coord"></param>
+        /// <returns></returns>
         public GameObject this[Vector2Int coord]
         {
             get
@@ -49,8 +82,15 @@ namespace Mercs.Tactical
             }
         }
 
-        public float MapSX => sx;
-        public float MapSy => sy;
+        /// <summary>
+        /// сдвиг тайла по координате X
+        /// </summary>
+        public float MapSX { get; private set; }
+
+        /// <summary>
+        /// сдвиг тайла по координате y
+        /// </summary>
+        public float MapSy { get; private set; }
 
 
         // Use this for initialization
@@ -59,8 +99,8 @@ namespace Mercs.Tactical
 
             map = GetComponent<Map>();
             path = GetComponent<PathMap>();
-            sy = 1;
-            sx = 1 * Mathf.Sin(Mathf.PI / 3);
+            MapSy = 1;
+            MapSX = 1 * Mathf.Sin(Mathf.PI / 3);
 
             tile_map = new GameObject[map.SizeX, map.SizeY];
 
@@ -72,27 +112,48 @@ namespace Mercs.Tactical
             GetComponent<MapOverlay>().Init();
         }
 
+        /// <summary>
+        /// очистить
+        /// </summary>
         void Clear()
         {
             foreach (Transform child in TilesParent)
                 Destroy(child.gameObject);
-            foreach (Transform child in PathCostParent)
-                Destroy(child.gameObject);
-            foreach (Transform child in LinksCostParent)
-                Destroy(child.gameObject);
         }
 
+        /// <summary>
+        /// переводит кооринаты тайла в координаты сцены
+        /// </summary>
+        /// <param name="tile_coord"></param>
+        /// <returns></returns>
         public Vector3 CellToWorld(Vector2Int tile_coord)
         {
             return CellToWorld(new Vector3Int(tile_coord.x, tile_coord.y, 0));
         }
+        /// <summary>
+        /// переводит кооринаты тайла в координаты сцены
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         public Vector3 CellToWorld(int x, int y)
         {
             return CellToWorld(new Vector3Int(x, y, 0));
         }
+        /// <summary>
+        /// переводит кооринаты тайла в координаты капты
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         public Vector2 CellToMap(int x, int y) => CellToMap(new Vector2Int(x, y));
 
-
+        /// <summary>
+        /// вычисляет расстояние на карте
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <returns></returns>
         public float MapDistance(Vector2Int from, Vector2Int to)
         {
             var t_from = CellToMap(from);
@@ -101,7 +162,12 @@ namespace Mercs.Tactical
             return Vector2.Distance(t_from, t_to);
         }
 
-
+        /// <summary>
+        /// возвращает последовательность тайлов между двумя точками. t - положение тайла на прямой где 0=from 1=to
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <returns></returns>
         public List<(float t, Vector2Int point)> Trace(Vector2Int from, Vector2Int to)
         {
             var w_from = CellToMap(from);

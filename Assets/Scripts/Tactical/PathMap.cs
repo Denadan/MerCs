@@ -438,7 +438,34 @@ namespace Mercs.Tactical
             if (!TacticalController.Instance.Map.OnMap(point))
                 return false;
             var dist = TacticalController.Instance.Grid.MapDistance(UnitPos, point);
-            return dist <= Unit.Movement.JumpMP;
+            if (dist > Unit.Movement.JumpMP)
+                return false;
+
+            var height = map[UnitPos].Height;
+            var list = TacticalController.Instance.Grid.Trace(UnitPos, point);
+            if (list == null)
+                return false;
+
+            foreach ((var t, var p) in list)
+            {
+                if (p == UnitPos)
+                    continue;
+                var c_tile = map[p];
+                if (c_tile == null)
+                    continue;
+                if (p == point)
+                {
+                    return TacticalController.Instance.UnitAt(p) == null 
+                        && c_tile.Height < height + Unit.Movement.JumpMP;
+                }
+                float add = c_tile.AddedHeight;
+                float? unit = Tactical.TacticalController.Instance.UnitAt(p)?.Height;
+                add = (unit.HasValue && unit.Value > add) ? unit.Value : add;
+
+                if (c_tile.Height + add >= height + Unit.Movement.JumpMP)
+                    return false;
+            }
+            return true;
         }
 
         /// <summary>

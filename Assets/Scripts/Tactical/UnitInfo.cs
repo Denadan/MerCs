@@ -28,6 +28,7 @@ namespace Mercs.Tactical
         public bool Reserve { get; set; }
         public string PilotName { get; set; }
         public int Weight { get; set; }
+        public float Height => Type == UnitType.MerC ? 1.5f + 0.1f * (int)Class : 1f; 
         public bool Selectable { get; set; }
         public MercClass Class => CONST.Class(Weight);
         public UnitType Type { get; set; }
