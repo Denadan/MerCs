@@ -124,6 +124,8 @@ namespace Mercs
             var angle = Vector2.Angle(Vector2.up, vector);
             angle *= Mathf.Sign(vector.x);
 
+            UnityEngine.Debug.Log(angle);
+
             if (source.x == dest.x)
                 if (source.y < dest.y)
                     return (Dir.N, Dir.N);

@@ -175,7 +175,7 @@ namespace Mercs.Tactical
 
             var res = new List<(float, Vector2Int)>();
             res.Add((0, from));
-            var dirs = DirHelper.GetLineDirs(from, to);
+            var dirs = DirHelper.GetLineDirs(w_from, w_to);
 
             if (dirs.main == dirs.second)
             {
