@@ -72,6 +72,9 @@ namespace Mercs.Tactical.States
 
             addState(new WaitMovementComplete());
             addState(new ConfirmGuardState());
+
+            addState(new DEBUG_TestLine());
+
             base.Start();
         }
 

@@ -4,7 +4,7 @@ namespace Mercs.Tactical
 {
     public class RandomMap : Map
     {
-        public override void Generate()
+        public override void Generate(HexGrid grid)
         {
             map = new TileInfo[SizeX, SizeY];
             for (int i = 0; i < SizeX; i++)

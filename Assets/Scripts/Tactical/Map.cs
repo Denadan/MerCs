@@ -25,16 +25,6 @@ namespace Mercs.Tactical
 
         public TileInfo this[Vector2Int coord] => this[coord.x, coord.y];
 
-        public float Distance(Vector2Int from, Vector2Int to)
-        {
-            var t_from = this[from];
-            var t_to = this[to];
-            if (t_from == null || t_to == null)
-                return 999f;
-
-            return Vector2.Distance(t_from.WorldCoord, t_to.WorldCoord) * 0.99f;
-        }
-
-        public abstract void Generate();
+        public abstract void Generate(HexGrid grid);
     }
 }

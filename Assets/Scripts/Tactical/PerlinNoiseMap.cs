@@ -12,19 +12,12 @@ namespace Mercs.Tactical
         public float ForestTrashHold = 0.3f;
         public float RoughTrashHold = 0.3f;
 
-        public override void Generate()
+        public override void Generate(HexGrid grid)
         {
             map = new TileInfo[SizeX, SizeY];
             float siny = Mathf.Sin(Mathf.PI / 3);
 
-            float maxx = SizeX * siny + 1;
-            float maxy = SizeY + 1;
-
-            coord_delegate cx, cy;
-
-            cx = (int a, int b) => a * siny;
-            cy = (int a, int b) => b + (a % 2) * 0.5f;
-
+            var max_c = grid.CellToMap(SizeX, SizeY);
 
             float[,,] temp_map = new float[SizeX, SizeY, 3];
 
@@ -40,13 +33,12 @@ namespace Mercs.Tactical
             for (int i = 0; i < SizeX; i++)
                 for (int j = 0; j < SizeY; j++)
                 {
-                    map[i, j] = new TileInfo()
-                    {
-                        WorldCoord = new Vector2(cx(i, j), cy(i, j))
-                    };
+                    map[i, j] = new TileInfo();
 
-                    float x = map[i, j].WorldCoord.x / maxx;
-                    float y = map[i, j].WorldCoord.y / maxy;
+                    var coord = grid.CellToMap(i, j);
+
+                    float x = coord.x / max_c.x;
+                    float y = coord.y / max_c.y;
                     for (int a = 0; a < 3; a++)
                     {
                         float val = temp_map[i, j, a] = all_noises[a][x, y];

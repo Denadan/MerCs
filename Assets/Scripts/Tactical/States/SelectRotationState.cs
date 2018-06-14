@@ -123,7 +123,7 @@ namespace Mercs.Tactical.States
         {
             Color c = Color.white;
 
-            c.a = Mathf.Clamp(1 - TacticalController.Instance.Map.Distance(origin_cell, coord) / 10, 0, 1);
+            c.a = Mathf.Clamp(1 - TacticalController.Instance.Grid.MapDistance(origin_cell, coord) / 10, 0, 1);
 
             //c.a = TacticalController.Instance.Map.Distance(original.position, coord) < 10 ? 0.5f : 0;
 

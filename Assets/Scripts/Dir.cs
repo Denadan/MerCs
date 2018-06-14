@@ -111,6 +111,55 @@ namespace Mercs
             return Dir.N;
         }
 
+        public static (Dir main, Dir second) GetLineDirs(Vector2 source, Vector2 dest)
+        {
+            var vector = dest - source;
+            var angle = Vector2.Angle(Vector2.up, vector);
+            angle *= Mathf.Sign(vector.x);
+
+            if (source.x == dest.x)
+                if (source.y < dest.y)
+                    return (Dir.N, Dir.N);
+                else
+                    return (Dir.S, Dir.S);
+
+            switch (angle)
+            {
+                case float a when a < 30f && a > -30f:
+                    if (a < 0)
+                        return (Dir.N, Dir.NW);
+                    else
+                        return (Dir.N, Dir.NE);
+                case float a when a < 90f && a >= 30f:
+                    if (a < 60f)
+                        return (Dir.NE, Dir.N);
+                    else
+                        return (Dir.NE, Dir.SE);
+                case float a when a < 150f && a >= 90f:
+                    if (a < 120f)
+                        return (Dir.SE, Dir.NE);
+                    else
+                        return (Dir.SE, Dir.S);
+                case float a when a > -90f && a <= -30f:
+                    if (a > -60f)
+                        return (Dir.NW, Dir.N);
+                    else
+                        return (Dir.NW, Dir.SW);
+                case float a when a > -150f && a <= -90f:
+                    if (a > -120f)
+                        return (Dir.SW, Dir.NW);
+                    else
+                        return (Dir.SW, Dir.S);
+                case float a when a >= 150 || a <= -150f:
+                    if (a < 0)
+                        return (Dir.S, Dir.SW);
+                    else
+                        return (Dir.S, Dir.SE);
+            }
+
+            return (Dir.N, Dir.N);
+        }
+
         /// <summary>
         /// соседи
         /// </summary>

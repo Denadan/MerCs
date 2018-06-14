@@ -6,7 +6,7 @@ namespace Mercs.Tactical
     public class TileInfo
     {
         public Vector3Int CellCoord { get; set; }
-        public Vector2 WorldCoord { get; set; }
+//        public Vector2 WorldCoord { get; set; }
         public int Height => CellCoord.z;
 
         public TileFeature Feature { get; set; }

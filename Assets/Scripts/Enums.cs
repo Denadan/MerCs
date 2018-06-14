@@ -161,5 +161,37 @@ namespace Mercs
         {
             return module.Slot <= SlotSize.Five;
         }
+
+        public static (bool intersect, Vector2 point) Inersect(Vector2 a1, Vector2 b1, Vector2 a2, Vector2 b2)
+        {
+            float px1 = a1.x - b1.x;
+            float py1 = a1.y - b1.y;
+
+            float px2 = a2.x - b2.x;
+            float py2 = a2.y - b2.y;
+
+            float d = px1 * py2 - px2 * py1;
+            if (d == 0)
+                return (false, Vector2.zero);
+
+            float d1 = a1.x * b1.y - a1.y * b1.x;
+            float d2 = a2.x * b2.y - a2.y * b2.x;
+
+            return (true, new Vector2((d1 * px2 - d2 * px1) / d, (d1 * py2 - d2 * py1) / d));
+        }
+
+        public static float T(Vector2 point, Vector2 a, Vector2 b)
+        {
+            if (b.x - a.x == 0)
+                if (b.y - a.y == 0)
+                    return 0f;
+                else
+                    return (point.y - a.y) / (b.y - a.y);
+            else
+                return (point.x - a.x) / (b.x - a.x);
+
+        }
+
+        public static float i() { return 0; }
     }
 }

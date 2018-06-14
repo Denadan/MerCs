@@ -435,7 +435,9 @@ namespace Mercs.Tactical
 
         private bool step_jump(Vector2Int point)
         {
-            var dist = TacticalController.Instance.Map.Distance(UnitPos, point);
+            if (!TacticalController.Instance.Map.OnMap(point))
+                return false;
+            var dist = TacticalController.Instance.Grid.MapDistance(UnitPos, point);
             return dist <= Unit.Movement.JumpMP;
         }
 

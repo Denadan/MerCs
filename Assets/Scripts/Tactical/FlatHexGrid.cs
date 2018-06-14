@@ -45,6 +45,11 @@ namespace Mercs.Tactical
 
         private Dictionary<Dir, Sprite[]> borders = new Dictionary<Dir, Sprite[]>();
 
+        public override Vector2 CellToMap(Vector2Int tile_coord)
+        {
+            return new Vector2(tile_coord.x * MapSX, tile_coord.y + (tile_coord.x % 2) * 0.5f);
+        }
+
         public override Vector3 CellToWorld(Vector3Int tile_coord)
         {
             float x = SizeX * tile_coord.x;
