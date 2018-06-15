@@ -40,7 +40,8 @@ namespace Mercs.Tactical
         [SerializeField] private Text roundText;
         [SerializeField] private WeaponList Weapons;
         [SerializeField] private GameObject TargetLinePrefab;
-
+        [SerializeField] public Material StrokeLineMaterial;
+        [SerializeField] public Material SolidLineMaterial;
 
 
         public LineRenderer MoveLine;
@@ -221,7 +222,7 @@ namespace Mercs.Tactical
 
         public LineRenderer GetLine(int n)
         {
-            if (n <= 0 || n >= 10)
+            if (n < 0 || n >= 10)
                 return null;
             while (n >= target_lines.Count)
             {

@@ -12,6 +12,8 @@ namespace Mercs.Tactical.States
         protected PhasePrepareState state;
         protected MovementStateData data;
 
+        protected List<(UnitInfo unit, LineRenderer line)> lines = new List<(UnitInfo unit, LineRenderer line)>();
+
         public path_target Path { get; private set; }
 
         public PlayerSelectMovementBase(PhasePrepareState state, MovementStateData data)
@@ -22,23 +24,34 @@ namespace Mercs.Tactical.States
 
         public override void OnLoad()
         {
- //           TacticalController.Instance.Overlay.HideAll();
+            //           TacticalController.Instance.Overlay.HideAll();
             // если карта путей готова - нарисовать её 
             if (TacticalController.Instance.Path.Ready)
                 ShowOverlay();
             else
                 TacticalController.Instance.StateMachine.StartCoroutine(wait_for_path(TacticalController.Instance.SelectedUnit));
+
+            int n = 0;
+            foreach (var unit in TacticalController.Instance.Units.Where(u => u.Faction != GameController.Instance.PlayerFaction))
+            {
+                lines.Add((unit, TacticalUIController.Instance.GetLine(n)));
+                lines[n].line.SetPosition(1, unit.transform.position);
+                n += 1;
+            }
         }
 
         public override void OnUnload()
         {
             TacticalController.Instance.Overlay.HideAll();
             TacticalUIController.Instance.MoveLine.gameObject.SetActive(false);
+            foreach (var item in lines)
+                item.line.gameObject.SetActive(false);
+            lines.Clear();
         }
 
         private IEnumerator wait_for_path(UnitInfo info)
         {
-            
+
             float start = TacticalController.Instance.Path.DEBUG_TimeStart;
             UnityEngine.Debug.Log($"Started");
             float end = 0;
@@ -74,6 +87,11 @@ namespace Mercs.Tactical.States
             TacticalController.Instance.HideHighlatedUnit(unit);
         }
 
+        protected virtual Vector2 LineScale(List<path_node> path)
+        {
+            return new Vector2((path.Count - 1) * 4, 1);
+        }
+
         public override void TileEnter(Vector2Int coord)
         {
             // получаем путь до точки
@@ -89,6 +107,32 @@ namespace Mercs.Tactical.States
                               select TacticalController.Instance.Grid.CellToWorld(v2.coord)).ToArray();
                 line.positionCount = points.Length;
                 line.SetPositions(points);
+                line.material.mainTextureScale = LineScale(list);
+
+                var pos = TacticalController.Instance.Grid.CellToWorld(coord);
+                var weapon = TacticalController.Instance.SelectedUnit.Weapons;
+
+                foreach (var l in lines)
+                {
+                    l.line.gameObject.SetActive(true);
+                    l.line.SetPosition(0, pos);
+                    var dist = TacticalController.Instance.Grid.MapDistance(coord, l.unit.Position.position);
+
+                    l.line.material.mainTextureScale = new Vector2(dist * 6, 1);
+
+
+                    if (dist > weapon.MaxOptimalRange)
+                        if (dist > weapon.MaxFalloffRange)
+                            l.line.startColor = l.line.endColor = Color.white;
+                        else
+                            l.line.startColor = l.line.endColor = Color.yellow;
+                    else
+                        if (dist < weapon.MinRange)
+                            l.line.startColor = l.line.endColor = Color.white;
+                        else
+                            l.line.startColor = l.line.endColor = Color.red;
+
+                }
             }
         }
 
@@ -96,6 +140,8 @@ namespace Mercs.Tactical.States
         {
             // скрываем линию
             TacticalUIController.Instance.MoveLine.gameObject.SetActive(false);
+            foreach (var item in lines)
+                item.line.gameObject.SetActive(false);
         }
 
         public override void UnitClick(UnitInfo unit, PointerEventData.InputButton button)
@@ -128,7 +174,7 @@ namespace Mercs.Tactical.States
             }
             // левая кнопка - вращать
             else if (button == PointerEventData.InputButton.Left &&
-                     (data.target = CanMove(coord))!= null)
+                     (data.target = CanMove(coord)) != null)
             {
                 data.dir = data.target.fast_path.facing;
                 SwitchTo(TacticalState.SelectRotation);

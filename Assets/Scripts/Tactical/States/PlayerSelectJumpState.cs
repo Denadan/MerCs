@@ -25,6 +25,11 @@ namespace Mercs.Tactical.States
             TacticalController.Instance.Overlay.ShowMoveMapJump();
         }
 
+        protected override Vector2 LineScale(List<PathMap.path_node> path)
+        {
+            return new Vector2((int)(TacticalController.Instance.Grid.MapDistance(path[0].coord, path[1].coord) * 4), 1);
+        }
+
         protected override List<PathMap.path_node> GetPath(Vector2Int coord)
         {
             var node = TacticalController.Instance.Path.JumpList.Find(i => i.coord == coord);
