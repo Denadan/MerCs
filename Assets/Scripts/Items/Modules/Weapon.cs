@@ -56,6 +56,9 @@ namespace Mercs.Items
         /// </summary>
         public bool VariableShots => Template.VariableShots;
 
+        public bool DirectFire => Template.DirectFire;
+        public bool IndirectFire => Template.IndirectFire;
+
         /// <summary>
         /// минимальное расстояние стрельбы
         /// артилерия - нет урона

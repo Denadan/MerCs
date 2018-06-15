@@ -8,12 +8,12 @@ using UnityEngine;
 namespace Mercs.Tactical
 {
     [RequireComponent(typeof(UnitInfo))]
-    public class WeaponsData : MonoBehaviour, IEnumerable<WeaponsData.WeaponInfo>
+    public class WeaponsData : MonoBehaviour, IEnumerable<WeaponsData.Info>
     {
         private UnitInfo info;
 
 
-        public class WeaponInfo
+        public class Info
         {
             public Weapon Weapon { get;  internal set; }
 
@@ -23,15 +23,23 @@ namespace Mercs.Tactical
             public bool Destroyed { get; internal set; }
 
             public bool CanShoot => !Destroyed && (!UseAmmo || AmmoLeft > 0);
+            public bool Enabled { get; set; }
+            public int Target { get; set; }
         }
 
         private Dictionary<Ammo, List<AmmoPod>> PodsByAmmo;
-        private Dictionary<Weapon, WeaponInfo> weapons;
+        private Dictionary<Weapon, Info> weapons;
 
-        public List<WeaponInfo> Weapons { get; private set; }
+        public List<Info> Weapons { get; private set; }
         public List<AmmoPod> Pods { get; private set; }
 
         public int this[Ammo ammo] => PodsByAmmo.TryGetValue(ammo, out var list) ? list.Sum(i => i.Count) : 0;
+
+
+        public float MaxOptimalRange { get; private set; }
+        public float MaxFalloffRange { get; private set; }
+        public bool HasIndirect { get; private set; }
+        public float MinRange { get; private set; }
 
         public IEnumerable<(Ammo ammo, int count)> this[AmmoType ammo] =>
             Pods.Where(i => i.Type == ammo)
@@ -57,11 +65,12 @@ namespace Mercs.Tactical
                 ammo.ApplyUpgrade();
             }
 
-            Weapons = info.Modules.OfType<Weapon>().Select(i => new WeaponInfo {Weapon = i}).ToList();
+            Weapons = info.Modules.OfType<Weapon>().Select(i => new Info {Weapon = i}).ToList();
             weapons = Weapons.ToDictionary(i => i.Weapon);
 
             foreach (var weaponInfo in Weapons)
             {
+                weaponInfo.Enabled = true;
                 if (weaponInfo.UseAmmo)
                 {
                     int count;
@@ -84,9 +93,19 @@ namespace Mercs.Tactical
                     weaponInfo.AmmoLeft = 0;
                 }
             }
+
+            calc_range();
         }
 
-        public IEnumerator<WeaponInfo> GetEnumerator()
+        private void calc_range()
+        {
+            MaxOptimalRange = Weapons.Max(i => i.Weapon.Optimal);
+            MaxFalloffRange = Weapons.Max(i => i.Weapon.Falloff);
+            MinRange = Weapons.Min(i => i.Weapon.MinRange);
+            HasIndirect = Weapons.Any(i => i.Weapon.IndirectFire);
+        }
+
+        public IEnumerator<Info> GetEnumerator()
         {
             return Weapons.GetEnumerator();
         }

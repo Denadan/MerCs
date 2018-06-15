@@ -2632,7 +2632,7 @@ MonoBehaviour:
   SelectedUnitStateWindow: {fileID: 453563036}
   roundText: {fileID: 624985803}
   Weapons: {fileID: 487902943}
-  DebugMenu: {fileID: 0}
+  TargetLinePrefab: {fileID: 0}
   MoveLine: {fileID: 454331253}
 --- !u!1 &487902938
 GameObject:
@@ -3664,7 +3664,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 281, y: 0}
+  m_AnchoredPosition: {x: 350.5, y: 0}
   m_SizeDelta: {x: 0, y: 120}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &628754796
@@ -6780,7 +6780,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 281, y: 0}
+  m_AnchoredPosition: {x: 350.5, y: 0}
   m_SizeDelta: {x: 0, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1325958037

@@ -36,7 +36,7 @@ namespace Mercs.Tactical.UI
 
         private int shots;
 
-        public void Set(WeaponsData.WeaponInfo info)
+        public void Set(WeaponsData.Info info)
         {
             shots = 1;
             if (info.CanShoot)
