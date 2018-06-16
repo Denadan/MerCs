@@ -15,3 +15,4 @@ MonoBehaviour:
   InitiativeBonus: 0
   Hp: 4
   Evasive: 1
+  VisualBonus: 2

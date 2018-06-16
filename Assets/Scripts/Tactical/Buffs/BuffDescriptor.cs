@@ -21,7 +21,7 @@ namespace Mercs.Tactical.Buffs
         public BuffType Type = BuffType.None;
         public float Value = 0;
         public BuffDuration Duration = BuffDuration.Permanent;
-        public Visibility MinVision = Visibility.None;
+        public Visibility.Level MinVision = Visibility.Level.None;
         public bool Stackable = true;
 
         public string ToolTip

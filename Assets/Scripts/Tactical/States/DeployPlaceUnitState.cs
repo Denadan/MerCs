@@ -55,7 +55,7 @@ namespace Mercs.Tactical.States
             if (state.units.Find(u => u.Position.position == coord) != null)
                 return;
 
-            state.unit_in_hand.info.gameObject.AddComponent<PolygonCollider2D>();
+            state.unit_in_hand.info.GFX.AddCollider();
             state.unit_in_hand.info.Reserve = false;
             state.unit_in_hand.button.Background.color = Color.green;
             state.unit_in_hand.button.BottomText.text = "DEPLOY";

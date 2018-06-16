@@ -19,10 +19,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4614353106774778}
-  - component: {fileID: 114291790252129412}
-  - component: {fileID: 114101135788229610}
   - component: {fileID: 114542518974869722}
-  - component: {fileID: 114746455252689770}
+  - component: {fileID: 114204004301124654}
+  - component: {fileID: 114382327017903472}
+  - component: {fileID: 114002126076069898}
   m_Layer: 0
   m_Name: MapFlat
   m_TagString: Untagged
@@ -60,62 +60,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!1 &1737559824481136
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4007008490804490}
-  m_Layer: 0
-  m_Name: Link
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!1 &1807232401144584
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 5
-  m_Component:
-  - component: {fileID: 4117034211365896}
-  m_Layer: 0
-  m_Name: Path
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &4007008490804490
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1737559824481136}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4614353106774778}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!4 &4117034211365896
-Transform:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1807232401144584}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 4614353106774778}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4519892905855222
 Transform:
   m_ObjectHideFlags: 1
@@ -140,8 +84,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4519892905855222}
-  - {fileID: 4117034211365896}
-  - {fileID: 4007008490804490}
   - {fileID: 4821704328078302}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -157,9 +99,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4614353106774778}
-  m_RootOrder: 3
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114101135788229610
+--- !u!114 &114002126076069898
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -167,94 +109,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1031959539713628}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea8dea19f65c1ed49b8c674897a9e3f3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  DEBUG_TimeStart: 0
-  DEBUG_TimeEnd: 0
---- !u!114 &114291790252129412
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1031959539713628}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc2c0e15aba333545a7a8c31a26a4314, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  TilesParent: {fileID: 4519892905855222}
-  PathCostParent: {fileID: 4117034211365896}
-  LinksCostParent: {fileID: 4007008490804490}
-  UnitsParent: {fileID: 4821704328078302}
-  SizeX: 0.75
-  SizeY: 0.85714287
-  NormalTiles:
-  - {fileID: 1186027561903988, guid: c85fb87f0234284479614c984e97c75d, type: 2}
-  WaterTiles:
-  - {fileID: 1086677025182882, guid: 66f8b80ed0267084b9eee5bd6b8c1e60, type: 2}
-  ForestTiles:
-  - {fileID: 1951091458142444, guid: dbd1f939ab496d44eba31d109e06c820, type: 2}
-  RoughTiles:
-  - {fileID: 1479836352609656, guid: dcff78c9fb2d9f240ae6bda00ebd02b2, type: 2}
-  DrawOBorder: 1
-  BorderPrefab: {fileID: 1775371542598530, guid: a3dc96e12f8ad42489c5cd7919f33d7f,
-    type: 2}
-  BorderN:
-  - {fileID: 21300008, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
-  - {fileID: 21300010, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
-  - {fileID: 21300012, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
-  - {fileID: 21300014, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
-  BorderS:
-  - {fileID: 21300016, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
-  - {fileID: 21300018, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
-  - {fileID: 21300020, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
-  - {fileID: 21300022, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
-  BorderSW:
-  - {fileID: 21300040, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
-  - {fileID: 21300042, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
-  - {fileID: 21300044, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
-  - {fileID: 21300046, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
-  BorderSE:
-  - {fileID: 21300048, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
-  - {fileID: 21300050, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
-  - {fileID: 21300052, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
-  - {fileID: 21300054, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
-  BorderNW:
-  - {fileID: 21300032, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
-  - {fileID: 21300034, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
-  - {fileID: 21300036, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
-  - {fileID: 21300038, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
-  BorderNE:
-  - {fileID: 21300024, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
-  - {fileID: 21300026, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
-  - {fileID: 21300028, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
-  - {fileID: 21300030, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
---- !u!114 &114542518974869722
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1031959539713628}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f514fb6c6a358304a86c75c633853f5e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  SizeX: 25
-  SizeY: 20
-  MaxHeight: 5
-  ForestTrashHold: 0.75
-  RoughTrashHold: 0.75
---- !u!114 &114746455252689770
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1031959539713628}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c5d4f6a49be40040a1df42994ba4cbc, type: 3}
+  m_Script: {fileID: 11500000, guid: 32edf5aa6d912d14da471a0a69c51281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   MoveColor: {r: 0, g: 1, b: 0, a: 0.33}
@@ -264,7 +119,7 @@ MonoBehaviour:
   White50: {fileID: 2800000, guid: 18084449e377e8141b7c4bc8e45f50c3, type: 3}
   White100: {fileID: 2800000, guid: 0f74296b534eed94aaa0d6498d668cd2, type: 3}
   GridMark: {fileID: 2800000, guid: 7297593f4933c4343801054d2c0d0f89, type: 3}
-  Stroke: {fileID: 2800000, guid: c60dda5127058e84099ccbe67088737d, type: 3}
+  Stroke: {fileID: 0}
   Sectors:
   - {fileID: 2800000, guid: fce13b6a223fae948ba09a17cfafcc54, type: 3}
   - {fileID: 2800000, guid: f1df9691e5ece9a499674129cbb01853, type: 3}
@@ -372,3 +227,88 @@ MonoBehaviour:
   - {fileID: 2800000, guid: 91d82f1118a83e44b98513e5d0896620, type: 3}
   - {fileID: 2800000, guid: a18c0423b1bbcdf4eb6bfe2ae33686e0, type: 3}
   - {fileID: 2800000, guid: 3362e2442b580ca4eb15b03a60bdf439, type: 3}
+--- !u!114 &114204004301124654
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1031959539713628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 770e732255a224d4983359df239aa2b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DEBUG_TimeStart: 0
+  DEBUG_TimeEnd: 0
+--- !u!114 &114382327017903472
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1031959539713628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7433ddfae9981bc43b83571808e424e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TilesParent: {fileID: 4519892905855222}
+  UnitsParent: {fileID: 4821704328078302}
+  SizeX: 0.75
+  SizeY: 0.85714287
+  NormalTiles:
+  - {fileID: 1186027561903988, guid: c85fb87f0234284479614c984e97c75d, type: 2}
+  WaterTiles:
+  - {fileID: 1086677025182882, guid: 66f8b80ed0267084b9eee5bd6b8c1e60, type: 2}
+  ForestTiles:
+  - {fileID: 1951091458142444, guid: dbd1f939ab496d44eba31d109e06c820, type: 2}
+  RoughTiles:
+  - {fileID: 1479836352609656, guid: dcff78c9fb2d9f240ae6bda00ebd02b2, type: 2}
+  DrawOBorder: 1
+  BorderPrefab: {fileID: 1775371542598530, guid: a3dc96e12f8ad42489c5cd7919f33d7f,
+    type: 2}
+  BorderN:
+  - {fileID: 21300008, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
+  - {fileID: 21300010, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
+  - {fileID: 21300012, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
+  - {fileID: 21300014, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
+  BorderS:
+  - {fileID: 21300016, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
+  - {fileID: 21300018, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
+  - {fileID: 21300020, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
+  - {fileID: 21300022, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
+  BorderSW:
+  - {fileID: 21300040, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
+  - {fileID: 21300042, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
+  - {fileID: 21300044, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
+  - {fileID: 21300046, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
+  BorderSE:
+  - {fileID: 21300048, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
+  - {fileID: 21300050, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
+  - {fileID: 21300052, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
+  - {fileID: 21300054, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
+  BorderNW:
+  - {fileID: 21300032, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
+  - {fileID: 21300034, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
+  - {fileID: 21300036, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
+  - {fileID: 21300038, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
+  BorderNE:
+  - {fileID: 21300024, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
+  - {fileID: 21300026, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
+  - {fileID: 21300028, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
+  - {fileID: 21300030, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
+--- !u!114 &114542518974869722
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1031959539713628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f514fb6c6a358304a86c75c633853f5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SizeX: 25
+  SizeY: 20
+  MaxHeight: 5
+  ForestTrashHold: 0.75
+  RoughTrashHold: 0.75

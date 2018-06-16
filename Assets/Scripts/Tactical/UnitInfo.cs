@@ -18,10 +18,11 @@ namespace Mercs.Tactical
         public BuffList Buffs;
         public WeaponsData Weapons;
         public ModulesData Modules;
+        public UnitGFX GFX;
 
-
-        public Visibility Vision;
-        
+        public float RadarRange { get; set; }
+        public float VisualRange { get; set; }
+        public float ScanRange { get; set; }
 
         public Faction Faction { get; set; }
         public bool Active { get; set; }
@@ -36,11 +37,6 @@ namespace Mercs.Tactical
         private void Start()
         {
             var camo = GetComponent<CamoSprite>();
-            UnityEngine.Debug.Log($"{PilotName}: {camo}");
-            camo.CamoTemplate = Faction.CamoTemplate;
-            camo.ColorB = Faction.CamoColorB;
-            camo.ColorR = Faction.CamoColorR;
-            camo.ColorG = Faction.CamoColorG;
         }
 
     }

@@ -24,6 +24,9 @@ namespace Mercs.Tactical.UI
         [SerializeField] private Sprite RunSprite;
         [SerializeField] private Sprite JumpSprite;
 
+        [SerializeField] private Sprite RadarSprite;
+        [SerializeField] private Sprite VisualSprite;
+        [SerializeField] private Sprite LockedSprite;
 
 
         private Dictionary<Parts, UnitPartStateBase> parts = new Dictionary<Parts, UnitPartStateBase>();
@@ -63,17 +66,19 @@ namespace Mercs.Tactical.UI
                 parts.Add(part, p);
             }
 
+
             UnitDamage(info.UnitHP);
         }
 
+
         private void ShowPartData()
         {
-            foreach (Transform child in StringContainer)
+            foreach (Transform child in stringContainer)
                 Destroy(child.gameObject);
 
             foreach(var module in info.Modules[selected])
             {
-                var str = Instantiate(StringPrefab, StringContainer).GetComponent<IconText>();
+                var str = Instantiate(StringPrefab, stringContainer).GetComponent<IconText>();
                 str.Icon = module.Icon;
                 str.Text = module.ShortName;
             }
@@ -103,6 +108,24 @@ namespace Mercs.Tactical.UI
                 item.Icon = JumpSprite;
                 item.Text = info.Movement.JumpMP.ToString();
             }
+        }
+
+        private void ShowRadarData()
+        {
+            var item = Instantiate(StringPrefab, StringContainer, false).GetComponent<IconText>();
+            item.Icon = RadarSprite;
+            item.Text = info.RadarRange.ToString();
+
+            if (info.VisualRange > 0)
+            {
+                item = Instantiate(StringPrefab, StringContainer, false).GetComponent<IconText>();
+                item.Icon = VisualSprite;
+                item.Text = info.VisualRange.ToString();
+            }
+
+            item = Instantiate(StringPrefab, StringContainer, false).GetComponent<IconText>();
+            item.Icon = LockedSprite;
+            item.Text = info.ScanRange.ToString();
         }
 
         private void OnDisable()
@@ -148,6 +171,7 @@ namespace Mercs.Tactical.UI
                 Armor.Value = hp.TotalArmor;
 
                 ShowMovementData();
+                ShowRadarData();
             }
             else
             {

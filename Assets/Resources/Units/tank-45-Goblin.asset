@@ -14,12 +14,10 @@ MonoBehaviour:
   Weight: 45
   Sprite: {fileID: 21300000, guid: 24c1c76632a0b31449bc4b787bedcf87, type: 3}
   AddHp: 0
+  RadarRange: 15
+  VisualRange: 15
+  ScannerRange: 10
   Type: 1
-  MoveSpeed: 4
-  RunSpeed: 6
-  Jumps: 0
-  Shield: 0
-  ShieldRegen: 0
   PartTable:
   - Place: 16384
     Structure: 2

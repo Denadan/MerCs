@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using Mercs.Tactical.UI;
 using Mercs.Tactical.Events;
 using System.Collections.Generic;
+using UnityEngine.Animations;
 
 namespace Mercs.Tactical
 {
@@ -42,6 +43,12 @@ namespace Mercs.Tactical
         [SerializeField] private GameObject TargetLinePrefab;
         [SerializeField] public Material StrokeLineMaterial;
         [SerializeField] public Material SolidLineMaterial;
+
+        [Header("Icons")]
+        public Sprite MercBlip;
+        public Sprite TankBlip;
+        public Sprite TurretBlip;
+        public Sprite VehicleBlip;
 
 
         public LineRenderer MoveLine;

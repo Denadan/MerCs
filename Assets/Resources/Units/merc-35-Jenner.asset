@@ -14,6 +14,9 @@ MonoBehaviour:
   Weight: 35
   Sprite: {fileID: 21300000, guid: 54de049198835db46b09c4dc084b1948, type: 3}
   AddHp: 0
+  RadarRange: 18
+  VisualRange: 12
+  ScannerRange: 10
   Type: 0
   PartTable:
   - Place: 2

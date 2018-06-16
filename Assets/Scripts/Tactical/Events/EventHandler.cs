@@ -217,5 +217,17 @@ namespace Mercs.Tactical.Events
                 hp.UnSubscribe(go);
             }
         }
+
+        public static void UnsubscribeVisionChange(UnitInfo selectedUnit, GameObject o)
+        {
+            if (TacticalController.Instance?.Vision != null)
+                TacticalController.Instance.Vision.UnSubscribe(selectedUnit, o);
+        }
+
+        public static void SubscribeVisionChange(UnitInfo selectedUnit, GameObject o)
+        {
+            if (TacticalController.Instance?.Vision != null)
+                TacticalController.Instance.Vision.Subscribe(selectedUnit, o);
+        }
     }
 }

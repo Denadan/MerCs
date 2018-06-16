@@ -27,6 +27,10 @@ namespace Mercs
         public Sprite Sprite;
         public int AddHp;
 
+        public float RadarRange;
+        public float VisualRange;
+        public float ScannerRange;
+
         public UnitType Type;
         public UnitPart[] PartTable;
         public Equip[] Items;

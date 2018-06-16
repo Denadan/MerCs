@@ -46,7 +46,7 @@ namespace Mercs.Tactical.States
             unit_to_remove.Position.position = new Vector2Int(-1, -1);
             unit_to_remove.Position.SetFacing(Dir.N);
             unit_to_remove.info.Reserve = true;
-            Object.Destroy(unit.GetComponent<PolygonCollider2D>());
+            unit_to_remove.info.GFX.RemoveCollider();
             unit_to_remove.button.Background.color = Color.white;
             unit_to_remove.button.BottomText.text = "RESERVE";
 

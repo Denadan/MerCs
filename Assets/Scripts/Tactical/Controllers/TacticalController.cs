@@ -19,13 +19,14 @@ namespace Mercs.Tactical
         private Faction[] factions;
         private int current_faction;
         private UnitInfo selected;
-
+        
         #region Properties
         public Map Map { get; private set; }
         public HexGrid Grid { get; private set; }
         public MapOverlay Overlay { get; private set; }
         public PathMap Path { get; private set; }
         public TacticalStateMachine StateMachine { get; private set; }
+        public Visibility Vision { get; private set; }
         public bool Ready { get; private set; }
 
         public UnitInfo SelectedUnit
@@ -49,7 +50,7 @@ namespace Mercs.Tactical
                         TacticalUIController.Instance.ShowSelectedUnitWindow(value);
                         TacticalUIController.Instance.MoveCameraTo(value);
                     }
-                    else if(value.Vision >= Visibility.Sensor)
+                    else if(Vision.GetLevelFor(value) >= Visibility.Level.Sensor)
                         TacticalUIController.Instance.MoveCameraTo(value);
                 }
             }
@@ -100,6 +101,8 @@ namespace Mercs.Tactical
             StateMachine = GetComponent<TacticalStateMachine>();
             Overlay = map_obj.GetComponent<MapOverlay>();
             Path = map_obj.GetComponent<PathMap>();
+            Vision = map_obj.GetComponent<Visibility>();
+
 
             Units.Clear();
             foreach (var item in GameController.Instance.Mechs)
@@ -184,8 +187,6 @@ namespace Mercs.Tactical
                 var unit = UnitContructor.Build(EnemyMechPrefab, item.Merc, item.Pilot);
                 unit.transform.SetParent(Grid.UnitsParent, false);
                 unit.Faction = GameController.Instance.EnemyFaction;
-                // TODO: VISIBILITY!
-                unit.Vision = Visibility.Visual;
 
                 var coord = unit.GetComponent<CellPosition>();
                 Vector2Int c = new Vector2Int();
@@ -198,7 +199,7 @@ namespace Mercs.Tactical
                 unit.Position.position = c;
                 unit.Position.SetFacing(Dir.S);
                 unit.transform.position = Grid.CellToWorld(c);
-                unit.gameObject.AddComponent<PolygonCollider2D>();
+                unit.GFX.AddCollider();
                 unit.Reserve = false;
 
                 Units.Add(unit);

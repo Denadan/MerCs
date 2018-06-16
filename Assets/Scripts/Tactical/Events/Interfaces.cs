@@ -31,4 +31,9 @@ namespace Mercs.Tactical.Events
     {
         void PartDamaged(UnitHp hp);
     }
+
+    public interface IVisionChanged : IEventSystemHandler
+    {
+        void VisionChanged(Visibility.Level level);
+    }
 }

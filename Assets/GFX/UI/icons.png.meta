@@ -125,9 +125,9 @@ TextureImporter:
     21300240: icons_87
     21300242: icons_88
     21300244: icons_89
-    21300246: icons_90
-    21300248: icons_91
-    21300250: icons_92
+    21300246: icons_blip
+    21300248: icons_eye
+    21300250: icons_locked
     21300252: icons_93
     21300254: icons_94
     21300256: icons_95
@@ -2015,7 +2015,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: icons_90
+      name: icons_blip
       rect:
         serializedVersion: 2
         x: 0
@@ -2035,7 +2035,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: icons_91
+      name: icons_eye
       rect:
         serializedVersion: 2
         x: 50
@@ -2055,7 +2055,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: icons_92
+      name: icons_locked
       rect:
         serializedVersion: 2
         x: 100

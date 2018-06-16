@@ -11,7 +11,7 @@ namespace Mercs.Tactical.Events
         {
             if (OriginalUnit == null)
                 OriginalUnit = GetComponent<UnitInfo>();
-            if(OriginalUnit == null)
+            if (OriginalUnit == null)
                 UnityEngine.Debug.Log("Не найден объеккт для прикрепленного юнита, " + gameObject.name);
         }
 

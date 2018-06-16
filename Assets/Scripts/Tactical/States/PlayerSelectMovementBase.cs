@@ -131,7 +131,6 @@ namespace Mercs.Tactical.States
                             l.line.startColor = l.line.endColor = Color.white;
                         else
                             l.line.startColor = l.line.endColor = Color.red;
-
                 }
             }
         }

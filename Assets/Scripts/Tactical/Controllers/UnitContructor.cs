@@ -18,7 +18,7 @@ namespace Mercs.Tactical
 
             info.Type = template.Type;
 
-            info.GetComponent<SpriteRenderer>().sprite = template.Sprite;
+            info.GFX.SetData(template);
             
             info.Weight = template.Weight;
             info.Reserve = true;
@@ -27,6 +27,10 @@ namespace Mercs.Tactical
             info.Modules.Build(template);
             info.UnitHP.Build(template, info.Modules);
             info.Weapons.Build();
+
+            info.RadarRange = template.RadarRange;
+            info.VisualRange = template.VisualRange;
+            info.ScanRange = template.ScannerRange;
 
             info.Movement.Build();
 
@@ -41,6 +45,7 @@ namespace Mercs.Tactical
 
             if (pilot == null)
             {
+                info.VisualRange = 0;
                 info.PilotName = "DroneAI";
                 GameObject.Destroy(info.PilotHP);
                 info.PilotHP = null;
@@ -49,7 +54,7 @@ namespace Mercs.Tactical
                     Type = BuffType.InitiativeBonus,
                     Value = -1,
                     TAG = "No Pilot",
-                    MinVision = Visibility.Scanned,
+                    MinVision = Visibility.Level.Scanned,
                     ToolTip = "Initiative {0}"
                 });
                 info.Movement.CanDoEvasive = false;
@@ -59,6 +64,7 @@ namespace Mercs.Tactical
             {
                 info.PilotName = pilot.name;
                 info.PilotHP.Init(pilot, add_hp);
+                info.VisualRange += pilot.VisualBonus;
 
                 if (pilot.InitiativeBonus > 0)
                     info.Buffs.Add(new BuffDescriptor
@@ -66,7 +72,7 @@ namespace Mercs.Tactical
                         Type = BuffType.InitiativeBonus,
                         Value = pilot.InitiativeBonus,
                         TAG = "Master Pilot",
-                        MinVision = Visibility.Scanned,
+                        MinVision = Visibility.Level.Scanned,
                         ToolTip = "Initiative {0}"
                     });
 

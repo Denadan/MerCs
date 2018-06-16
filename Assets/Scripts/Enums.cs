@@ -12,11 +12,6 @@ namespace Mercs
         None, Road, Forest, Rough, Water, Cover, Pillar
     }
 
-    public enum Visibility
-    {
-        None, Sensor, Visual, Scanned, Friendly
-    }
-
     public enum MercClass
     {
         Scout = 0,      // 25- 34
