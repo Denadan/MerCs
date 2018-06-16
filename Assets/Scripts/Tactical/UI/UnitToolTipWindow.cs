@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿#pragma warning disable 649
+
+using System.Collections.Generic;
 using Mercs.Tactical.Events;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -32,7 +34,6 @@ namespace Mercs.Tactical.UI
         [SerializeField] private Sprite LockedSprite;
 
 
-        private Dictionary<Parts, UnitPartStateBase> parts = new Dictionary<Parts, UnitPartStateBase>();
         private UnitInfo current_unit, selected_unit;
         private UnitInfo info;
         private Visibility.Level level;
@@ -42,7 +43,6 @@ namespace Mercs.Tactical.UI
         public void SetUnit(UnitInfo info)
         {
             this.info = info;
-            parts.Clear();
             foreach (Transform child in PartsHolder)
                 Destroy(child.gameObject);
 
@@ -58,7 +58,6 @@ namespace Mercs.Tactical.UI
             {
                 var p = Instantiate(level == Visibility.Level.Visual ? HiddenPartPrefab : VissiblePartPrefab, PartsHolder, false).GetComponent<UnitPartStateBase>();
                 p.Init(this, part, info.UnitHP);
-                parts.Add(part, p);
             }
 
             foreach (Transform child in WeaponContainer)
@@ -72,8 +71,6 @@ namespace Mercs.Tactical.UI
 
             UnitDamage(info.UnitHP);
         }
-
-
 
         private void ShowPart(Parts part)
         {

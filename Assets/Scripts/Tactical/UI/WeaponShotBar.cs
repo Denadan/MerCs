@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿#pragma warning disable 649
+
+using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 

@@ -1,10 +1,8 @@
 ﻿#pragma warning disable 649
 
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Mercs.Tactical.Buffs;
 using Mercs.Tactical.States;
 using Mercs.Tactical.UI;
 using Tools;
@@ -232,14 +230,22 @@ namespace Mercs.Tactical
             info.Position.Facing = data.dir;
 
             var start_time = Time.realtimeSinceStartup;
+
+            int t_old = -1;
             while (Time.realtimeSinceStartup < start_time + total_time)
             {
                 var t = (1 - (Time.realtimeSinceStartup - start_time) / total_time) * length - 0.0001f;
+                int ti = (int) t;
 
-
-                var ns = path[(int) t];
-                var ne = path[(int) t + 1];
-                var t1 = t - (int) t;
+                var ns = path[ti];
+                var ne = path[ti + 1];
+                var t1 = t - ti;
+                
+                if (t_old != ti)
+                {
+                    t_old = ti;
+                    Vision.RecalcVision(info, ne.coord);
+                }
 
                 info.transform.position = Vector3.Lerp(
                     Grid.CellToWorld(ns.coord), Grid.CellToWorld(ne.coord), t1
@@ -272,6 +278,7 @@ namespace Mercs.Tactical
 
             info.transform.position = Grid.CellToWorld(path[0].coord);
             info.Position.SetFacing(dir);
+            Vision.RecalcVision(info);
             if (state != TacticalState.NotReady)
             {
                 yield return new WaitForSeconds(0.5f);
@@ -310,6 +317,7 @@ namespace Mercs.Tactical
 
             info.transform.position = end;
             info.Position.SetFacing(target_dir);
+            Vision.RecalcVision(info);
             if (state != TacticalState.NotReady)
             {
                 yield return new WaitForSeconds(0.5f);

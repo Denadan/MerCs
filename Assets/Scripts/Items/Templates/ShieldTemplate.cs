@@ -20,6 +20,6 @@ namespace Mercs.Items
         /// <summary>
         /// задержка перезарядки
         /// </summary>
-        internal int ShieldDelay;
+        public int ShieldDelay;
     }
 }

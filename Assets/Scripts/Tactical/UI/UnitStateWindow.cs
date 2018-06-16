@@ -1,4 +1,7 @@
-﻿using System.Collections.Generic;
+﻿#pragma warning disable 649
+
+
+using System.Collections.Generic;
 using Mercs.Tactical.Events;
 using UnityEngine;
 using UnityEngine.UI;
@@ -73,12 +76,12 @@ namespace Mercs.Tactical.UI
 
         private void ShowPartData()
         {
-            foreach (Transform child in stringContainer)
+            foreach (Transform child in StringContainer)
                 Destroy(child.gameObject);
 
             foreach(var module in info.Modules[selected])
             {
-                var str = Instantiate(StringPrefab, stringContainer).GetComponent<IconText>();
+                var str = Instantiate(StringPrefab, StringContainer).GetComponent<IconText>();
                 str.Icon = module.Icon;
                 str.Text = module.ShortName;
             }

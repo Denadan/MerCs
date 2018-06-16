@@ -1,21 +1,40 @@
-﻿using UnityEngine;
+﻿#pragma warning disable 649
+
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace Mercs.Tactical.UI
 {
+    /// <summary>
+    ///отображает приблизительная информация о части
+    /// </summary>
     public class UnitHiddenPartState : UnitPartStateBase
     {
-        [SerializeField]
-        private Text PartText;
-        [SerializeField]
-        private Image PartStateBack;
-        [SerializeField]
-        private Image StructureBar;
-        [SerializeField]
-        private Image ArmorFullBar;
+        /// <summary>
+        /// название части
+        /// </summary>
+        [SerializeField]private Text PartText;
+        /// <summary>
+        /// состояние части
+        /// </summary>
+        [SerializeField]private Image PartStateBack;
+        /// <summary>
+        /// состояние структуры
+        /// </summary>
+        [SerializeField]private Image StructureBar;
+        /// <summary>
+        /// состояние брони
+        /// </summary>
+        [SerializeField]private Image ArmorFullBar;
 
         private float max_str, max_arm;
 
+        /// <summary>
+        /// инициализация
+        /// </summary>
+        /// <param name="window"></param>
+        /// <param name="part"></param>
+        /// <param name="hp"></param>
         public override void Init(IUnitStateWindow window, Parts part, UnitHp hp)
         {
             base.Init(window, part, hp);
@@ -32,7 +51,10 @@ namespace Mercs.Tactical.UI
             max_arm = max.has_back_armor ? max.armor + max.back_armor : max.armor;
             UpdateValues(hp);
         }
-
+        /// <summary>
+        /// получение урона - обновление данных
+        /// </summary>
+        /// <param name="hp"></param>
         protected override void UpdateValues(UnitHp hp)
         {
             if (hp.PartDestroyed(part))

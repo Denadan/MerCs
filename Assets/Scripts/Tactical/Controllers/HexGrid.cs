@@ -222,41 +222,6 @@ namespace Mercs.Tactical
         }
 
 
-        /// <summary>
-        /// calc if have direct vission
-        /// </summary>
-        /// <param name="from"></param>
-        /// <param name="from_height"></param>
-        /// <param name="to"></param>
-        /// <param name="to_height"></param>
-        /// <returns></returns>
-        public bool HaveDirect(Vector2Int from, float from_height, Vector2Int to, float to_height)
-        {
-            if (!map.OnMap(from) || !map.OnMap(to))
-                return false;
-
-            var trace = Trace(from, to);
-            if (trace.Count <= 2)
-                return true;
-
-            from_height += map[from].Height;
-            to_height += map[to].Height;
-            var diff = to_height - from_height;
-
-            for (int i = 1; i < trace.Count - 1; i++)
-            {
-                var tile = map[trace[i].point];
-
-                if (tile == null)
-                    continue;
-
-                if (tile.Height + tile.AddedHeight < from_height + diff * trace[i].t)
-                    return false;
-            }
-
-            return true;
-        }
-
     }
 
 }

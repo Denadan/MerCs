@@ -1,4 +1,5 @@
-﻿using System;
+﻿#pragma warning disable 649
+
 using Denadan.UI;
 using UnityEngine;
 using UnityEngine.UI;

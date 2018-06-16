@@ -1,4 +1,7 @@
-﻿using Mercs.Tactical.Events;
+﻿#pragma warning disable 649
+
+
+using Mercs.Tactical.Events;
 using UnityEngine;
 
 namespace Mercs.Tactical
@@ -38,7 +41,7 @@ namespace Mercs.Tactical
                 case Visibility.Level.Sensor:
                     Blip.gameObject.SetActive(true);
                     Main.gameObject.SetActive(false);
-                    Canvas.SetActive(false);
+                    Canvas.SetActive(true);
                     break;
                 case Visibility.Level.None:
                     Blip.gameObject.SetActive(false);

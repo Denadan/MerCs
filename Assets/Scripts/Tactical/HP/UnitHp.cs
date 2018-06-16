@@ -1,8 +1,9 @@
-﻿using System.Collections.Generic;
+﻿#pragma warning disable 649
+
+
+using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using System;
-using System.Runtime.ConstrainedExecution;
 using Mercs.Items;
 using EventHandler = Mercs.Tactical.Events.EventHandler;
 
