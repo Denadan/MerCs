@@ -25,7 +25,7 @@ namespace Mercs.Tactical.UI
         {
             if (Unit == null)
                 return;
-            unitImage.sprite = Unit.GetComponent<SpriteRenderer>().sprite;
+            unitImage.sprite = Unit.GFX.GetIcon();
             unitImage.material = Unit.Faction.CamoMaterial;
             nameText.text = Unit.PilotName;
 

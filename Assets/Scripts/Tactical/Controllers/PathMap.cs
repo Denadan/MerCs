@@ -57,6 +57,9 @@ namespace Mercs.Tactical
                 get => other_path.Keys.ToArray();
             }
 
+            public Dictionary<UnitInfo, (UnitInfo target, Visibility.Level level, Visibility.Line direct)> target_data = null;
+
+
 
         }
 

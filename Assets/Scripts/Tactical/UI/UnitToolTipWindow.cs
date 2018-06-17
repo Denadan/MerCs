@@ -243,12 +243,13 @@ namespace Mercs.Tactical.UI
 
         public void MouseUnitEnter(UnitInfo unit)
         {
-
             var l = unit.Faction == GameController.Instance.PlayerFaction ?
                 Visibility.Level.Friendly :
-                TacticalController.Instance.Vision.GetLevelFor(info);
+                TacticalController.Instance.Vision.GetLevelFor(unit);
 
-            if (level < Visibility.Level.Visual)
+            UnityEngine.Debug.Log($"{unit} - {l}");
+
+            if (l < Visibility.Level.Visual)
                 return;
 
             if (selected_unit != null)
@@ -297,7 +298,7 @@ namespace Mercs.Tactical.UI
         {
             var l = unit.Faction == GameController.Instance.PlayerFaction ?
                 Visibility.Level.Friendly :
-                TacticalController.Instance.Vision.GetLevelFor(info);
+                TacticalController.Instance.Vision.GetLevelFor(unit);
 
             if (button == PointerEventData.InputButton.Right && l >= Visibility.Level.Visual)
             {

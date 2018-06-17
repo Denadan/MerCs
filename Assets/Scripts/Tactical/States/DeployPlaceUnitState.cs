@@ -24,7 +24,7 @@ namespace Mercs.Tactical.States
             state.unit_in_hand.info.gameObject.SetActive(true);
             state.unit_in_hand.info.transform.position = TacticalController.Instance.Grid.CellToWorld(
                 new Vector3Int(coord.x, coord.y, TacticalController.Instance.Map[coord.x, coord.y].Height));
-            state.unit_in_hand.renderer.color =
+            state.unit_in_hand.info.GFX.HighlightColor =
                 (state.DeployZone.Contains(coord) && !unit_under_cursor) ? Color.green : Color.red;
         }
 
@@ -59,8 +59,7 @@ namespace Mercs.Tactical.States
             state.unit_in_hand.info.Reserve = false;
             state.unit_in_hand.button.Background.color = Color.green;
             state.unit_in_hand.button.BottomText.text = "DEPLOY";
-            state.unit_in_hand.renderer.color = Color.white;
-            state.unit_in_hand.renderer.sortingOrder = 0;
+            state.unit_in_hand.info.GFX.HighlightColor = Color.white;
             state.unit_in_hand.Position.position = coord;
 
             TacticalController.Instance.Overlay.HideTile(coord);

@@ -109,7 +109,7 @@ namespace Mercs.Tactical
                 info.transform.SetParent(Grid.UnitsParent, false);
                 info.gameObject.SetActive(false);
                 info.Faction = GameController.Instance.PlayerFaction;
-
+                info.GFX.SetFaction(GameController.Instance.PlayerFaction);
                 Units.Add(info);
             }
 
@@ -151,6 +151,8 @@ namespace Mercs.Tactical
             CurrentRound = 0;
             factions = new Faction[] { GameController.Instance.PlayerFaction, GameController.Instance.EnemyFaction };
             current_faction = UnityEngine.Random.Range(0, factions.Length);
+
+            Vision.Init();
 
             StateMachine.State = TacticalState.TurnPrepare;
         }
@@ -198,6 +200,7 @@ namespace Mercs.Tactical
                 unit.Position.SetFacing(Dir.S);
                 unit.transform.position = Grid.CellToWorld(c);
                 unit.GFX.AddCollider();
+                unit.GFX.SetFaction(GameController.Instance.EnemyFaction);
                 unit.Reserve = false;
 
                 Units.Add(unit);

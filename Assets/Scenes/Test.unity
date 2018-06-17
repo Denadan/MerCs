@@ -912,7 +912,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 476892280}
         m_MethodName: FinishDeploy
         m_Mode: 1
         m_Arguments:
@@ -2051,7 +2051,7 @@ MonoBehaviour:
   ArmorF: {fileID: 777509759}
   ArmorB: {fileID: 675523075}
   Structure: {fileID: 394268973}
-  StringContainer: {fileID: 0}
+  StringContainer: {fileID: 918999055}
   StringPrefab: {fileID: 1140671655883812, guid: 9fcd09ffaac668a41bd755c311b29dee,
     type: 2}
   MoveSprite: {fileID: 21300188, guid: 6d1c14462e604a1469e33d3b1472600d, type: 3}
@@ -3559,7 +3559,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 381, y: 0}
+  m_AnchoredPosition: {x: 361, y: 0}
   m_SizeDelta: {x: 0, y: 120}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &628754796
@@ -5355,6 +5355,10 @@ Prefab:
       propertyPath: m_RootOrder
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 1775771083925676, guid: 87cff43d5c7aba948b2814588ef7de07, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 87cff43d5c7aba948b2814588ef7de07, type: 2}
   m_IsPrefabParent: 0
@@ -5791,6 +5795,11 @@ Prefab:
     - target: {fileID: 4263884190785126, guid: 07e82044926071d489462e15c635e3dc, type: 2}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 120341395296911884, guid: 07e82044926071d489462e15c635e3dc,
+        type: 2}
+      propertyPath: m_Parameters.widthMultiplier
+      value: 0.1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 07e82044926071d489462e15c635e3dc, type: 2}
@@ -6966,7 +6975,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 381, y: 0}
+  m_AnchoredPosition: {x: 361, y: 0}
   m_SizeDelta: {x: 0, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1325958037
@@ -7540,8 +7549,8 @@ MonoBehaviour:
   ArmorF: {fileID: 297390205}
   ArmorB: {fileID: 1541014429}
   Structure: {fileID: 1181251165}
-  WeaponContainer: {fileID: 0}
-  RadarContainer: {fileID: 0}
+  WeaponContainer: {fileID: 113301183}
+  RadarContainer: {fileID: 1294167891}
   StringPrefab: {fileID: 1140671655883812, guid: 9fcd09ffaac668a41bd755c311b29dee,
     type: 2}
   Group: {fileID: 1451351479}

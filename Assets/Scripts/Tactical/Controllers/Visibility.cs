@@ -74,12 +74,13 @@ namespace Mercs.Tactical
                     units.Add(info);
                 }
 
+            rebuild_dictionary();
+
             foreach (var unit in TacticalController.Instance.Units)
             {
                 Raise(unit, GetLevelFor(unit));
             }
 
-            rebuild_dictionary();
         }
 
         private (Level, Line) calc_vision(vision_info info) =>
@@ -259,13 +260,20 @@ namespace Mercs.Tactical
 
         public Level GetLevelFor(UnitInfo info)
         {
-            return looked_to.TryGetValue(info, out var list) ? list.Max(i => i.level) : Level.None;
+            if (looked_to.TryGetValue(info, out var list))
+                return list.Max(i => i.level);
+            else
+                return Level.None;
+
+            // return looked_to.TryGetValue(info, out var list) ? list.Max(i => i.level) : Level.None;
         }
 
         #region events
 
         private void Raise(UnitInfo unit, Level level)
         {
+            //UnityEngine.Debug.Log($"{unit.PilotName} - {level}");
+
             if (subscribers.TryGetValue(unit, out var list))
                 foreach (var obj in list)
                     ExecuteEvents.Execute<IVisionChanged>(obj, null, (o, data) =>o.VisionChanged(level));

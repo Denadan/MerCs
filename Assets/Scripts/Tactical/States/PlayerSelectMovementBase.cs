@@ -32,7 +32,9 @@ namespace Mercs.Tactical.States
                 TacticalController.Instance.StateMachine.StartCoroutine(wait_for_path(TacticalController.Instance.SelectedUnit));
 
             int n = 0;
-            foreach (var unit in TacticalController.Instance.Units.Where(u => u.Faction != GameController.Instance.PlayerFaction))
+
+            foreach (var unit in TacticalController.Instance.Units
+                .Where(u => u.Faction != GameController.Instance.PlayerFaction && TacticalController.Instance.Vision.GetLevelFor(u) > Visibility.Level.None))
             {
                 lines.Add((unit, TacticalUIController.Instance.GetLine(n)));
                 lines[n].line.SetPosition(1, unit.transform.position);
@@ -95,42 +97,72 @@ namespace Mercs.Tactical.States
         public override void TileEnter(Vector2Int coord)
         {
             // получаем путь до точки
-            var list = GetPath(coord);
-            if (list != null && list.Count >= 2)
+            var path = GetPath(coord);
+            if (path.list != null && path.list.Count >= 2)
             {
                 // рисуем линию
                 var line = TacticalUIController.Instance.MoveLine;
                 line.gameObject.SetActive(true);
                 line.startColor = Color.red;
                 line.endColor = Color.green;
-                var points = (from v2 in list
+                var points = (from v2 in path.list
                               select TacticalController.Instance.Grid.CellToWorld(v2.coord)).ToArray();
                 line.positionCount = points.Length;
                 line.SetPositions(points);
-                line.material.mainTextureScale = LineScale(list);
+                line.material.mainTextureScale = LineScale(path.list);
 
                 var pos = TacticalController.Instance.Grid.CellToWorld(coord);
                 var weapon = TacticalController.Instance.SelectedUnit.Weapons;
 
+                if (path.target.target_data == null)
+                    path.target.target_data =
+                        TacticalController.Instance.Vision.CalcFrom(TacticalController.Instance.SelectedUnit, coord)
+                        .ToDictionary(i => i.target);
+                var start_pos = TacticalController.Instance.Grid.CellToWorld(coord);
+
                 foreach (var l in lines)
                 {
-                    l.line.gameObject.SetActive(true);
-                    l.line.SetPosition(0, pos);
-                    var dist = TacticalController.Instance.Grid.MapDistance(coord, l.unit.Position.position);
+                    if (path.target.target_data.TryGetValue(l.unit, out var data))
+                    {
+                        if (data.level > Visibility.Level.Sensor)
+                        {
+                            var dist = TacticalController.Instance.Grid.MapDistance(coord, l.unit.Position.position);
+                            l.line.gameObject.SetActive(true);
+                            l.line.SetPosition(0, start_pos);
+                            l.line.material.mainTextureScale = new Vector2(dist * 6f, 1f);
 
-                    l.line.material.mainTextureScale = new Vector2(dist * 6, 1);
-
-
-                    if (dist > weapon.MaxOptimalRange)
-                        if (dist > weapon.MaxFalloffRange)
-                            l.line.startColor = l.line.endColor = Color.white;
+                            switch (data.direct)
+                            {
+                                case Visibility.Line.Indirect:
+                                    l.line.materials[0] = TacticalUIController.Instance.StrokeLineMaterial;
+                                    if (dist > TacticalController.Instance.SelectedUnit.Weapons.MaxIndirectRange)
+                                        l.line.startColor = l.line.endColor = Color.white;
+                                    else
+                                        l.line.startColor = l.line.endColor = Color.red;
+                                    break;
+                                case Visibility.Line.Partial:
+                                    l.line.materials[0] = TacticalUIController.Instance.SolidLineMaterial;
+                                    if (dist > TacticalController.Instance.SelectedUnit.Weapons.MaxFalloffRange ||
+                                        dist < TacticalController.Instance.SelectedUnit.Weapons.MinRange)
+                                        l.line.startColor = l.line.endColor = Color.white;
+                                    else
+                                        l.line.startColor = l.line.endColor = Color.yellow;
+                                    break;
+                                case Visibility.Line.Dirrect:
+                                    l.line.materials[0] = TacticalUIController.Instance.SolidLineMaterial;
+                                    if (dist > TacticalController.Instance.SelectedUnit.Weapons.MaxFalloffRange ||
+                                        dist < TacticalController.Instance.SelectedUnit.Weapons.MinRange)
+                                        l.line.startColor = l.line.endColor = Color.white;
+                                    else
+                                        l.line.startColor = l.line.endColor = Color.red;
+                                    break;
+                            }
+                        }
                         else
-                            l.line.startColor = l.line.endColor = Color.yellow;
+                            l.line.gameObject.SetActive(false);
+                    }
                     else
-                        if (dist < weapon.MinRange)
-                            l.line.startColor = l.line.endColor = Color.white;
-                        else
-                            l.line.startColor = l.line.endColor = Color.red;
+                        l.line.gameObject.SetActive(false);
                 }
             }
         }
@@ -210,7 +242,7 @@ namespace Mercs.Tactical.States
         /// </summary>
         /// <param name="coord"></param>
         /// <returns></returns>
-        protected abstract List<path_node> GetPath(Vector2Int coord);
+        protected abstract (path_target target, List<path_node> list) GetPath(Vector2Int coord);
         /// <summary>
         /// проверяет можно ли двигаться в указаную точку и возвращает конечную точку пути
         /// </summary>

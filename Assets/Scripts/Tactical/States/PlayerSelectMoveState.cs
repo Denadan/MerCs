@@ -25,20 +25,22 @@ namespace Mercs.Tactical.States
             TacticalController.Instance.Overlay.ShowMoveMapMove();
         }
 
-        protected override List<PathMap.path_node> GetPath(Vector2Int coord)
+        protected override (PathMap.path_target target, List<PathMap.path_node> list) GetPath(Vector2Int coord)
         {
             if (!TacticalController.Instance.Path.Ready || TacticalController.Instance.Path.MoveList == null)
-                return null;
-            var start = TacticalController.Instance.Path.MoveList.Find(item => item.coord == coord)?.fast_path;
-            if (start == null)
-                return null;
+                return (null, null);
+            var start = TacticalController.Instance.Path.MoveList.Find(item => item.coord == coord);
+            if (start?.fast_path == null)
+                return (null, null);
             var result = new List<PathMap.path_node>();
+
+            var current = start.fast_path;
             do
             {
-                result.Add(start);
-                start = start.prev;
-            } while (start != null);
-            return result;
+                result.Add(current);
+                current = current.prev;
+            } while (current != null);
+            return (start, result);
         }
 
 

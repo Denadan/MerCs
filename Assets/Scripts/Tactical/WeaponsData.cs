@@ -38,7 +38,8 @@ namespace Mercs.Tactical
 
         public float MaxOptimalRange { get; private set; }
         public float MaxFalloffRange { get; private set; }
-        public bool HasIndirect { get; private set; }
+        public float MaxIndirectRange { get; private set; }
+        public bool HasIndirect => MaxIndirectRange > 0;
         public float MinRange { get; private set; }
 
         public IEnumerable<(Ammo ammo, int count)> this[AmmoType ammo] =>
@@ -102,7 +103,7 @@ namespace Mercs.Tactical
             MaxOptimalRange = Weapons.Max(i => i.Weapon.Optimal);
             MaxFalloffRange = Weapons.Max(i => i.Weapon.Falloff);
             MinRange = Weapons.Min(i => i.Weapon.MinRange);
-            HasIndirect = Weapons.Any(i => i.Weapon.IndirectFire);
+            MaxIndirectRange = Weapons.Where(i => i.Weapon.IndirectFire).DefaultIfEmpty().Max(i =>  i?.Weapon.Falloff ?? 0);
         }
 
         public IEnumerator<Info> GetEnumerator()

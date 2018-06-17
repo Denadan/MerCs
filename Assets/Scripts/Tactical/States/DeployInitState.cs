@@ -10,7 +10,6 @@ namespace Mercs.Tactical.States
         public class unit
         {
             public UnitInfo info;
-            public SpriteRenderer renderer;
             public UnitSelectButton button;
             public CellPosition Position;
         }
@@ -30,7 +29,6 @@ namespace Mercs.Tactical.States
                      select new unit
                      {
                          info = unit_info,
-                         renderer = unit_info.GetComponent<SpriteRenderer>(),
                          button = TacticalUIController.Instance.AddUnit(unit_info),
                          Position = unit_info.GetComponent<CellPosition>()
                      }).ToList();

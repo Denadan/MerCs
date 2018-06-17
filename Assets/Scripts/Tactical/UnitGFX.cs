@@ -10,10 +10,15 @@ namespace Mercs.Tactical
         [SerializeField] private SpriteRenderer blip = null;
         [SerializeField] private CamoSprite camo = null;
 
+        public Color HighlightColor
+        {
+            get => sprite.color;
+            set => sprite.color = value;
+        }
+
 
         public void SetData(UnitTemplate template)
         {
-            
             sprite.sprite = template.Sprite;
             if (blip != null) 
             switch (template.Type)
@@ -43,12 +48,17 @@ namespace Mercs.Tactical
 
         public void AddCollider()
         {
-            gameObject.AddComponent<PolygonCollider2D>();
+            sprite.gameObject.AddComponent<PolygonCollider2D>();
         }
 
         public void RemoveCollider()
         {
-            Destroy(gameObject.GetComponent<Collider2D>());
+            Destroy(sprite.gameObject.GetComponent<Collider2D>());
+        }
+
+        public Sprite GetIcon()
+        {
+            return sprite.sprite;
         }
     }
 }

@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 114204004301124654}
   - component: {fileID: 114382327017903472}
   - component: {fileID: 114002126076069898}
+  - component: {fileID: 114396496064934704}
   m_Layer: 0
   m_Name: MapFlat
   m_TagString: Untagged
@@ -296,6 +297,17 @@ MonoBehaviour:
   - {fileID: 21300026, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
   - {fileID: 21300028, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
   - {fileID: 21300030, guid: c4c851977da7cfa479ee970e6ef093a1, type: 3}
+--- !u!114 &114396496064934704
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1031959539713628}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6607ed9cb3534fe40b2974db775668db, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114542518974869722
 MonoBehaviour:
   m_ObjectHideFlags: 1
