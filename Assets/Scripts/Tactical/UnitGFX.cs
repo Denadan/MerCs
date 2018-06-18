@@ -49,11 +49,15 @@ namespace Mercs.Tactical
         public void AddCollider()
         {
             sprite.gameObject.AddComponent<PolygonCollider2D>();
+            if(blip != null)
+                blip.gameObject.AddComponent<PolygonCollider2D>();
         }
 
         public void RemoveCollider()
         {
             Destroy(sprite.gameObject.GetComponent<Collider2D>());
+            if (blip != null)
+                Destroy(blip.gameObject.GetComponent<Collider2D>());
         }
 
         public Sprite GetIcon()

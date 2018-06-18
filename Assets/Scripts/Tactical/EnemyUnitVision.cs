@@ -20,7 +20,7 @@ namespace Mercs.Tactical
             EventHandler.UnsubscribeVisionChange(unit, gameObject);
         }
 
-        private void Start()
+        private void Awake()
         {
             unit = GetComponent<UnitInfo>();
             EventHandler.SubscribeVisionChange(unit, gameObject);
@@ -29,7 +29,8 @@ namespace Mercs.Tactical
 
         public void VisionChanged(Visibility.Level level)
         {
-            UnityEngine.Debug.Log($"{unit} - {level}");
+            UnityEngine.Debug.Log($"VISION CHANGE{unit} - {level}");
+
             switch (level)
             {
                 case Visibility.Level.Visual:

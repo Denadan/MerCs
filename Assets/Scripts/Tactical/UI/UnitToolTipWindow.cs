@@ -247,8 +247,6 @@ namespace Mercs.Tactical.UI
                 Visibility.Level.Friendly :
                 TacticalController.Instance.Vision.GetLevelFor(unit);
 
-            UnityEngine.Debug.Log($"{unit} - {l}");
-
             if (l < Visibility.Level.Visual)
                 return;
 
@@ -302,11 +300,6 @@ namespace Mercs.Tactical.UI
 
             if (button == PointerEventData.InputButton.Right && l >= Visibility.Level.Visual)
             {
-                if (selected_unit != null)
-                    Events.EventHandler.UnsubscribeUnitHp(selected_unit, this.gameObject);
-
-                Events.EventHandler.SubscribeVisionChange(selected_unit, this.gameObject);
-
                 selected_unit = info;
             }
         }

@@ -268,6 +268,18 @@ namespace Mercs.Tactical
             // return looked_to.TryGetValue(info, out var list) ? list.Max(i => i.level) : Level.None;
         }
 
+
+        public Level GetLevelFor(UnitInfo info, UnitInfo from, Level level)
+        {
+            var l = looked_to.TryGetValue(info, out var list) ? 
+                list.Where(i=>i.from != from).Max(i => i.level) :
+                Level.None;
+
+            return level > l ? level : l;
+
+            // return looked_to.TryGetValue(info, out var list) ? list.Max(i => i.level) : Level.None;
+        }
+
         #region events
 
         private void Raise(UnitInfo unit, Level level)
