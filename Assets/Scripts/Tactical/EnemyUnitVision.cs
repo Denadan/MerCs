@@ -37,17 +37,14 @@ namespace Mercs.Tactical
                 case Visibility.Level.Friendly:
                     Blip.gameObject.SetActive(false);
                     Main.gameObject.SetActive(true);
-                    Canvas.SetActive(true);
                     break;
                 case Visibility.Level.Sensor:
                     Blip.gameObject.SetActive(true);
                     Main.gameObject.SetActive(false);
-                    Canvas.SetActive(true);
                     break;
                 case Visibility.Level.None:
                     Blip.gameObject.SetActive(false);
                     Main.gameObject.SetActive(false);
-                    Canvas.SetActive(false);
                     break;
 
             }
