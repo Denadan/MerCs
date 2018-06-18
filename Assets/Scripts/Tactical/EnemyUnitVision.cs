@@ -29,7 +29,6 @@ namespace Mercs.Tactical
 
         public void VisionChanged(Visibility.Level level)
         {
-            UnityEngine.Debug.Log($"VISION CHANGE{unit} - {level}");
 
             switch (level)
             {

@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace Mercs.Tactical.UI
 {
-    public class UnitToolTipWindow: MonoBehaviour, IUnitDamaged, IUnitEventReceiver, IUnitStateWindow, IPointerDownHandler, IVisionChanged
+    public class UnitToolTipWindow : MonoBehaviour, IUnitDamaged, IUnitEventReceiver, IUnitStateWindow, IPointerDownHandler, IVisionChanged
     {
 
         [SerializeField] private GameObject VissiblePartPrefab;
@@ -48,27 +48,36 @@ namespace Mercs.Tactical.UI
 
             Events.EventHandler.SubscribeUnitHp(info, this.gameObject);
 
-            CaptionText.text = $"{info.PilotName}({CONST.Class(info.Weight)} {info.Type})";
-
-            level = level == Visibility.Level.Friendly ? 
+            level = level == Visibility.Level.Friendly ?
                 Visibility.Level.Friendly :
                 TacticalController.Instance.Vision.GetLevelFor(info);
 
-            foreach (var part in info.UnitHP.AllParts)
+            if (level > Visibility.Level.Sensor)
             {
-                var p = Instantiate(level == Visibility.Level.Visual ? HiddenPartPrefab : VissiblePartPrefab, PartsHolder, false).GetComponent<UnitPartStateBase>();
-                p.Init(this, part, info.UnitHP);
+                CaptionText.text = $"{info.PilotName}({CONST.Class(info.Weight)} {info.Type})";
+                foreach (var part in info.UnitHP.AllParts)
+                {
+                    var p = Instantiate(level == Visibility.Level.Visual ? HiddenPartPrefab : VissiblePartPrefab, PartsHolder, false).GetComponent<UnitPartStateBase>();
+                    p.Init(this, part, info.UnitHP);
+                }
+            }
+            else
+            {
+                CaptionText.text = $"Unknown {CONST.Class(info.Weight)} {info.Type}";
+                //Instantiate(UnknowPartPrefab, PartsHolder, false);
+                //Instantiate(UnknowPartPrefab, PartsHolder, false);
             }
 
             foreach (Transform child in WeaponContainer)
                 Destroy(child.gameObject);
 
-            if(level == Visibility.Level.Visual)
-                Shield.ShowHidden();
-            else
-                Shield.Show();
-            ShowRadarData();
+            Shield.Show(level);
 
+            Structure.Show(level);
+
+            selected = Parts.None;
+
+            ShowRadarData();
             UnitDamage(info.UnitHP);
         }
 
@@ -77,7 +86,13 @@ namespace Mercs.Tactical.UI
             foreach (Transform child in WeaponContainer)
                 Destroy(child.gameObject);
 
+            if (level <= Visibility.Level.Sensor)
+                return;
+
             var list = part == Parts.None ? info.Modules : info.Modules[part];
+            var capt = Instantiate(StringPrefab, WeaponContainer).GetComponent<IconText>();
+            capt.Text = part == Parts.None ? "Modules" : $"{part} modules";
+
 
             foreach (var module in list)
             {
@@ -101,7 +116,6 @@ namespace Mercs.Tactical.UI
                 }
             }
         }
-
 
         public void ShowRadarData()
         {
@@ -146,22 +160,23 @@ namespace Mercs.Tactical.UI
             UnitDamage(info.UnitHP);
         }
 
-
         public void VisionChanged(Visibility.Level l)
         {
             if (level != Visibility.Level.Friendly && l != level)
-                if (l < Visibility.Level.Visual)
+                if (l == Visibility.Level.None)
                 {
-                    MouseUnitLeave(info);
+                    if (selected_unit != null)
+                        Events.EventHandler.UnsubscribeUnitHp(selected_unit, this.gameObject);
+                    selected_unit = null;
+                    Window.SetActive(false);
+                    Group.interactable = false;
+                    Group.blocksRaycasts = false;
                 }
                 else
                 {
                     level = l;
                     SetUnit(info);
                 }
-
-            ShowRadarData();
-
         }
 
         public void UnitDamage(UnitHp hp)
@@ -171,20 +186,10 @@ namespace Mercs.Tactical.UI
 
             if (selected == Parts.None)
             {
-                if ( level == Visibility.Level.Visual)
-                {
-                    Structure.ShowHidden();
-                    Armor.ShowHidden();
-                    ArmorB.Hide();
-                    ArmorF.Hide();
-                }
-                else
-                {
-                    Structure.Show();
-                    Armor.Show();
-                    ArmorB.Hide();
-                    ArmorF.Hide();
-                }
+                Armor.Show(level);
+                ArmorB.Hide();
+                ArmorF.Hide();
+
 
                 Structure.MaxValue = hp.MaxStructure;
                 Structure.Value = hp.TotalStructure;
@@ -197,10 +202,9 @@ namespace Mercs.Tactical.UI
                 var max = hp.MaxHp(selected);
                 var current = hp.CurrentHp(selected);
 
-                if (level == Visibility.Level.Visual)
+                if (level <= Visibility.Level.Visual)
                 {
-                    Structure.ShowHidden();
-                    Armor.ShowHidden();
+                    Armor.Show(level);
                     ArmorF.Hide();
                     ArmorB.Hide();
 
@@ -217,8 +221,8 @@ namespace Mercs.Tactical.UI
 
                     if (max.has_back_armor)
                     {
-                        ArmorF.Show();
-                        ArmorB.Show();
+                        ArmorF.Show(level);
+                        ArmorB.Show(level);
                         Armor.Hide();
 
                         ArmorF.MaxValue = max.armor;
@@ -231,13 +235,12 @@ namespace Mercs.Tactical.UI
                     {
                         ArmorF.Hide();
                         ArmorB.Hide();
-                        Armor.Show();
+                        Armor.Show(level);
                         Armor.MaxValue = max.armor;
                         Armor.Value = current.armor;
                     }
                 }
             }
-
             ShowPart(selected);
         }
 
@@ -247,7 +250,7 @@ namespace Mercs.Tactical.UI
                 Visibility.Level.Friendly :
                 TacticalController.Instance.Vision.GetLevelFor(unit);
 
-            if (l < Visibility.Level.Visual)
+            if (l < Visibility.Level.None)
                 return;
 
             if (selected_unit != null)
@@ -259,8 +262,8 @@ namespace Mercs.Tactical.UI
             Group.blocksRaycasts = false;
             Window.SetActive(true);
             level = l;
-            Events.EventHandler.SubscribeVisionChange(unit, this.gameObject);
             SetUnit(unit);
+            Events.EventHandler.SubscribeVisionChange(unit, this.gameObject);
             current_unit = unit;
         }
 
@@ -282,12 +285,11 @@ namespace Mercs.Tactical.UI
                         Visibility.Level.Friendly :
                         TacticalController.Instance.Vision.GetLevelFor(info);
 
-                    Events.EventHandler.SubscribeVisionChange(selected_unit, this.gameObject);
-
                     Window.SetActive(true);
                     Group.interactable = true;
                     Group.blocksRaycasts = true;
                     SetUnit(selected_unit);
+                    Events.EventHandler.SubscribeVisionChange(unit, this.gameObject);
                 }
             }
         }
@@ -298,7 +300,7 @@ namespace Mercs.Tactical.UI
                 Visibility.Level.Friendly :
                 TacticalController.Instance.Vision.GetLevelFor(unit);
 
-            if (button == PointerEventData.InputButton.Right && l >= Visibility.Level.Visual)
+            if (button == PointerEventData.InputButton.Right && l != Visibility.Level.None)
             {
                 selected_unit = info;
             }
@@ -308,7 +310,7 @@ namespace Mercs.Tactical.UI
         {
             if (eventData.button == PointerEventData.InputButton.Right)
             {
-                if(selected_unit != null)
+                if (selected_unit != null)
                     Events.EventHandler.UnsubscribeUnitHp(selected_unit, this.gameObject);
                 selected_unit = null;
                 Window.SetActive(false);

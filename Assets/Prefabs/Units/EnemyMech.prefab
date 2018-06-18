@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4564865907933908}
   - component: {fileID: 212100623396558816}
   - component: {fileID: 114941151446961876}
+  - component: {fileID: 114531148360376314}
   m_Layer: 9
   m_Name: Blip
   m_TagString: Untagged
@@ -272,6 +273,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6415f3027cc83e84eaed763cf1652f6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114531148360376314
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1106877627241948}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1282ce5d370feb43807e546fbb38c25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OriginalUnit: {fileID: 114965138826047726}
 --- !u!114 &114617306362889160
 MonoBehaviour:
   m_ObjectHideFlags: 1

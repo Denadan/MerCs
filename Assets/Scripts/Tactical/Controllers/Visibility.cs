@@ -264,8 +264,6 @@ namespace Mercs.Tactical
                 return list.Max(i => i.level);
             else
                 return Level.None;
-
-            // return looked_to.TryGetValue(info, out var list) ? list.Max(i => i.level) : Level.None;
         }
 
 
@@ -276,8 +274,6 @@ namespace Mercs.Tactical
                 Level.None;
 
             return level > l ? level : l;
-
-            // return looked_to.TryGetValue(info, out var list) ? list.Max(i => i.level) : Level.None;
         }
 
         #region events
@@ -293,9 +289,8 @@ namespace Mercs.Tactical
 
         public void UnSubscribe(UnitInfo selectedUnit, GameObject o)
         {
-            if (subscribers.TryGetValue(selectedUnit, out var subs))
+            if (!subscribers.TryGetValue(selectedUnit, out var subs))
             {
-                subs = new List<GameObject>();
                 subs.Remove(o);
             }
         }
