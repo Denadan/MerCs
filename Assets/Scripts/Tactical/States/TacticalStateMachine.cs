@@ -7,7 +7,7 @@ namespace Mercs.Tactical.States
 {
     [RequireComponent(typeof(TileSubscriber))]
     [RequireComponent(typeof(UnitSubscriber))]
-    public class TacticalStateMachine : StateMachine<TacticalState, TacticalStateHandler>, ITileEventReceiver, IUnitEventReceiver
+    public class TacticalStateMachine : StateMachine<TacticalState, TacticalStateHandler>, ITileEvent, IUnitEvent
     {
         public void MouseTileEnter(Vector2Int coord)
         {
@@ -26,16 +26,20 @@ namespace Mercs.Tactical.States
 
         public void MouseUnitEnter(UnitInfo unit)
         {
+            //UnityEngine.Debug.Log($"Enter {unit}");
             curStateHandler?.UnitEnter(unit);
         }
 
         public void MouseUnitLeave(UnitInfo unit)
         {
+            //UnityEngine.Debug.Log($"Leave {unit}");
             curStateHandler?.UnitLeave(unit);
         }
 
         public void MouseUnitClick(UnitInfo unit, PointerEventData.InputButton button)
         {
+            //UnityEngine.Debug.Log($"CLick {unit}");
+
             curStateHandler?.UnitClick(unit, button);
         }
 

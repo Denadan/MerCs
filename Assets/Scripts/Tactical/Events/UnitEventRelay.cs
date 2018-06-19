@@ -3,31 +3,41 @@ using UnityEngine.EventSystems;
 
 namespace Mercs.Tactical.Events
 {
+    [AddComponentMenu("Merc/EventRelay/Unit Mouse Event")]
     public class UnitEventRelay : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
     {
-        public UnitInfo OriginalUnit;
+        [SerializeField]
+        private UnitInfo OriginalUnit;
 
         private void Start()
         {
             if (OriginalUnit == null)
                 OriginalUnit = GetComponent<UnitInfo>();
             if (OriginalUnit == null)
+            {
                 UnityEngine.Debug.Log("Не найден объеккт для прикрепленного юнита, " + gameObject.name);
+                Destroy(this);
+            }
+        }
+
+        public void SetUnit(UnitInfo unit)
+        {
+            OriginalUnit = unit;
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
-            EventHandler.UnitPointerClick(eventData, OriginalUnit);
+            EventHandler.Raise<IUnitEvent>((i, d) => i.MouseUnitClick(OriginalUnit, eventData.button));
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            EventHandler.UnitPointerEnter(eventData, OriginalUnit);
+            EventHandler.Raise<IUnitEvent>((i, d) => i.MouseUnitEnter(OriginalUnit));
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
-            EventHandler.UnitPointerLeave(eventData, OriginalUnit);
+            EventHandler.Raise<IUnitEvent>((i, d) => i.MouseUnitLeave(OriginalUnit));
         }
     }
 }

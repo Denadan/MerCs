@@ -2,16 +2,8 @@
 
 namespace Mercs.Tactical.Events
 {
-    public class TileSubscriber : MonoBehaviour
+    [AddComponentMenu("Merc/Subscribers/Tile Mouse Events")]
+    public class TileSubscriber : EventSubscriber<ITileEvent>
     {
-        private void Start()
-        {
-            EventHandler.TileSubscribe(gameObject);
-        }
-
-        private void OnDestroy()
-        {
-            EventHandler.TileUnSubscribe(gameObject);
-        }
     }
 }

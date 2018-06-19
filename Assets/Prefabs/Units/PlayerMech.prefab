@@ -42,6 +42,9 @@ GameObject:
   - component: {fileID: 114512496420037400}
   - component: {fileID: 114639379534745836}
   - component: {fileID: 225737933493321580}
+  - component: {fileID: 114037082105697092}
+  - component: {fileID: 114830197972438962}
+  - component: {fileID: 114615103279520124}
   m_Layer: 9
   m_Name: Canvas
   m_TagString: Untagged
@@ -234,6 +237,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114037082105697092
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1142654088064934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 695e47e7a7b04994489e4ebbbd63d0e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114071902167861198
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -372,6 +386,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5ced98843f745804b86ac0e986459d50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114615103279520124
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1142654088064934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20212fd43642c454287e90afb1f218df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114639151643461354
@@ -544,6 +569,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5ced98843f745804b86ac0e986459d50, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114830197972438962
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1142654088064934}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cd9ea447f691be45a9caa3207b420d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114833635588889142

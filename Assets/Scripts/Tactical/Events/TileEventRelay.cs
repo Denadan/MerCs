@@ -4,11 +4,12 @@ using UnityEngine.EventSystems;
 namespace Mercs.Tactical.Events
 {
     [RequireComponent(typeof(TileInfoComponent))]
+    [AddComponentMenu("Merc/EventRelay/Tile Mouse Event")]
     public class TileEventRelay : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
     {
         private TileInfoComponent info;
 
-        public void Start()
+        public void Awake()
         {
             info = GetComponent<TileInfoComponent>();
         }
@@ -16,19 +17,19 @@ namespace Mercs.Tactical.Events
         public void OnPointerDown(PointerEventData eventData)
         {
             if (info.Info != null)
-                EventHandler.TilePointerClick(eventData, new Vector2Int(info.Info.CellCoord.x, info.Info.CellCoord.y));
+                EventHandler.Raise<ITileEvent>((i, d) => i.MouseTileClick(new Vector2Int(info.Info.CellCoord.x, info.Info.CellCoord.y), eventData.button));
         }
 
         public void OnPointerEnter(PointerEventData eventData)
         {
             if (info.Info != null)
-                EventHandler.TilePointerEnter(eventData, new Vector2Int(info.Info.CellCoord.x, info.Info.CellCoord.y));
+                EventHandler.Raise<ITileEvent>((i, d) => i.MouseTileEnter(new Vector2Int(info.Info.CellCoord.x, info.Info.CellCoord.y)));
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
             if (info.Info != null)
-                EventHandler.TilePointerLeave(eventData, new Vector2Int(info.Info.CellCoord.x, info.Info.CellCoord.y));
+                EventHandler.Raise<ITileEvent>((i, d) => i.MouseTileLeave(new Vector2Int(info.Info.CellCoord.x, info.Info.CellCoord.y)));
         }
     }
 }

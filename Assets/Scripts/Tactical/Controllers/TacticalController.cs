@@ -48,7 +48,7 @@ namespace Mercs.Tactical
                         TacticalUIController.Instance.ShowSelectedUnitWindow(value);
                         TacticalUIController.Instance.MoveCameraTo(value);
                     }
-                    else if(Vision.GetLevelFor(value) >= Visibility.Level.Sensor)
+                    else if(value.CurrentVision >= Visibility.Level.Sensor)
                         TacticalUIController.Instance.MoveCameraTo(value);
                 }
             }

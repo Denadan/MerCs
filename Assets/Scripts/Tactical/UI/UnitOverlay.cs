@@ -9,7 +9,7 @@ using Denadan.UI;
 
 namespace Mercs.Tactical.UI
 {
-    public class UnitOverlay : MonoBehaviour, IUnitDamaged, IUnitEventReceiver, IVisionChanged
+    public class UnitOverlay : MonoBehaviour, IUnitDamaged, IUnitEvent, IVisionChanged
     {
         [SerializeField] private UnitInfo info;
 
@@ -32,7 +32,6 @@ namespace Mercs.Tactical.UI
         private void Awake()
         {
             group = GetComponent<CanvasGroup>();
-            EventHandler.SubscribeVisionChange(info, gameObject);
         }
 
         public void MouseUnitClick(UnitInfo unit, PointerEventData.InputButton button)
@@ -41,9 +40,6 @@ namespace Mercs.Tactical.UI
 
         public void Start()
         {
-            EventHandler.SubscribeUnitHp(info, gameObject);
-            EventHandler.UnitSubscribe(gameObject);
-
             if (info.Faction == GameController.Instance.PlayerFaction)
                 vision = Visibility.Level.Friendly;
 
@@ -63,12 +59,6 @@ namespace Mercs.Tactical.UI
             HeatSlider.Value = 0;
         }
 
-        private void OnDestroy()
-        {
-            EventHandler.UnsubscribeUnitHp(info, gameObject);
-            EventHandler.UnsubscribeVisionChange(info, gameObject);
-            EventHandler.UnitUnSubscribe(gameObject);
-        }
 
         public void MouseUnitEnter(UnitInfo unit)
         {
@@ -82,16 +72,20 @@ namespace Mercs.Tactical.UI
                 group.alpha = 1f;
         }
 
-        public void UnitDamage(UnitHp hp)
+        public void UnitDamage(UnitInfo unit, UnitHp hp)
         {
+            if (unit != info)
+                return;
+
             ShieldSlider.Value = hp.Shield;
             ArmorSlider.Value = hp.TotalArmor;
             StructSlider.Value = hp.TotalStructure;
         }
 
-        public void VisionChanged(Visibility.Level level)
+        public void VisionChanged(UnitInfo unit, Visibility.Level level)
         {
-            UnityEngine.Debug.Log($"{info.PilotName} - {level}");
+            if (unit != info)
+                return;
 
             if (info.Faction == GameController.Instance.PlayerFaction)
                 return;

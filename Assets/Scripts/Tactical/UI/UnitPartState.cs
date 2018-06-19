@@ -25,14 +25,14 @@ namespace Mercs.Tactical.UI
 
         protected bool has_structure;
 
-        public override void Init(IUnitStateWindow window, Parts part, UnitHp hp)
+        public override void Init(IUnitStateWindow window, Parts part, UnitInfo unit)
         {
 
-            base.Init(window, part, hp);
+            base.Init(window, part, unit);
 
             PartText.text = part.ToString();
 
-            if (hp.PartDestroyed(part))
+            if (unit.UnitHP.PartDestroyed(part))
             {
                 PartStateBack.color = Color.black;
                 StructureSlider.Hide();
@@ -43,7 +43,7 @@ namespace Mercs.Tactical.UI
             }
             else
             {
-                var max = hp.MaxHp(part);
+                var max = unit.UnitHP.MaxHp(part);
                 has_structure = max.structure > 0;
                 if (has_structure)
                 {
@@ -68,14 +68,14 @@ namespace Mercs.Tactical.UI
                     ArmorBSlider.Hide();
                     ArmorFullSlider.MaxValue = max.armor;
                 }
-                UpdateValues(hp);
+                UpdateValues();
             }
         }
 
 
-        protected  override void UpdateValues(UnitHp hp)
+        protected  override void UpdateValues( )
         {
-            if (hp.PartDestroyed(part))
+            if (unit.UnitHP.PartDestroyed(part))
             {
                 PartStateBack.color = Color.black;
                 StructureSlider.Hide();
@@ -85,7 +85,7 @@ namespace Mercs.Tactical.UI
             }
             else
             {
-                var current = hp.CurrentHp(part);
+                var current = unit.UnitHP.CurrentHp(part);
 
                 if (current.has_back_armor)
                 {

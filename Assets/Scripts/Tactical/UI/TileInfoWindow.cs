@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace Mercs.Tactical.UI
 {
-    public class TileInfoWindow : MonoBehaviour, ITileEventReceiver
+    public class TileInfoWindow : MonoBehaviour, ITileEvent
     {
         [SerializeField]
         private GameObject Window;

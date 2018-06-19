@@ -35,11 +35,11 @@ namespace Mercs.Tactical.UI
         /// <param name="window"></param>
         /// <param name="part"></param>
         /// <param name="hp"></param>
-        public override void Init(IUnitStateWindow window, Parts part, UnitHp hp)
+        public override void Init(IUnitStateWindow window, Parts part, UnitInfo info)
         {
-            base.Init(window, part, hp);
+            base.Init(window, part, info);
 
-            var max = hp.MaxHp(part);
+            var max = info.UnitHP.MaxHp(part);
             PartText.text = part.ToString();
 
             max_str = max.structure;
@@ -49,15 +49,15 @@ namespace Mercs.Tactical.UI
                 StructureBar.gameObject.SetActive(false);
             ArmorFullBar.gameObject.SetActive(true);
             max_arm = max.has_back_armor ? max.armor + max.back_armor : max.armor;
-            UpdateValues(hp);
+            UpdateValues();
         }
         /// <summary>
         /// получение урона - обновление данных
         /// </summary>
         /// <param name="hp"></param>
-        protected override void UpdateValues(UnitHp hp)
+        protected override void UpdateValues()
         {
-            if (hp.PartDestroyed(part))
+            if (unit.UnitHP.PartDestroyed(part))
             {
                 PartStateBack.color = Color.black;
                 StructureBar.gameObject.SetActive(true);
@@ -65,7 +65,7 @@ namespace Mercs.Tactical.UI
             }
             else
             {
-                var current = hp.CurrentHp(part);
+                var current = unit.UnitHP.CurrentHp(part);
                 if (max_str > 0)
                     StructureBar.color = CONST.GetColor(current.structure, max_str);
                 ArmorFullBar.color = CONST.GetColor(current.has_back_armor ? current.armor + current.back_armor : current.armor, max_arm);

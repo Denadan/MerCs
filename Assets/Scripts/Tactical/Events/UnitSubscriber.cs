@@ -2,16 +2,9 @@
 
 namespace Mercs.Tactical.Events
 {
-    public class UnitSubscriber : MonoBehaviour
+    [AddComponentMenu("Merc/Subscribers/Unit Mouse Events")]
+    public class UnitSubscriber : EventSubscriber<IUnitEvent>
     {
-        private void Start()
-        {
-            EventHandler.UnitSubscribe(gameObject);
-        }
 
-        private void OnDestroy()
-        {
-            EventHandler.UnitUnSubscribe(gameObject);
-        }
     }
 }

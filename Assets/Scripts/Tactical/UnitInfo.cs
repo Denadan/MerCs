@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Mercs.Items;
 using Mercs.Sprites;
 using Mercs.Tactical.Buffs;
+using Mercs.Tactical.Events;
 using UnityEngine;
 
 namespace Mercs.Tactical
@@ -33,6 +34,8 @@ namespace Mercs.Tactical
         public bool Selectable { get; set; }
         public MercClass Class => CONST.Class(Weight);
         public UnitType Type { get; set; }
+
+        public Visibility.Level CurrentVision { get; set; }
 
         private void Start()
         {

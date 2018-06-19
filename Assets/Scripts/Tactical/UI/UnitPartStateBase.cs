@@ -8,15 +8,15 @@ namespace Mercs.Tactical.UI
     {
         private IUnitStateWindow window;
         protected Parts part;
-        protected UnitHp hp;
+        protected UnitInfo unit;
 
-        protected abstract void UpdateValues(UnitHp hp);
+        protected abstract void UpdateValues();
 
-        public virtual void Init(IUnitStateWindow window, Parts part, UnitHp hp)
+        public virtual void Init(IUnitStateWindow window, Parts part, UnitInfo unit)
         {
             this.window = window;
             this.part = part;
-            this.hp = hp;
+            this.unit = unit;
         }
 
 
@@ -30,9 +30,11 @@ namespace Mercs.Tactical.UI
             window.HidePartDetail();
         }
 
-        public void PartDamaged(UnitHp hp)
+        public void PartDamaged(UnitInfo unit, Parts part)
         {
-            UpdateValues(hp);
+            if (this.unit != unit || part != this.part)
+                return;
+            UpdateValues();
         }
     }
 }

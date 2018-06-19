@@ -532,6 +532,7 @@ GameObject:
   - component: {fileID: 163712853}
   - component: {fileID: 163712852}
   - component: {fileID: 163712854}
+  - component: {fileID: 163712855}
   m_Layer: 5
   m_Name: TileInfo
   m_TagString: Untagged
@@ -605,6 +606,17 @@ CanvasGroup:
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
+--- !u!114 &163712855
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 163712850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bea41cfdc0b028e40b79d7a7191e16d0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &177015751
 GameObject:
   m_ObjectHideFlags: 0
@@ -2033,10 +2045,6 @@ Prefab:
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
-    - target: {fileID: 1864267075667566, guid: c740c0c32a26b6d43ad78dbb27d2668a, type: 2}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: c740c0c32a26b6d43ad78dbb27d2668a, type: 2}
   m_IsPrefabParent: 0
@@ -2051,6 +2059,7 @@ GameObject:
   - component: {fileID: 453563038}
   - component: {fileID: 453563037}
   - component: {fileID: 453563036}
+  - component: {fileID: 453563040}
   m_Layer: 5
   m_Name: UnitStatWindow
   m_TagString: Untagged
@@ -2141,6 +2150,17 @@ MonoBehaviour:
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 1
   m_ChildControlHeight: 1
+--- !u!114 &453563040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 453563034}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20212fd43642c454287e90afb1f218df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &454331251
 GameObject:
   m_ObjectHideFlags: 0
@@ -7526,6 +7546,8 @@ GameObject:
   - component: {fileID: 1451351480}
   - component: {fileID: 1451351479}
   - component: {fileID: 1451351483}
+  - component: {fileID: 1451351486}
+  - component: {fileID: 1451351485}
   m_Layer: 5
   m_Name: UnitToolTipWindow
   m_TagString: Untagged
@@ -7639,6 +7661,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 695e47e7a7b04994489e4ebbbd63d0e0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1451351485
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1451351477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 20212fd43642c454287e90afb1f218df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1451351486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1451351477}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cd9ea447f691be45a9caa3207b420d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1462780877

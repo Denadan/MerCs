@@ -11,24 +11,17 @@ namespace Mercs.Tactical
     {
         [SerializeField] private GameObject Main;
         [SerializeField] private GameObject Blip;
-        [SerializeField] private GameObject Canvas;
         private UnitInfo unit;
-
-
-        private void OnDestroy()
-        {
-            EventHandler.UnsubscribeVisionChange(unit, gameObject);
-        }
 
         private void Awake()
         {
             unit = GetComponent<UnitInfo>();
-            EventHandler.SubscribeVisionChange(unit, gameObject);
         }
 
-
-        public void VisionChanged(Visibility.Level level)
+        public void VisionChanged(UnitInfo unit, Visibility.Level level)
         {
+            if (this.unit != unit)
+                return;
 
             switch (level)
             {

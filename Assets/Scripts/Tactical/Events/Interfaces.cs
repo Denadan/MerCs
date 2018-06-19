@@ -3,14 +3,14 @@ using UnityEngine.EventSystems;
 
 namespace Mercs.Tactical.Events
 {
-    public interface ITileEventReceiver : IEventSystemHandler
+    public interface ITileEvent : IEventSystemHandler
     {
         void MouseTileEnter(Vector2Int coord);
         void MouseTileLeave(Vector2Int coord);
         void MouseTileClick(Vector2Int coord, PointerEventData.InputButton button);
     }
 
-    public interface IUnitEventReceiver : IEventSystemHandler
+    public interface IUnitEvent : IEventSystemHandler
     {
         void MouseUnitEnter(UnitInfo unit);
         void MouseUnitLeave(UnitInfo unit);
@@ -19,21 +19,22 @@ namespace Mercs.Tactical.Events
 
     public interface IPilotDamaged : IEventSystemHandler
     {
-        void PilotDamaged(PilotHp hp);
+        void PilotDamaged(UnitInfo unit, PilotHp hp);
     }
 
     public interface IUnitDamaged : IEventSystemHandler
     {
-        void UnitDamage(UnitHp hp);
+        void UnitDamage(UnitInfo unit, UnitHp hp);
     }
 
     public interface IPartDamaged : IEventSystemHandler
     {
-        void PartDamaged(UnitHp hp);
+        void PartDamaged(UnitInfo unit, Parts part);
     }
 
     public interface IVisionChanged : IEventSystemHandler
     {
-        void VisionChanged(Visibility.Level level);
+        void VisionChanged(UnitInfo unit, Visibility.Level level);
     }
+
 }

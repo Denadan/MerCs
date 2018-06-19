@@ -39,10 +39,7 @@ namespace Mercs.Tactical.UI
                 HpBar.MaxHP = Unit.PilotHP.MaxHp;
                 HpBar.AddHP = Unit.PilotHP.AddHp;
                 HpBar.HP = Unit.PilotHP.Hp;
-                EventHandler.PilotHpSubscribe(gameObject, Unit);
             }
-
-            EventHandler.SubscribeUnitHp(Unit, gameObject);
 
             if (Unit.UnitHP.MaxShield > 0)
                 Shield.MaxValue = Unit.UnitHP.MaxShield;
@@ -52,30 +49,25 @@ namespace Mercs.Tactical.UI
             Armor.MaxValue = Unit.UnitHP.MaxArmor;
             Struct.MaxValue = Unit.UnitHP.MaxStructure;
 
-            UnitDamage(Unit.UnitHP);
+            UnitDamage(Unit, Unit.UnitHP);
         }
 
 
-        public void PilotDamaged(PilotHp hp)
+        public void PilotDamaged(UnitInfo unit, PilotHp hp)
         {
+            if (this.Unit != unit)
+                return;
 
             HpBar.AddHP = Unit.PilotHP.AddHp;
             HpBar.HP = Unit.PilotHP.Hp;
 
         }
 
-
-        public void OnDestroy()
+        public void UnitDamage(UnitInfo unit, UnitHp hp)
         {
-            if (Unit != null)
-            {
-                EventHandler.PilotHpUnSubscribe(gameObject, Unit);
-                EventHandler.PilotHpUnSubscribe(gameObject, Unit);
-            }
-        }
+            if (this.Unit != unit)
+                return;
 
-        public void UnitDamage(UnitHp hp)
-        {
             Shield.Value = hp.Shield;
             Armor.Value = hp.TotalArmor;
             Struct.Value = hp.TotalStructure;

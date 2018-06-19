@@ -38,10 +38,6 @@ namespace Mercs.Tactical.UI
 
         public void SetUnit(UnitInfo info)
         {
-
-            if (this.info != null)
-                Events.EventHandler.UnsubscribeUnitHp(info, this.gameObject);
-
             parts.Clear();
             foreach (Transform child in PartsHolder)
                 Destroy(child.gameObject);
@@ -56,21 +52,18 @@ namespace Mercs.Tactical.UI
 
                 return;
             }
-
-            Events.EventHandler.SubscribeUnitHp(info, this.gameObject);
-
             CaptionText.text = $"{info.PilotName}({CONST.Class(info.Weight)} {info.Type})";
             this.info = info;
 
             foreach (var part in info.UnitHP.AllParts)
             {
                 var p = Instantiate(PartPrefab, PartsHolder, false).GetComponent<UnitPartStateBase>();
-                p.Init(this, part, info.UnitHP);
+                p.Init(this, part, info);
                 parts.Add(part, p);
             }
 
 
-            UnitDamage(info.UnitHP);
+            UnitDamage(info, info.UnitHP);
         }
 
 
@@ -137,27 +130,26 @@ namespace Mercs.Tactical.UI
         private void OnDisable()
         {
             selected = Parts.None;
-            if (info != null)
-            {
-                Events.EventHandler.UnsubscribeUnitHp(info, this.gameObject);
-                info = null;
-            }
+            info = null;
         }
 
         public void ShowPartDetail(Parts part)
         {
             selected = part;
-            UnitDamage(info.UnitHP);
+            UnitDamage(info, info.UnitHP);
         }
 
         public void HidePartDetail()
         {
             selected = Parts.None;
-            UnitDamage(info.UnitHP);
+            UnitDamage(info, info.UnitHP);
         }
 
-        public void UnitDamage(UnitHp hp)
+        public void UnitDamage(UnitInfo unit, UnitHp hp)
         {
+            if (info != unit)
+                return;
+
             Shield.Show();
             Shield.MaxValue = hp.MaxShield;
             Shield.Value = hp.Shield;

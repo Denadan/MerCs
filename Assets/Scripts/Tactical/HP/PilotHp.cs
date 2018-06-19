@@ -1,7 +1,5 @@
-﻿using System.Collections.Generic;
-using Mercs.Tactical.Events;
+﻿using Mercs.Tactical.Events;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 namespace Mercs.Tactical
 {
@@ -14,9 +12,6 @@ namespace Mercs.Tactical
 
         private UnitInfo unit;
 
-        private List<GameObject> subscribers = new List<GameObject>();
-
-
         public void Init(PilotInfo info, int addhp)
         {
             MaxHp = info.Hp;
@@ -27,7 +22,6 @@ namespace Mercs.Tactical
        public void Start()
         {
             unit = GetComponent<UnitInfo>();
-            EventHandler.RegisterPilotHp(unit, this);
         }
 
         public void DoDamage(int damage)
@@ -50,26 +44,7 @@ namespace Mercs.Tactical
                 else
                     Hp = 0;
 
-            foreach (var subscriber in subscribers)
-                ExecuteEvents.Execute<IPilotDamaged>(subscriber, null,
-                    (handler, eventData) => handler.PilotDamaged(this));
+            EventHandler.Raise<IPilotDamaged>((i, d) => i.PilotDamaged(unit, this));
         }
-
-        private void OnDestroy()
-        {
-            subscribers.Clear();
-            EventHandler.UnRegisterPilotHp(unit);
-        }
-
-        public void Subscribe(GameObject go)
-        {
-            subscribers.Add(go);
-        }
-
-        public void Unsubscribe(GameObject go)
-        {
-            subscribers.Remove(go);
-        }
-
     }
 }

@@ -96,7 +96,7 @@ namespace Mercs.Tactical
             var item = Instantiate(UnitListItemPrefab, UnitListMenu.transform, false).GetComponent<UnitSelectButton>();
 
             item.Unit = info;
-            item.GetComponent<UnitEventRelay>().OriginalUnit = info;
+            item.GetComponent<UnitEventRelay>().SetUnit(info);
             item.BottomText.text = "";
 
             return item;

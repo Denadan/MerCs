@@ -34,7 +34,7 @@ namespace Mercs.Tactical.States
             int n = 0;
 
             foreach (var unit in TacticalController.Instance.Units
-                .Where(u => u.Faction != GameController.Instance.PlayerFaction && TacticalController.Instance.Vision.GetLevelFor(u) > Visibility.Level.None))
+                .Where(u => u.Faction != GameController.Instance.PlayerFaction && u.CurrentVision > Visibility.Level.None))
             {
                 lines.Add((unit, TacticalUIController.Instance.GetLine(n)));
                 lines[n].line.SetPosition(1, unit.transform.position);

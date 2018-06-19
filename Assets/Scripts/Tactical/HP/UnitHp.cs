@@ -70,24 +70,11 @@ namespace Mercs.Tactical
                 //current_hp.y *= UnityEngine.Random.Range(0f, 1f);
                 //current_hp.z *= UnityEngine.Random.Range(0f, 1f);
             }
-            #region events
-            private List<GameObject> subscribers = new List<GameObject>();
 
-            public void Subscrive(GameObject go)
-            {
-                subscribers.Add(go);
-            }
-
-            public void UnSubscribe(GameObject go)
-            {
-                subscribers.Remove(go);
-            }
-            #endregion
         }
 
         private Dictionary<Parts, part> parts;
         private List<GameObject> subscribers = new List<GameObject>();
-        //private List<IModuleInfo> modules;
 
         List<(Parts place, float w)> front, back, left, right;
 
@@ -95,16 +82,7 @@ namespace Mercs.Tactical
         public float Shield { get; private set; }
         public float ShieldRegen { get; set; }
 
-        private void Start()
-        {
-            EventHandler.RegisterUnitHp(GetComponent<UnitInfo>(), this);
-        }
-
-        private void OnDestroy()
-        {
-            EventHandler.UnRegisterUnitHp(GetComponent<UnitInfo>());
-        }
-
+        public float Heat { get; private set; }
         public void Build(UnitTemplate template, ModulesData modules)
         {
 
@@ -205,27 +183,5 @@ namespace Mercs.Tactical
             (part.max_hp.x, part.max_hp.y, part.max_hp.z, part.has_back_armor) :
             (0, 0, 0, false);
 
-        public void Subscribe(GameObject go, Parts part)
-        {
-            if (parts.TryGetValue(part, out var p))
-                p.Subscrive(go);
-        }
-
-        public void UnSubscribe(GameObject go, Parts part)
-        {
-            if (parts.TryGetValue(part, out var p))
-                p.UnSubscribe(go);
-        }
-
-        internal void Subscribe(GameObject go)
-        {
-            if (go != null)
-                subscribers.Add(go);
-        }
-
-        internal void UnSubscribe(GameObject go)
-        {
-            subscribers.Remove(go);
-        }
     }
 }

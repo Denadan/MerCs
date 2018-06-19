@@ -78,9 +78,9 @@ namespace Mercs.Tactical
 
             foreach (var unit in TacticalController.Instance.Units)
             {
-                Raise(unit, GetLevelFor(unit));
+                unit.CurrentVision = GetLevelFor(unit);
+                EventHandler.Raise<IVisionChanged>((i, d) => i.VisionChanged(unit, unit.CurrentVision));
             }
-
         }
 
         private (Level, Line) calc_vision(vision_info info) =>
@@ -99,7 +99,7 @@ namespace Mercs.Tactical
             var dist = grid.MapDistance(f_pos, t_pos);
             var direct = HaveDirect(f_pos, from.Height, t_pos, to.Height);
 
-            if (dist >from.RadarRange && dist > from.VisualRange)
+            if (dist > from.RadarRange && dist > from.VisualRange)
                 return (Level.None, direct);
 
             if (direct == Line.Indirect)
@@ -150,13 +150,13 @@ namespace Mercs.Tactical
 
                 if (tile.Height > h1)
                     return Line.Indirect;
-                if(tile.Height + tile.AddedHeight > h1)
+                if (tile.Height + tile.AddedHeight > h1)
                     if (tile.HasCover)
                         forest += 1;
                     else
                         return Line.Indirect;
 
-                if(full & (tile.Height > h0 || !tile.HasCover && tile.Height + tile.AddedHeight > h0))
+                if (full & (tile.Height > h0 || !tile.HasCover && tile.Height + tile.AddedHeight > h0))
                     full = false;
             }
 
@@ -182,22 +182,26 @@ namespace Mercs.Tactical
             if (looked_from.TryGetValue(unit, out var list_f))
                 foreach (var info in list_f)
                 {
-                    var old_l = GetLevelFor(info.to);
                     (info.level, info.direct) = calc_vision(info);
-                    var new_l = GetLevelFor(info.to);
-                    if (old_l != new_l)
-                        Raise(info.to, new_l);
+
+                    var l = GetLevelFor(info.to);
+                    if (info.to.CurrentVision != l)
+                    {
+                        info.to.CurrentVision = l;
+                        EventHandler.Raise<IVisionChanged>((i, d) => i.VisionChanged(info.to, l));
+                    }
                 }
 
-            var level = GetLevelFor(unit);
             if (looked_to.TryGetValue(unit, out var list_t))
                 foreach (var info in list_t)
                     (info.level, info.direct) = calc_vision(info);
 
             var new_level = GetLevelFor(unit);
-            if (level != new_level)
-                Raise(unit, new_level);
-
+            if (unit.CurrentVision != new_level)
+            {
+                unit.CurrentVision = new_level;
+                EventHandler.Raise<IVisionChanged>((i, d) => i.VisionChanged(unit, new_level));
+            }
         }
 
         public void RecalcVision(UnitInfo unit, Vector2Int pos)
@@ -206,22 +210,26 @@ namespace Mercs.Tactical
             if (looked_from.TryGetValue(unit, out var list_f))
                 foreach (var info in list_f)
                 {
-                    var old_l = GetLevelFor(info.to);
                     (info.level, info.direct) = calc_vision(info, pos);
-                    var new_l = GetLevelFor(info.to);
-                    if (old_l != new_l)
-                        Raise(info.to, new_l);
+
+                    var l = GetLevelFor(info.to);
+                    if (info.to.CurrentVision != l)
+                    {
+                        info.to.CurrentVision = l;
+                        EventHandler.Raise<IVisionChanged>((i, d) => i.VisionChanged(info.to, l));
+                    }
                 }
 
-            var level = GetLevelFor(unit);
             if (looked_to.TryGetValue(unit, out var list_t))
                 foreach (var info in list_t)
                     (info.level, info.direct) = calc_vision_to(info, pos);
 
             var new_level = GetLevelFor(unit);
-            if (level != new_level)
-                Raise(unit, new_level);
-
+            if (unit.CurrentVision != new_level)
+            {
+                unit.CurrentVision = new_level;
+                EventHandler.Raise<IVisionChanged>((i, d) => i.VisionChanged(unit, new_level));
+            }
         }
 
 
@@ -249,7 +257,7 @@ namespace Mercs.Tactical
         {
             var res = new List<(UnitInfo target, Level level, Line direct)>();
 
-            if(looked_from.TryGetValue(unit, out var list))
+            if (looked_from.TryGetValue(unit, out var list))
                 foreach (var info in list)
                 {
                     var val = calc_vision(info, pos);
@@ -258,7 +266,7 @@ namespace Mercs.Tactical
             return res;
         }
 
-        public Level GetLevelFor(UnitInfo info)
+        private Level GetLevelFor(UnitInfo info)
         {
             if (looked_to.TryGetValue(info, out var list))
                 return list.Max(i => i.level);
@@ -266,45 +274,14 @@ namespace Mercs.Tactical
                 return Level.None;
         }
 
-
         public Level GetLevelFor(UnitInfo info, UnitInfo from, Level level)
         {
-            var l = looked_to.TryGetValue(info, out var list) ? 
-                list.Where(i=>i.from != from).Max(i => i.level) :
+            var l = looked_to.TryGetValue(info, out var list) ?
+                list.Where(i => i.from != from).Max(i => i.level) :
                 Level.None;
 
             return level > l ? level : l;
         }
 
-        #region events
-
-        private void Raise(UnitInfo unit, Level level)
-        {
-            //UnityEngine.Debug.Log($"{unit.PilotName} - {level}");
-
-            if (subscribers.TryGetValue(unit, out var list))
-                foreach (var obj in list)
-                    ExecuteEvents.Execute<IVisionChanged>(obj, null, (o, data) =>o.VisionChanged(level));
-        }
-
-        public void UnSubscribe(UnitInfo selectedUnit, GameObject o)
-        {
-            if (!subscribers.TryGetValue(selectedUnit, out var subs))
-            {
-                subs.Remove(o);
-            }
-        }
-
-        public void Subscribe(UnitInfo selectedUnit, GameObject o)
-        {
-            if (!subscribers.TryGetValue(selectedUnit, out var subs))
-            {
-                subs = new List<GameObject>();
-                subscribers.Add(selectedUnit, subs);
-            }
-
-            subs.Add(o);
-        }
-        #endregion
     }
 }

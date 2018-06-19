@@ -1,7 +1,7 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Tools;
-using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -10,224 +10,111 @@ namespace Mercs.Tactical.Events
 {
     public class EventHandler : SceneSingleton<EventHandler>
     {
-        private List<GameObject> TileSubscribers = new List<GameObject>();
-        private List<GameObject> UnitSubscribers = new List<GameObject>();
-        private Dictionary<UnitInfo, PilotHp> pilotHps = new Dictionary<UnitInfo, PilotHp>();
-        private Dictionary<UnitInfo, UnitHp> UnitHPs = new Dictionary<UnitInfo, UnitHp>();
-
-        public static void UnitPointerClick(PointerEventData data, UnitInfo Unit)
+        private class list_item : IEnumerable<GameObject>
         {
-            if (Instance == null)
-                return;
-            if (Unit != null)
+            private bool in_work = false;
+            private List<GameObject> list = new List<GameObject>();
+            private List<GameObject> add = new List<GameObject>();
+            private List<GameObject> del = new List<GameObject>();
+            
+            public void Add(GameObject go)
             {
-                foreach (var unitSubscriber in Instance.UnitSubscribers)
-                {
-                    ExecuteEvents.Execute<IUnitEventReceiver>(unitSubscriber, data,
-                        (unit, eventdata) => unit.MouseUnitClick(Unit, data.button));
-                }
+
+                //UnityEngine.Debug.Log($"ADD {go} work:{in_work}");
+                
+                (in_work ? add : list).Add(go);
+
+                //UnityEngine.Debug.Log($"{add.Count} {list.Count}");
             }
-        }
 
-        public static void UnitPointerEnter(PointerEventData data, UnitInfo Unit)
-        {
-            if (Instance == null)
-                return;
-            if (Unit != null)
+            public void Del(GameObject go)
             {
-                foreach (var unitSubscriber in Instance.UnitSubscribers)
+                if (in_work)
+                    del.Add(go);
+                else
+                    list.Remove(go);
+            }
+
+            public void Complete()
+            {
+                if (in_work)
                 {
-                    ExecuteEvents.Execute<IUnitEventReceiver>(unitSubscriber, data,
-                        (unit, eventdata) => unit.MouseUnitEnter(Unit));
-                }
-                var coord = Unit.GetComponent<CellPosition>();
-                if (coord != null)
-                    foreach (var tileSubscriber in Instance.TileSubscribers)
+                    if (add.Count > 0)
                     {
-                        ExecuteEvents.Execute<ITileEventReceiver>(tileSubscriber, data,
-                            (handler, eventData) => handler.MouseTileEnter(coord.position));
+                        list.AddRange(add);
+                        add.Clear();
                     }
-            }
-        }
-        public static void UnitPointerLeave(PointerEventData data, UnitInfo Unit)
-        {
-            if (Instance == null)
-                return;
-            if (Unit != null)
-            {
-                foreach (var unitSubscriber in Instance.UnitSubscribers)
-                {
-                    ExecuteEvents.Execute<IUnitEventReceiver>(unitSubscriber, data,
-                        (unit, eventdata) => unit.MouseUnitLeave(Unit));
-                }
-                var coord = Unit.GetComponent<CellPosition>();
-                if (coord != null)
-                    foreach (var tileSubscriber in Instance.TileSubscribers)
+
+                    if(del.Count > 0)
                     {
-                        ExecuteEvents.Execute<ITileEventReceiver>(tileSubscriber, data,
-                            (handler, eventData) => handler.MouseTileLeave(coord.position));
+                        list.RemoveAll(i => del.Contains(i));
+                        del.Clear();
                     }
+                    in_work = false;
+                }
             }
-        }
-        public static void TilePointerClick(PointerEventData data, Vector2Int coord)
-        {
-            if (Instance == null)
-                return;
-            foreach (var tileSubscriber in Instance.TileSubscribers)
+
+            public IEnumerator<GameObject> GetEnumerator()
             {
-                ExecuteEvents.Execute<ITileEventReceiver>(tileSubscriber, data,
-                    (handler, eventData) => handler.MouseTileClick(coord, data.button));
+                in_work = true;
+                return list.GetEnumerator();
             }
-        }
-        public static void TilePointerEnter(PointerEventData data, Vector2Int coord)
-        {
-            if (Instance == null)
-                return;
-            foreach (var tileSubscriber in Instance.TileSubscribers)
+
+            IEnumerator IEnumerable.GetEnumerator()
             {
-                ExecuteEvents.Execute<ITileEventReceiver>(tileSubscriber, data,
-                    (handler, eventData) => handler.MouseTileEnter(coord));
+                in_work = true;
+                return list.GetEnumerator();
             }
         }
-        public static void TilePointerLeave(PointerEventData data, Vector2Int coord)
+
+        private Dictionary<Type, list_item> subscribers = new Dictionary<Type, list_item>();
+
+
+        public static void Subscribe<TEvent>(GameObject go)
+            where TEvent : IEventSystemHandler
         {
+            //UnityEngine.Debug.Log($"Subscribe -[{go.name}]- to {typeof(TEvent).ToString()} {Instance}");
+
             if (Instance == null)
                 return;
-            foreach (var tileSubscriber in Instance.TileSubscribers)
+
+            if (!Instance.subscribers.TryGetValue(typeof(TEvent), out var item))
             {
-                ExecuteEvents.Execute<ITileEventReceiver>(tileSubscriber, data,
-                    (handler, eventData) => handler.MouseTileLeave(coord));
+                item = new list_item();
+                Instance.subscribers.Add(typeof(TEvent), item);
             }
+            item.Add(go);
+
         }
 
-
-
-        public static void TileSubscribe(GameObject go)
+        public static void UnSubscribe<TEvent>(GameObject go)
+            where TEvent : IEventSystemHandler
         {
-            if (Instance == null)
-                return;
-            Instance.TileSubscribers.Add(go);
-        }
-
-        public static void TileUnSubscribe(GameObject go)
-        {
-            if (Instance == null)
-                return;
-            Instance.TileSubscribers.Remove(go);
-        }
-
-        public static void UnitSubscribe(GameObject go)
-        {
-            if (Instance == null)
-                return;
-            Instance.UnitSubscribers.Add(go);
-        }
-
-        public static void UnitUnSubscribe(GameObject go)
-        {
-            if (Instance == null)
-                return;
-            Instance.UnitSubscribers.Remove(go);
-        }
-
-        public static void PilotHpSubscribe(GameObject go, UnitInfo unit)
-        {
+            //UnityEngine.Debug.Log($"UnSubscribe -[{go.name}]- to {typeof(TEvent).ToString()} {Instance}");
             if (Instance == null)
                 return;
 
-            if(Instance.pilotHps.TryGetValue(unit, out var hp))
-                hp.Subscribe(go);
-        }
-
-        public static void PilotHpUnSubscribe(GameObject go, UnitInfo unit)
-        {
-            if (Instance == null)
-                return;
-            if (Instance.pilotHps.TryGetValue(unit, out var hp))
-                hp.Unsubscribe(go);
-        }
-
-        public static void RegisterPilotHp(UnitInfo unit, PilotHp hp)
-        {
-            if (Instance == null)
-                return;
-
-            Instance.pilotHps.Add(unit,hp);
-        }
-
-        public static void UnRegisterPilotHp(UnitInfo unit)
-        {
-            if (Instance == null || unit == null)
-                return;
-
-            Instance.pilotHps.Remove(unit);
-        }
-
-        public static void RegisterUnitHp(UnitInfo unit, UnitHp hp)
-        {
-            if (Instance == null || unit == null)
-                return;
-
-            Instance.UnitHPs.Add(unit, hp);
-        }
-
-        public static void UnRegisterUnitHp(UnitInfo unit)
-        {
-            if (Instance == null)
-                return;
-            Instance.UnitHPs.Remove(unit);
-        }
-
-        public static void SubscribePart(UnitInfo unit, Parts part, GameObject go)
-        {
-            if (Instance == null)
-                return;
-            if (Instance.UnitHPs.TryGetValue(unit, out var hp))
+            if (Instance.subscribers.TryGetValue(typeof(TEvent), out var item))
             {
-                hp.Subscribe(go, part);
+                item.Del(go);
             }
         }
 
-        public static void UnsubscribePart(UnitInfo unit, Parts part, GameObject go)
+
+        public static void Raise<TEvent>(ExecuteEvents.EventFunction<TEvent> functor)
+            where TEvent : IEventSystemHandler
         {
-            if (Instance == null)
+            //UnityEngine.Debug.Log($"Raise {typeof(TEvent).ToString()} {Instance}");
+
+            if (Instance == null || !Instance.subscribers.TryGetValue(typeof(TEvent), out var item))
                 return;
-            if (Instance.UnitHPs.TryGetValue(unit, out var hp))
+
+            foreach (var go in item)
             {
-                hp.UnSubscribe(go, part);
+                //UnityEngine.Debug.Log($"Raise {typeof(TEvent).ToString()} for {go}");
+                ExecuteEvents.Execute<TEvent>(go, null, functor);
             }
-        }
-
-        public static void SubscribeUnitHp(UnitInfo unit, GameObject go)
-        {
-            if (Instance == null)
-                return;
-            if (Instance.UnitHPs.TryGetValue(unit, out var hp))
-            {
-                hp.Subscribe(go);
-            }
-        }
-
-        public static void UnsubscribeUnitHp(UnitInfo unit, GameObject go)
-        {
-            if (Instance == null)
-                return;
-            if (Instance.UnitHPs.TryGetValue(unit, out var hp))
-            {
-                hp.UnSubscribe(go);
-            }
-        }
-
-        public static void UnsubscribeVisionChange(UnitInfo selectedUnit, GameObject o)
-        {
-            if (TacticalController.Instance?.Vision != null)
-                TacticalController.Instance.Vision.UnSubscribe(selectedUnit, o);
-        }
-
-        public static void SubscribeVisionChange(UnitInfo selectedUnit, GameObject o)
-        {
-            if (TacticalController.Instance?.Vision != null)
-                TacticalController.Instance.Vision.Subscribe(selectedUnit, o);
+            item.Complete();
         }
     }
 }
