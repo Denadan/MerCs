@@ -40,6 +40,9 @@ namespace Mercs.Items
             base.ApplyUpgrade();
             weight = upgrade(UpgradeType.Weight, Template.Weight);
         }
+
+        public abstract bool Unique { get; }
+
 #if UNITY_EDITOR
         public override string ToString()
         {

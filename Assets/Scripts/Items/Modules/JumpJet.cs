@@ -10,6 +10,7 @@ namespace Mercs.Items
     public class JumpJet : ModuleInfo<JumpJetTemplate>, IHeatProducer, IHeatContainer
     {
         public override ModuleType ModType => ModuleType.JumpJet;
+        public override bool Unique => false;
 
         /// <summary>
         /// нагрев при прижке

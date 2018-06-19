@@ -103,10 +103,10 @@ namespace Mercs.Tactical
                 return (Level.None, direct);
 
             if (direct == Line.Indirect)
-                return (dist > from.RadarRange ? Level.None : Level.Sensor, direct);
+                return (dist > from.RadarRange || to.Buffs.Shutdown ? Level.None : Level.Sensor, direct);
 
             if (dist > from.VisualRange)
-                return (dist > from.ScanRange ? Level.Sensor : Level.Scanned, direct);
+                return (dist > from.ScanRange ? (to.Buffs.Shutdown ? Level.None : Level.Sensor) : Level.Scanned, direct);
             else
                 return (dist > from.ScanRange ? Level.Visual : Level.Scanned, direct);
         }

@@ -39,8 +39,9 @@ namespace Mercs.Tactical.UI
 
         public void B_Guard()
         {
-            if (TacticalController.Instance.StateMachine.State != States.TacticalState.ConfirmGuard)
-                TacticalController.Instance.StateMachine.State = States.TacticalState.ConfirmGuard;
+            TacticalUIController.Instance.HighlightActionBarButton(ActionButton.Guard);
+            if (TacticalController.Instance.StateMachine.State != States.TacticalState.Confirm)
+                TacticalController.Instance.StateMachine.State = States.TacticalState.Confirm;
         }
 
         public void B_Cancel()

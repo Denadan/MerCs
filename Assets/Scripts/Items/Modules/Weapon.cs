@@ -10,7 +10,7 @@ namespace Mercs.Items
 
 
         public override ModuleType ModType => ModuleType.Weapon;
-
+        public override bool Unique => false;
 
 
         /// <summary>

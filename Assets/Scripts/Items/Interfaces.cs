@@ -11,6 +11,7 @@ namespace Mercs.Items
         SlotSize Slot { get; }
         ModuleType ModType { get; }
         Sprite Icon { get; }
+        bool Unique { get; }
 
         void ApplyUpgrade();
     }
@@ -28,6 +29,11 @@ namespace Mercs.Items
     public interface IHeatProducer
     {
         float Heat { get; }
+    }
+
+    public interface IPassiveHeatPoducer
+    {
+        float HeatPerRound { get; }
     }
 
     public interface IShield

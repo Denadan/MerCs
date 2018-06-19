@@ -10,6 +10,7 @@ namespace Mercs.Items
     public class HeatSink : ModuleInfo<HeatSinkTemplate>, IHeatDissipator, IHeatContainer
     {
         public override ModuleType ModType => ModuleType.HeatSink;
+        public override bool Unique => false;
 
         /// <summary>
         /// рассеивание тепла в ход

@@ -1,4 +1,5 @@
 ﻿
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,17 @@ namespace Mercs.Tactical.Buffs
 {
     public class BuffList : MonoBehaviour, IEnumerable<BuffDescriptor>
     {
+        public UnitInfo info;
+
         private List<BuffDescriptor> buffs = new List<BuffDescriptor>();
+
+        public bool Overheated => info.Heat.Value > info.Heat.ThresholdValue;
+        public bool Shutdown { get; private set; }
+
+        private void Awake()
+        {
+            info = GetComponent<UnitInfo>();
+        }
 
         public void EndPhase()
         {
@@ -47,6 +58,16 @@ namespace Mercs.Tactical.Buffs
         IEnumerator IEnumerable.GetEnumerator()
         {
             return buffs.GetEnumerator();
+        }
+
+        public void EngineOff()
+        {
+            Shutdown = true;
+        }
+
+        public void EngineOn()
+        {
+            Shutdown = false;
         }
     }
 }

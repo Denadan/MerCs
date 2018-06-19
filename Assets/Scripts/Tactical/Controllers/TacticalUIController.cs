@@ -16,6 +16,8 @@ namespace Mercs.Tactical
         private Dictionary<TacticalButton, Button> tactical_button;
         private Image highlated_abb;
 
+        public ActionButton HighlightedButton { get; private set; }
+
         [Header("UnitListMenu")]
         [SerializeField] private GameObject UnitListMenu;
         [SerializeField] private GameObject UnitListItemPrefab;
@@ -192,6 +194,7 @@ namespace Mercs.Tactical
             if (highlated_abb != null)
                 highlated_abb.color = Color.white;
 
+            HighlightedButton = button;
             highlated_abb = action_bar[button];
 
             if (highlated_abb != null)

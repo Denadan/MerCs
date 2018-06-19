@@ -4,10 +4,11 @@ using UnityEngine;
 namespace Mercs.Items
 {
     [CreateAssetMenu(fileName = "ShieldGenerator", menuName = "MerCs/Module/ShieldGenerator")]
-    public class ShieldGenerator : ModuleInfo<ShieldTemplate>, IShield, IShieldRegenerator, IHeatProducer
+    public class ShieldGenerator : ModuleInfo<ShieldTemplate>, IShield, IShieldRegenerator, IPassiveHeatPoducer
     {
         
         public override ModuleType ModType => ModuleType.Shield;
+        public override bool Unique => false;
         /// <summary>
         /// обем щита
         /// </summary>
@@ -19,11 +20,11 @@ namespace Mercs.Items
         /// <summary>
         /// задржка перезарядки после полного истощения 
         /// </summary>
-        public int ShiledDelay => Template.ShieldDelay;
+        public int ShieldDelay => Template.ShieldDelay;
         /// <summary>
         /// Производимое тепло
         /// </summary>
-        public float Heat { get; private set; }
+        public float HeatPerRound { get; private set; }
 
         /// <summary>
         /// применение апгрейда
@@ -35,7 +36,7 @@ namespace Mercs.Items
 
             Shield = upgrade(UpgradeType.Stability, Template.Shield);
             ShieldRegen = upgrade(UpgradeType.StabilityRestore, Template.ShieldRegen);
-            Heat = upgrade(UpgradeType.MoveMod, Template.Heat);
+            HeatPerRound = upgrade(UpgradeType.Heat, Template.Heat);
         }
 
 #if UNITY_EDITOR
@@ -49,7 +50,7 @@ namespace Mercs.Items
             sb.Append($"Shield)\n");
             sb.Append(base.ToString());
             sb.Append($"\nShield: {Shield} + {ShieldRegen}");
-            sb.Append($"\nHeat: {Heat}\n");
+            sb.Append($"\nHeat: {HeatPerRound}\n");
 
 
             return sb.ToString();

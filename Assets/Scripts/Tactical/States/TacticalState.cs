@@ -20,11 +20,11 @@
         SelectRun = 41,
         SelectJump = 42,
         SelectRotation = 43,
-        ConfirmGuard = 44,
         PlayerEndTurn = 45,
         WaitMovementComplete = 46,
         SelectEvasive = 47,
 
+        Confirm = 200,
 
         DEBUG_TEST_LINE = 1000
     }

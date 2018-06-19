@@ -23,18 +23,17 @@ namespace Mercs.Tactical
 
         public int MoveMp
         {
-            get => move;
+            get => info.Buffs.Shutdown ? 0 : move;
             set => move = value;
         }
         public int RunMP
         {
-            get => run;
+            get => info.Buffs.Shutdown ? 0 : run;
             set => run = value;
         }
-
         public int JumpMP
         {
-            get => jump;
+            get => info.Buffs.Shutdown ? 0 : jump;
             set => jump = value;
         }
 
@@ -73,9 +72,9 @@ namespace Mercs.Tactical
                         * 1.5f / info.Weight);
 
             var jump_mod = info.Modules.OfType<IJumpMod>().Aggregate(1f, (i, mod) => i * mod.JumpMod);
-            jump = (int) (info.Modules.OfType<JumpJet>().Sum(i => i.EngineRating) * jump_mod / info.Weight);
+            jump = (int)(info.Modules.OfType<JumpJet>().Sum(i => i.EngineRating) * jump_mod / info.Weight);
 
-            if(info.UnitHP.AllParts.Contains(Parts.LL) && info.UnitHP.AllParts.Contains(Parts.RL))
+            if (info.UnitHP.AllParts.Contains(Parts.LL) && info.UnitHP.AllParts.Contains(Parts.RL))
             {
                 var jump_in_legs = info.Modules[Parts.LL].OfType<JumpJet>().Sum(i => i.EngineRating)
                     + info.Modules[Parts.RL].OfType<JumpJet>().Sum(i => i.EngineRating);

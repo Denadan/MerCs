@@ -19,6 +19,7 @@ namespace Mercs.Items
         private int _crit;
 
         public override ModuleType ModType => ModuleType.Reactor;
+        public override bool Unique => true;
         /// <summary>
         /// вес реактора
         /// </summary>

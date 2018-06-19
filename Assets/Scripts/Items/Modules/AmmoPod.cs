@@ -10,6 +10,7 @@ namespace Mercs.Items
     public class AmmoPod : ModuleInfo<AmmoPodTemplate>
     {
         public override ModuleType ModType => ModuleType.AmmoPod;
+        public override bool Unique => false;
 
         /// <summary>
         /// вместимость контейнера

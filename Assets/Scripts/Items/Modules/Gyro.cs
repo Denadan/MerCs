@@ -18,6 +18,7 @@ namespace Mercs.Items
         /// </summary>
         public MercClass Class;
         public override ModuleType ModType => ModuleType.Gyro;
+        public override bool Unique => true;
         /// <summary>
         /// базовая стабильность
         /// </summary>

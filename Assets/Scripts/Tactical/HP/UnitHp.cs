@@ -6,6 +6,7 @@ using UnityEngine;
 using System.Linq;
 using Mercs.Items;
 using EventHandler = Mercs.Tactical.Events.EventHandler;
+using System;
 
 namespace Mercs.Tactical
 {
@@ -77,7 +78,9 @@ namespace Mercs.Tactical
         private List<GameObject> subscribers = new List<GameObject>();
 
         List<(Parts place, float w)> front, back, left, right;
+        private int shield_delay;
 
+        public int ShieldDelay { get; private set; }
         public float MaxShield { get; private set; }
         public float Shield { get; private set; }
         public float ShieldRegen { get; set; }
@@ -138,7 +141,7 @@ namespace Mercs.Tactical
                                 size = 5;
                                 break;
                             case SlotSize.Gyro:
-                                size = 3 + (int) (module as Gyro).CritSize;
+                                size = 3 + (int)(module as Gyro).CritSize;
                                 break;
                         }
 
@@ -148,10 +151,21 @@ namespace Mercs.Tactical
                 }
             }
 
-            MaxShield = modules.OfType<IShield>().Sum(i => i.Shield);
-            Shield = MaxShield;
-            ShieldRegen = modules.OfType<IShieldRegenerator>().Sum(i => i.ShieldRegen);
-            
+            var shield = modules.OfType<ShieldGenerator>().FirstOrDefault();
+
+            if (shield == null)
+            {
+                Shield = MaxShield = 0;
+                ShieldRegen = 0;
+                ShieldDelay = 0;
+            }
+            else
+            {
+                MaxShield = modules.OfType<IShield>().Sum(i => i.Shield);
+                Shield = MaxShield;
+                ShieldRegen = modules.OfType<IShieldRegenerator>().Sum(i => i.ShieldRegen);
+                ShieldDelay = shield.ShieldDelay;
+            }
             foreach (var p in list)
             {
                 if (p.template.DependOn != Parts.None)
@@ -183,5 +197,20 @@ namespace Mercs.Tactical
             (part.max_hp.x, part.max_hp.y, part.max_hp.z, part.has_back_armor) :
             (0, 0, 0, false);
 
+        public void DoOverheatDamage()
+        {
+
+        }
+
+        internal void EngineOn()
+        {
+            Shield = 0;
+        }
+
+        internal void EngineOff()
+        {
+            shield_delay = 0;
+            Shield = MaxShield * 0.1f;
+        }
     }
 }

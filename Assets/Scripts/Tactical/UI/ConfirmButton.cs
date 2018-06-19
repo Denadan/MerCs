@@ -7,13 +7,12 @@ namespace Mercs.Tactical.UI
     {
         public void OnClick()
         {
-            switch (TacticalController.Instance.StateMachine.State)
+            switch (TacticalUIController.Instance.HighlightedButton)
             {
-                case TacticalState.ConfirmGuard:
+                case ActionButton.Guard:
                     TacticalController.Instance.StateMachine.State = TacticalState.PlayerEndTurn;
                     break;
             }
         }
-       
     }
 }
