@@ -69,5 +69,11 @@ namespace Mercs.Tactical
             Movement.NewTurn();
             Active = true;
         }
+
+        public void SpendAction()
+        {
+            Active = false;
+            Buffs.BeginTurn();
+        }
     }
 }

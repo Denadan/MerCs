@@ -13,6 +13,7 @@ namespace Mercs.Tactical.Buffs
             EndOfPhase,
             BeginNextTurn,
             EndNextTurn,
+            Projected
         }
 
         private string tooltip;
@@ -23,6 +24,7 @@ namespace Mercs.Tactical.Buffs
         public BuffDuration Duration = BuffDuration.Permanent;
         public Visibility.Level MinVision = Visibility.Level.None;
         public bool Stackable = true;
+        public UnitInfo ProjectedSouce = null;
 
         public string ToolTip
         {

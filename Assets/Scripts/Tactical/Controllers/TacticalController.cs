@@ -17,7 +17,7 @@ namespace Mercs.Tactical
         private Faction[] factions;
         private int current_faction;
         private UnitInfo selected;
-        
+
         #region Properties
         public Map Map { get; private set; }
         public HexGrid Grid { get; private set; }
@@ -48,7 +48,7 @@ namespace Mercs.Tactical
                         TacticalUIController.Instance.ShowSelectedUnitWindow(value);
                         TacticalUIController.Instance.MoveCameraTo(value);
                     }
-                    else if(value.CurrentVision >= Visibility.Level.Sensor)
+                    else if (value.CurrentVision >= Visibility.Level.Sensor)
                         TacticalUIController.Instance.MoveCameraTo(value);
                 }
             }
@@ -207,17 +207,58 @@ namespace Mercs.Tactical
             }
         }
 
+        /// <summary>
+        /// Запускаем движение юнита без ожидания
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="unit"></param>
         public void StartMovement(MovementStateData data, UnitInfo unit)
         {
             StartMovementWait(data, unit, TacticalState.NotReady);
         }
 
+        /// <summary>
+        /// запускаем движение юнита с ожиданием окончания
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="unit"></param>
+        /// <param name="state">состояние, которое выставить по окончанию</param>
         public void StartMovementWait(MovementStateData data, UnitInfo unit, TacticalState state)
         {
+            // собственно запускаем движение согластно типу
             if (data.Type == MovementStateData.MoveType.Jump)
-                StartCoroutine(Jump(data,unit,state));
+                StartCoroutine(Jump(data, unit, state));
             else
                 StartCoroutine(Move(data, unit, state));
+
+            // вещаем бафф движения
+            Buffs.BuffType type = Buffs.BuffType.None;
+            switch (data.Type)
+            {
+                case MovementStateData.MoveType.Move:
+                    type = Buffs.BuffType.MoveEvasion;
+                    break;
+                case MovementStateData.MoveType.Run:
+                    type = Buffs.BuffType.RunEvasion;
+                    break;
+                case MovementStateData.MoveType.Jump:
+                    type = Buffs.BuffType.EvasiveEvasion;
+                    break;
+                case MovementStateData.MoveType.Evasive:
+                    type = Buffs.BuffType.JumpEvasion;
+                    break;
+            }
+
+            if (type != Buffs.BuffType.None)
+                unit.Buffs.Add(new Buffs.BuffDescriptor
+                {
+                    Type = type,
+                    Duration = Buffs.BuffDescriptor.BuffDuration.BeginNextTurn,
+                    Stackable = false,
+                    TAG = "Evasion",
+                    MinVision = Visibility.Level.Visual,
+                    Value = type == Buffs.BuffType.JumpEvasion ? Grid.MapDistance(data.path[0].coord, data.path[1].coord) : data.path.Count
+                });
         }
 
         private IEnumerator Move(MovementStateData data, UnitInfo info, TacticalState state)
@@ -238,12 +279,12 @@ namespace Mercs.Tactical
             while (Time.realtimeSinceStartup < start_time + total_time)
             {
                 var t = (1 - (Time.realtimeSinceStartup - start_time) / total_time) * length - 0.0001f;
-                int ti = (int) t;
+                int ti = (int)t;
 
                 var ns = path[ti];
                 var ne = path[ti + 1];
                 var t1 = t - ti;
-                
+
                 if (t_old != ti)
                 {
                     t_old = ti;
@@ -259,7 +300,7 @@ namespace Mercs.Tactical
                 var angle_start = Quaternion.Euler(0, 0, ns.facing.GetAngleV());
                 var angle_end = Quaternion.Euler(0, 0, ne.facing.GetAngleV());
                 info.transform.rotation = Quaternion.Lerp(angle_start, angle_end, t1);
-                
+
                 yield return 0;
             }
 

@@ -36,7 +36,7 @@ namespace Mercs.Tactical.States
             TacticalController.Instance.SelectedUnit.Active = false;
             TacticalController.Instance.SelectedUnit.Selectable = false;
             state.ActiveUnits.Remove(TacticalController.Instance.SelectedUnit);
-            TacticalController.Instance.SelectedUnit.Movement.MoveDone();
+            TacticalController.Instance.SelectedUnit.SpendAction();
 
             TacticalController.Instance.StartMovementWait(data, TacticalController.Instance.SelectedUnit,
                 state.ActiveUnits.Count > 0 ? TacticalState.PhaseSelectFaction : TacticalState.PhasePrepare);

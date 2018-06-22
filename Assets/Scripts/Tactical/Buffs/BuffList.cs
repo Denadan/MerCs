@@ -16,6 +16,8 @@ namespace Mercs.Tactical.Buffs
         public bool Shutdown { get; private set; }
         public bool Prone { get; private set; }
 
+
+
         private void Awake()
         {
             info = GetComponent<UnitInfo>();
@@ -33,13 +35,15 @@ namespace Mercs.Tactical.Buffs
 
         public void BeginTurn()
         {
-
+            buffs.RemoveAll(i => i.Duration == BuffDescriptor.BuffDuration.BeginNextTurn);
         }
 
         public void EndTurn()
         {
 
         }
+
+      
 
         public void Add(BuffDescriptor buff)
         {
