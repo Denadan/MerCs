@@ -156,6 +156,8 @@ namespace Mercs.Tactical
 
         public void ShowActionBarButtons(UnitInfo unit)
         {
+            ShowActionBar();
+
             if (unit.Movement.MoveMp > 0)
                 ShowActionBarButton(ActionButton.Move);
             else

@@ -40,14 +40,17 @@ namespace Mercs
         Fire,
         Guard,
         Cancel,
-        Evade
+        Evade,
     }
 
     public enum TacticalButton
     {
         Confirm,
         Reserve,
-        Done
+        Done,
+        Fire,
+        EngineOn,
+        StandUp,
     }
     /// <summary>
     /// Части юнитов

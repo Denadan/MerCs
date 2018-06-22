@@ -11,8 +11,7 @@ namespace Mercs.Tactical.States
         {
             foreach(var unit in TacticalController.Instance.Units.Where(i => !i.Reserve))
             {
-                unit.Movement.NewTurn();
-                unit.Active = true;
+                unit.NewTurn();
             }
 
             TacticalController.Instance.CurrentRound += 1;

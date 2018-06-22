@@ -25,7 +25,6 @@ namespace Mercs.Tactical.States
                 Select(unit => (unit: unit, button: TacticalController.Instance[unit])).
                 Where(item => item.button != null))
             {
-                //UnityEngine.Debug.Log($"{i.unit.PilotName} active:{i.unit.Active} selectable:{i.unit.Selectable}");
 
                 if (i.unit.Active)
                     if (i.unit.Selectable)
@@ -52,7 +51,15 @@ namespace Mercs.Tactical.States
                 TacticalUIController.Instance.ShowActionBarButtons(selected);
                 TacticalUIController.Instance.HideActionBarButton(ActionButton.Cancel);
 
-                SwitchTo(TacticalState.SelectMovement);
+                switch(selected)
+                {
+                    case UnitInfo info when info.Buffs.Shutdown || info.Buffs.Prone:
+                        SwitchTo(TacticalState.WaitActionBar);
+                        break;
+                    default:
+                        SwitchTo(TacticalState.SelectMovement);
+                        break;
+                }
             }
             else
             {

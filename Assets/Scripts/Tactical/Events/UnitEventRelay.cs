@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 namespace Mercs.Tactical.Events
 {
     [AddComponentMenu("Merc/EventRelay/Unit Mouse Event")]
-    public class UnitEventRelay : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
+    public class UnitEventRelay : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {
         [SerializeField]
         private UnitInfo OriginalUnit;
@@ -25,11 +25,6 @@ namespace Mercs.Tactical.Events
             OriginalUnit = unit;
         }
 
-        public void OnPointerDown(PointerEventData eventData)
-        {
-            EventHandler.Raise<IUnitEvent>((i, d) => i.MouseUnitClick(OriginalUnit, eventData.button));
-        }
-
         public void OnPointerEnter(PointerEventData eventData)
         {
             EventHandler.Raise<IUnitEvent>((i, d) => i.MouseUnitEnter(OriginalUnit));
@@ -38,6 +33,11 @@ namespace Mercs.Tactical.Events
         public void OnPointerExit(PointerEventData eventData)
         {
             EventHandler.Raise<IUnitEvent>((i, d) => i.MouseUnitLeave(OriginalUnit));
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            EventHandler.Raise<IUnitEvent>((i, d) => i.MouseUnitClick(OriginalUnit, eventData.button));
         }
     }
 }

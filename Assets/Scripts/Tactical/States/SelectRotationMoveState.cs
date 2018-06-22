@@ -36,13 +36,13 @@ namespace Mercs.Tactical.States
             TacticalController.Instance.SelectedUnit.Active = false;
             TacticalController.Instance.SelectedUnit.Selectable = false;
             state.ActiveUnits.Remove(TacticalController.Instance.SelectedUnit);
+            TacticalController.Instance.SelectedUnit.Movement.MoveDone();
 
             TacticalController.Instance.StartMovementWait(data, TacticalController.Instance.SelectedUnit,
                 state.ActiveUnits.Count > 0 ? TacticalState.PhaseSelectFaction : TacticalState.PhasePrepare);
-           TacticalController.Instance.SelectedUnit = null;
+            TacticalController.Instance.SelectedUnit = null;
 
             SwitchTo(TacticalState.WaitMovementComplete);
-
         }
 
         private List<PathMap.path_node> get_path()
@@ -57,6 +57,14 @@ namespace Mercs.Tactical.States
 
             return list;
         }
+
+        public override void OnLoad()
+        {
+            base.OnLoad();
+
+            TacticalUIController.Instance.HideActionBar();
+        }
+
 
         protected override void ShowFacing()
         {
@@ -76,6 +84,7 @@ namespace Mercs.Tactical.States
         {
             SwitchTo(TacticalController.Instance.StateMachine.LastState);
 
+            TacticalUIController.Instance.ShowActionBarButtons(TacticalController.Instance.SelectedUnit);
             TacticalUIController.Instance.MoveLine.gameObject.SetActive(false);
         }
 

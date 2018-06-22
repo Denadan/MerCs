@@ -24,7 +24,7 @@
         WaitMovementComplete = 46,
         SelectEvasive = 47,
 
-        Confirm = 200,
+        WaitActionBar = 200,
 
         DEBUG_TEST_LINE = 1000
     }

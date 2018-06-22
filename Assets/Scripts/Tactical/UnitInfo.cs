@@ -63,5 +63,11 @@ namespace Mercs.Tactical
 
             return true;
         }
+
+        public void NewTurn()
+        {
+            Movement.NewTurn();
+            Active = true;
+        }
     }
 }

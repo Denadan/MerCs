@@ -19,14 +19,20 @@ namespace Mercs.Tactical.States
 
         public override void TileClick(Vector2Int coord, PointerEventData.InputButton button)
         {
-            if(Cancelable && button == PointerEventData.InputButton.Right)
+            if (Cancelable && button == PointerEventData.InputButton.Right)
                 Cancel();
+
+            else if (button == PointerEventData.InputButton.Left)
+                Done(cur_facing);
         }
 
         public override void UnitClick(UnitInfo unit, PointerEventData.InputButton button)
         {
             if (Cancelable && button == PointerEventData.InputButton.Right)
                 Cancel();
+
+            else if (button == PointerEventData.InputButton.Left)
+                Done(cur_facing);
         }
 
         public override void Update()
@@ -48,7 +54,7 @@ namespace Mercs.Tactical.States
             }
 
             // левая кнопка - завершить
-            if (Input.GetMouseButtonUp(0))
+            if (Input.GetMouseButton(0) && !EventSystem.current.IsPointerOverGameObject())
             {
                 Done(cur_facing);
             }

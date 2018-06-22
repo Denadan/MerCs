@@ -14,6 +14,7 @@ namespace Mercs.Tactical.Buffs
 
         public bool Overheated => info.Heat.Value > info.Heat.ThresholdValue;
         public bool Shutdown { get; private set; }
+        public bool Prone { get; private set; }
 
         private void Awake()
         {

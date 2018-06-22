@@ -75,7 +75,7 @@ namespace Mercs.Tactical.States
             addState(new SelectRotationMoveState(prepare, movement));
 
             addState(new WaitMovementComplete());
-            addState(new ConfirmGuardState());
+            addState(new WaitActionBar());
 
             addState(new DEBUG_TestLine());
 
