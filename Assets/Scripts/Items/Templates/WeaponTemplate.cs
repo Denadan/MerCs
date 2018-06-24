@@ -22,6 +22,8 @@ namespace Mercs.Items
         public float Optimal;
         public float Falloff;
 
+        public int AimBonus = 0;
+
         public bool DirectFire = true;
         public bool IndirectFire = false;
         public bool SupportFire = false;

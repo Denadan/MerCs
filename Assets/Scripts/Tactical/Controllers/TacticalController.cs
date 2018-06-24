@@ -76,6 +76,7 @@ namespace Mercs.Tactical
 
         public IEnumerable<UnitInfo> PlayerUnits { get; private set; }
         public IEnumerable<UnitInfo> EnemyUnits { get; private set; }
+        public int TargetingRevision { get; set; }
 
         #region Inspector
         [SerializeField]

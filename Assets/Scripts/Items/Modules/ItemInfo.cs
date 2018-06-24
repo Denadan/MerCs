@@ -69,7 +69,11 @@ namespace Mercs.Items
         protected float upgrade(UpgradeType type, float base_value)
         {
             return Template.Upgrades.Sum(Upgrade[type], base_value);
+        }
 
+        protected int upgrade_non_zero(UpgradeType type, int base_value)
+        {
+            return Template.Upgrades.SumNZ(Upgrade[type], base_value);
         }
 
         /// <summary>

@@ -91,6 +91,11 @@ namespace Mercs.Items
         /// </summary>
         public float Heat => Template.VariableShots ? Shots * HeatForShot : HeatForShot;
 
+        /// <summary>
+        /// Бонус точности
+        /// </summary>
+        public int AimBonus { get; private set; }
+
         #region game_data
         public Ammo LoadedAmmo;
         #endregion
@@ -118,6 +123,8 @@ namespace Mercs.Items
             if(Template.StockAmmo != null)
                 Template.StockAmmo.ApplyUpgrade();
 
+            AimBonus = upgrade_non_zero(UpgradeType.Accuracy, AimBonus);
+
             apply = true;
             LoadAmmo(LoadedAmmo);
         }
@@ -134,6 +141,7 @@ namespace Mercs.Items
                 MinRange /= old.RangeMod;
                 Optimal /= old.RangeMod;
                 Falloff /= old.RangeMod;
+                AimBonus -= old.AimMod;
             }
             apply = false;
 
@@ -144,6 +152,7 @@ namespace Mercs.Items
                 MinRange *= LoadedAmmo.RangeMod;
                 Optimal *= LoadedAmmo.RangeMod;
                 Falloff *= LoadedAmmo.RangeMod;
+                AimBonus += LoadedAmmo.AimMod;
             }
         }
 

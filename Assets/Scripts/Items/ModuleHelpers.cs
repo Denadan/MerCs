@@ -69,5 +69,33 @@ namespace Mercs.Items
 
             return val;
         }
+
+        public static int SumNZ(this IEnumerable<UpgradeTemplate> list, Upgrade.UItem upgrade, int base_value)
+        {
+
+            if (list == null || upgrade == null)
+                return base_value;
+            var item = list.FirstOrDefault(i => i.Type == upgrade.type);
+            if (item == null)
+                return base_value;
+
+            int value = upgrade.value < -item.Min ? -item.Min : upgrade.value;
+            value = value > item.Max ? item.Max : value;
+
+
+            if (value != 0)
+            {
+                if (item.AddValue != 0)
+                    base_value += (int)item.AddValue * value;
+            }
+            else if (value < 0)
+            {
+                if (item.SubValue != 0)
+                    base_value += (int)item.SubValue * value;
+            }
+
+            return base_value;
+        }
+
     }
 }

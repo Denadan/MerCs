@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "com.unity.incrementalcompiler": "0.0.42-preview.4",
+    "com.unity.incrementalcompiler": "0.0.42-preview.9",
     "com.unity.package-manager-ui": "1.9.3",
     "com.unity.ads": "exclude",
     "com.unity.purchasing": "exclude"

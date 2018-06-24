@@ -49,7 +49,7 @@ namespace Mercs.Items
         /// <summary>
         /// модификация точности
         /// </summary>
-        public float AimMod { get; private set; }
+        public int AimMod { get; private set; }
         /// <summary>
         /// поглощение кинетического урона броней
         /// </summary>
@@ -78,7 +78,7 @@ namespace Mercs.Items
             StabDamage = upgrade(UpgradeType.StabDamage, Template.StabDamage);
 
             RangeMod = upgrade(UpgradeType.Range, Template.RangeMod);
-            AimMod = upgrade(UpgradeType.Accuracy, Template.AimMod);
+            AimMod = upgrade_non_zero(UpgradeType.Accuracy, Template.AimMod);
 
             Guidance = upgrade<GuidanceSystem>(UpgradeType.GuidanceSystem);
             GuidanceBonus = upgrade(UpgradeType.GuidanceBonus);
