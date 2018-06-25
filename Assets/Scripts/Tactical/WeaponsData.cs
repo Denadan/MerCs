@@ -1,9 +1,10 @@
 ﻿using Mercs.Items;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using Mercs.Tactical.Buffs;
+using Mercs.Tactical.States;
 
 namespace Mercs.Tactical
 {
@@ -106,6 +107,124 @@ namespace Mercs.Tactical
             MaxIndirectRange = Weapons.Where(i => i.Weapon.IndirectFire).DefaultIfEmpty().Max(i =>  i?.Weapon.Falloff ?? 0);
         }
 
+        public List<(Info, float)> GetChance(Visibility.LoS los)
+        {
+            var res = new List<(Info, float)>();
+
+            foreach(var data in Weapons)
+            {
+                //пушка не может стрелять, цель не видима или слишком далеко
+                if(!data.CanShoot || los.Distance > data.Weapon.Falloff || los.Level <= Visibility.Level.Sensor
+                    || info.Buffs.Shutdown || info.Buffs.Prone)
+                    res.Add((data, 0));
+
+                //базовое значение
+                float aim = data.Weapon.AimBonus;
+
+                //если нет прямой видимости
+                if (los.Line == Visibility.Line.Indirect)
+                {
+                    //если оружие не может стрелять по наводке
+                    if (!data.Weapon.IndirectFire || los.Level <= Visibility.Level.Visual)
+                    {
+                        res.Add((data, 0));
+                        continue;
+                    }
+                    // иначе штраф за наводку
+                    aim += -4;
+                }
+                //если видииость частичная и пушка может стрелять напрямую
+                else if (los.Line == Visibility.Line.Partial && data.Weapon.DirectFire)
+                {
+                    aim -= 2;
+                }
+                //если пушка может стрелять только по наводке - обычный штраф
+                else if(!data.Weapon.DirectFire)
+                {
+                    aim -= 4;
+                }
+
+                //бонусы баффов
+                aim += info.Buffs.SumBuffs(BuffType.Aim);
+                aim -= info.Buffs.SumBuffs(BuffType.Evasion);
+
+                aim = Mathf.Clamp(0.5f + aim / 0.05f, 0, 1);
+
+                res.Add((data, aim));
+            }
+
+            return res;
+        }
+
+        public List<(Info, float)> GetChance(Visibility.LoS los, MovementStateData move)
+        {
+            var res = new List<(Info, float)>();
+
+            foreach (var data in Weapons)
+            {
+                //пушка не может стрелять, цель не видима или слишком далеко
+                if (!data.CanShoot || los.Distance > data.Weapon.Falloff || los.Level <= Visibility.Level.Sensor
+                    || info.Buffs.Shutdown || info.Buffs.Prone)
+                    res.Add((data, 0));
+
+                //базовое значение
+                float aim = data.Weapon.AimBonus;
+
+                //если нет прямой видимости
+                if (los.Line == Visibility.Line.Indirect)
+                {
+                    //если оружие не может стрелять по наводке
+                    if (!data.Weapon.IndirectFire || los.Level <= Visibility.Level.Visual)
+                    {
+                        res.Add((data, 0));
+                        continue;
+                    }
+                    // иначе штраф за наводку
+                    aim += -4;
+                }
+                //если видииость частичная и пушка может стрелять напрямую
+                else if (los.Line == Visibility.Line.Partial && data.Weapon.DirectFire)
+                {
+                    aim -= 2;
+                }
+                //если пушка может стрелять только по наводке - обычный штраф
+                else if (!data.Weapon.DirectFire)
+                {
+                    aim -= 4;
+                }
+
+                //бонусы баффов
+                aim += info.Buffs.Where(i => i.TAG != "move").SumBuffs(BuffType.Aim);
+                aim -= info.Buffs.SumBuffs(BuffType.Evasion);
+
+                if(move != null)
+                {
+                    switch (move.Type)
+                    {
+                        case MovementStateData.MoveType.Move:
+                            aim -= 1;
+                            break;
+                        case MovementStateData.MoveType.Run:
+                            aim -= 2;
+                            break;
+                        case MovementStateData.MoveType.Jump:
+                            aim -= 3;
+                            break;
+                        case MovementStateData.MoveType.Evasive:
+                            aim -= 3;
+                            break;
+                    }
+                }
+
+                aim = Mathf.Clamp(0.5f + aim / 0.05f, 0, 1);
+
+                res.Add((data, aim));
+            }
+
+            return res;
+        }
+
+        #region IEnumerable
         public IEnumerator<Info> GetEnumerator()
         {
             return Weapons.GetEnumerator();
@@ -115,5 +234,6 @@ namespace Mercs.Tactical
         {
             return GetEnumerator();
         }
+        #endregion
     }
 }

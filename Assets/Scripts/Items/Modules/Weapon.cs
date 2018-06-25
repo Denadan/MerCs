@@ -13,6 +13,8 @@ namespace Mercs.Items
         public override bool Unique => false;
 
 
+        public WeaponType Type => Template.Type;
+
         /// <summary>
         /// модификатор урона боеприпаса
         /// </summary>
