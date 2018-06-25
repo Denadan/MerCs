@@ -35,12 +35,21 @@ namespace Mercs.Tactical
 
         public enum Line { Indirect, Partial, Dirrect }
 
+        public class LoS
+        {
+            public UnitInfo Target;
+            public float Distance;
+            public Level Level;
+            public Line Line;
+        }
+
         private class vision_info
         {
             public UnitInfo from;
             public UnitInfo to;
             public Level level;
             public Line direct;
+            public float distance;
         }
 
         private List<vision_info> units;
@@ -69,7 +78,7 @@ namespace Mercs.Tactical
                         to = unitto
                     };
 
-                    (info.level, info.direct) = calc_vision(info);
+                    (info.level, info.direct, info.distance) = calc_vision(info);
 
                     units.Add(info);
                 }
@@ -83,32 +92,32 @@ namespace Mercs.Tactical
             }
         }
 
-        private (Level, Line) calc_vision(vision_info info) =>
+        private (Level, Line, float) calc_vision(vision_info info) =>
             calc_vision(info.@from, info.@from.Position.position, info.to, info.to.Position.position);
-        private (Level, Line) calc_vision(vision_info info, Vector2Int f_pos) =>
+        private (Level, Line, float) calc_vision(vision_info info, Vector2Int f_pos) =>
             calc_vision(info.@from, f_pos, info.to, info.to.Position.position);
-        private (Level, Line) calc_vision_to(vision_info info, Vector2Int pos) =>
+        private (Level, Line, float) calc_vision_to(vision_info info, Vector2Int pos) =>
             calc_vision(info.@from, info.@from.Position.position, info.to, pos);
 
 
-        private (Level, Line) calc_vision(UnitInfo from, Vector2Int f_pos, UnitInfo to, Vector2Int t_pos)
+        private (Level, Line, float) calc_vision(UnitInfo from, Vector2Int f_pos, UnitInfo to, Vector2Int t_pos)
         {
-            if (!map.OnMap(f_pos) || !map.OnMap(t_pos))
-                return (Level.None, Line.Indirect);
-
             var dist = grid.MapDistance(f_pos, t_pos);
+            if (!map.OnMap(f_pos) || !map.OnMap(t_pos))
+                return (Level.None, Line.Indirect, dist);
+
             var direct = HaveDirect(f_pos, from.Height, t_pos, to.Height);
 
             if (dist > from.RadarRange && dist > from.VisualRange)
-                return (Level.None, direct);
+                return (Level.None, direct, dist);
 
             if (direct == Line.Indirect)
-                return (dist > from.RadarRange || to.Buffs.Shutdown ? Level.None : Level.Sensor, direct);
+                return (dist > from.RadarRange || to.Buffs.Shutdown ? Level.None : Level.Sensor, direct, dist);
 
             if (dist > from.VisualRange)
-                return (dist > from.ScanRange ? (to.Buffs.Shutdown ? Level.None : Level.Sensor) : Level.Scanned, direct);
+                return (dist > from.ScanRange ? (to.Buffs.Shutdown ? Level.None : Level.Sensor) : Level.Scanned, direct, dist);
             else
-                return (dist > from.ScanRange ? Level.Visual : Level.Scanned, direct);
+                return (dist > from.ScanRange ? Level.Visual : Level.Scanned, direct, dist);
         }
 
 
@@ -182,7 +191,7 @@ namespace Mercs.Tactical
             if (looked_from.TryGetValue(unit, out var list_f))
                 foreach (var info in list_f)
                 {
-                    (info.level, info.direct) = calc_vision(info);
+                    (info.level, info.direct, info.distance) = calc_vision(info);
 
                     var l = GetLevelFor(info.to);
                     if (info.to.CurrentVision != l)
@@ -194,7 +203,7 @@ namespace Mercs.Tactical
 
             if (looked_to.TryGetValue(unit, out var list_t))
                 foreach (var info in list_t)
-                    (info.level, info.direct) = calc_vision(info);
+                    (info.level, info.direct, info.distance) = calc_vision(info);
 
             var new_level = GetLevelFor(unit);
             if (unit.CurrentVision != new_level)
@@ -210,7 +219,7 @@ namespace Mercs.Tactical
             if (looked_from.TryGetValue(unit, out var list_f))
                 foreach (var info in list_f)
                 {
-                    (info.level, info.direct) = calc_vision(info, pos);
+                    (info.level, info.direct, info.distance) = calc_vision(info, pos);
 
                     var l = GetLevelFor(info.to);
                     if (info.to.CurrentVision != l)
@@ -222,7 +231,7 @@ namespace Mercs.Tactical
 
             if (looked_to.TryGetValue(unit, out var list_t))
                 foreach (var info in list_t)
-                    (info.level, info.direct) = calc_vision_to(info, pos);
+                    (info.level, info.direct, info.distance) = calc_vision_to(info, pos);
 
             var new_level = GetLevelFor(unit);
             if (unit.CurrentVision != new_level)
@@ -239,29 +248,49 @@ namespace Mercs.Tactical
             rebuild_dictionary();
         }
 
-        public IEnumerable<(UnitInfo target, Level level, Line direct)> GetFrom(UnitInfo unit)
+        public IEnumerable<LoS> GetFrom(UnitInfo unit)
         {
             return looked_from.TryGetValue(unit, out var list)
-                ? from item in list select (target: item.to, level: item.level, direct: item.direct)
-                : Enumerable.Empty<(UnitInfo, Level, Line)>();
+                ? from item in list
+                  select new LoS
+                  {
+                      Distance = item.distance,
+                      Level = item.level,
+                      Line = item.direct,
+                      Target = item.to
+                  }
+                : Enumerable.Empty<LoS>();
         }
 
-        public IEnumerable<(UnitInfo target, Level level, Line direct)> GetTo(UnitInfo unit)
+        public IEnumerable<LoS> GetTo(UnitInfo unit)
         {
             return looked_to.TryGetValue(unit, out var list)
-                ? from item in list select (target: item.@from, level: item.level, direct: item.direct)
-                : Enumerable.Empty<(UnitInfo, Level, Line)>(); ;
+                ? from item in list
+                  select new LoS
+                  {
+                      Distance = item.distance,
+                      Level = item.level,
+                      Line = item.direct,
+                      Target = item.@from
+                  }
+                : Enumerable.Empty<LoS>(); ;
         }
 
-        public IEnumerable<(UnitInfo target, Level level, Line direct)> CalcFrom(UnitInfo unit, Vector2Int pos)
+        public IEnumerable<LoS> CalcFrom(UnitInfo unit, Vector2Int pos)
         {
-            var res = new List<(UnitInfo target, Level level, Line direct)>();
+            var res = new List<LoS>();
 
             if (looked_from.TryGetValue(unit, out var list))
                 foreach (var info in list)
                 {
                     var val = calc_vision(info, pos);
-                    res.Add((info.to, val.Item1, val.Item2));
+                    res.Add(new LoS
+                    {
+                        Distance = val.Item3,
+                        Level = val.Item1,
+                        Line = val.Item2,
+                        Target = info.to
+                    });
                 }
             return res;
         }

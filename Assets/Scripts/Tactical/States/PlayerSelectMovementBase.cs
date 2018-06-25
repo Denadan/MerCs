@@ -119,7 +119,7 @@ namespace Mercs.Tactical.States
                 if (path.target.target_data == null)
                     path.target.target_data =
                         TacticalController.Instance.Vision.CalcFrom(TacticalController.Instance.SelectedUnit, coord)
-                        .ToDictionary(i => i.target);
+                        .ToDictionary(i => i.Target);
 
                 //стартовая позиция линии
                 var start_pos = TacticalController.Instance.Grid.CellToWorld(coord);
@@ -130,26 +130,25 @@ namespace Mercs.Tactical.States
                     if (path.target.target_data.TryGetValue(l.unit, out var data))
                     {
                         //уровень видимости в этой точке
-                        var level = TacticalController.Instance.Vision.GetLevelFor(l.unit, TacticalController.Instance.SelectedUnit, data.level);
+                        var level = TacticalController.Instance.Vision.GetLevelFor(l.unit, TacticalController.Instance.SelectedUnit, data.Level);
 
                         //если видно
                         if (level > Visibility.Level.Sensor)
                         {
                             //расстояние до цели
-                            var dist = TacticalController.Instance.Grid.MapDistance(coord, l.unit.Position.position);
                             //включаем линию
                             l.line.gameObject.SetActive(true);
                             l.line.SetPosition(0, start_pos);
                             
                             //в зависимости от прямой видимости
-                            switch (data.direct)
+                            switch (data.Line)
                             {
                                 //нет прямой видиости - штриховая линия
                                 case Visibility.Line.Indirect:
                                     l.line.material = TacticalUIController.Instance.StrokeLineMaterial;
                                     //плотность штриховки
-                                    l.line.material.mainTextureScale = new Vector2(dist * 6f, 1f);
-                                    if (dist > TacticalController.Instance.SelectedUnit.Weapons.MaxIndirectRange)
+                                    l.line.material.mainTextureScale = new Vector2(data.Distance * 6f, 1f);
+                                    if (data.Distance > TacticalController.Instance.SelectedUnit.Weapons.MaxIndirectRange)
                                         l.line.startColor = l.line.endColor = Color.white;
                                     else
                                         l.line.startColor = l.line.endColor = Color.red;
@@ -157,8 +156,8 @@ namespace Mercs.Tactical.States
                                 //частичная видимость - цельная желтая
                                 case Visibility.Line.Partial:
                                     l.line.material = TacticalUIController.Instance.SolidLineMaterial;
-                                    if (dist > TacticalController.Instance.SelectedUnit.Weapons.MaxFalloffRange ||
-                                        dist < TacticalController.Instance.SelectedUnit.Weapons.MinRange)
+                                    if (data.Distance > TacticalController.Instance.SelectedUnit.Weapons.MaxFalloffRange ||
+                                        data.Distance < TacticalController.Instance.SelectedUnit.Weapons.MinRange)
                                         l.line.startColor = l.line.endColor = Color.white;
                                     else
                                         l.line.startColor = l.line.endColor = Color.yellow;
@@ -166,8 +165,8 @@ namespace Mercs.Tactical.States
                                 //прямая видисость - цельная красная
                                 case Visibility.Line.Dirrect:
                                     l.line.material = TacticalUIController.Instance.SolidLineMaterial;
-                                    if (dist > TacticalController.Instance.SelectedUnit.Weapons.MaxFalloffRange ||
-                                        dist < TacticalController.Instance.SelectedUnit.Weapons.MinRange)
+                                    if (data.Distance > TacticalController.Instance.SelectedUnit.Weapons.MaxFalloffRange ||
+                                        data.Distance < TacticalController.Instance.SelectedUnit.Weapons.MinRange)
                                         l.line.startColor = l.line.endColor = Color.white;
                                     else
                                         l.line.startColor = l.line.endColor = Color.red;

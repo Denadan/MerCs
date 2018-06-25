@@ -38,11 +38,13 @@ namespace Mercs.Tactical
                     SelectionMark.SetParent(transform, false);
                     SelectionMark.gameObject.SetActive(false);
                     TacticalUIController.Instance.HideSelectedUnitWindow();
+                    CurrentLoS = Enumerable.Empty<Visibility.LoS>();
                 }
                 else
                 {
                     SelectionMark.SetParent(selected.transform, false);
                     SelectionMark.gameObject.SetActive(true);
+                    CurrentLoS = Vision.GetFrom(value);
                     if (value.Faction == GameController.Instance.PlayerFaction)
                     {
                         TacticalUIController.Instance.ShowSelectedUnitWindow(value);
@@ -56,6 +58,9 @@ namespace Mercs.Tactical
         public int CurrentPhase { get; set; }
         public int CurrentRound { get; set; }
         public Faction CurrentFaction { get => factions[current_faction]; }
+        public IEnumerable<UnitInfo> PlayerUnits { get; private set; }
+        public IEnumerable<UnitInfo> EnemyUnits { get; private set; }
+        public IEnumerable<Visibility.LoS> CurrentLoS { get; private set; }
 
 
         #endregion
@@ -74,9 +79,6 @@ namespace Mercs.Tactical
         public List<UnitInfo> Units = new List<UnitInfo>();
 
 
-        public IEnumerable<UnitInfo> PlayerUnits { get; private set; }
-        public IEnumerable<UnitInfo> EnemyUnits { get; private set; }
-        public int TargetingRevision { get; set; }
 
         #region Inspector
         [SerializeField]
@@ -232,34 +234,52 @@ namespace Mercs.Tactical
             else
                 StartCoroutine(Move(data, unit, state));
 
-            // вещаем бафф движения
-            Buffs.BuffType type = Buffs.BuffType.None;
+            var buff = new Buffs.BuffDescriptor
+            {
+                Duration = Buffs.BuffDescriptor.BuffDuration.BeginNextTurn,
+                Stackable = true,
+                Type = Buffs.BuffType.Evasion,
+                MinVision = Visibility.Level.Visual
+            };
+
+
+            var debuff = new Buffs.BuffDescriptor()
+            {
+                Duration = Buffs.BuffDescriptor.BuffDuration.BeginNextTurn,
+                Stackable = true,
+                Type = Buffs.BuffType.Aim,
+                MinVision = Visibility.Level.Visual
+            };
+
             switch (data.Type)
             {
+                case MovementStateData.MoveType.Evasive:
+                    buff.Value = 3 + data.path.Count / 2;
+                    debuff.Value = -3;
+                    buff.TAG = debuff.TAG = "move";
+                    break;
                 case MovementStateData.MoveType.Move:
-                    type = Buffs.BuffType.MoveEvasion;
+                    buff.Value = 1 + data.path.Count / 2;
+                    debuff.Value = -1;
+                    buff.TAG = debuff.TAG = "move";
                     break;
                 case MovementStateData.MoveType.Run:
-                    type = Buffs.BuffType.RunEvasion;
+                    buff.Value = 3 + data.path.Count / 2;
+                    debuff.Value = -2;
+                    buff.TAG = debuff.TAG = "move";
                     break;
                 case MovementStateData.MoveType.Jump:
-                    type = Buffs.BuffType.EvasiveEvasion;
-                    break;
-                case MovementStateData.MoveType.Evasive:
-                    type = Buffs.BuffType.JumpEvasion;
+                    buff.Value = 2 + Grid.MapDistance(data.path[0].coord, data.path[1].coord) / 2;
+                    debuff.Value = -3;
+                    buff.TAG = debuff.TAG = "move";
                     break;
             }
 
-            if (type != Buffs.BuffType.None)
-                unit.Buffs.Add(new Buffs.BuffDescriptor
-                {
-                    Type = type,
-                    Duration = Buffs.BuffDescriptor.BuffDuration.BeginNextTurn,
-                    Stackable = false,
-                    TAG = "Evasion",
-                    MinVision = Visibility.Level.Visual,
-                    Value = type == Buffs.BuffType.JumpEvasion ? Grid.MapDistance(data.path[0].coord, data.path[1].coord) : data.path.Count
-                });
+            if (buff.Value > 5)
+                buff.Value = 5;
+
+            unit.Buffs.Add(buff);
+            unit.Buffs.Add(debuff);
         }
 
         private IEnumerator Move(MovementStateData data, UnitInfo info, TacticalState state)
@@ -324,6 +344,7 @@ namespace Mercs.Tactical
             info.transform.position = Grid.CellToWorld(path[0].coord);
             info.Position.SetFacing(dir);
             Vision.RecalcVision(info);
+            CurrentLoS = Vision.GetFrom(info);
             if (state != TacticalState.NotReady)
             {
                 yield return new WaitForSeconds(0.5f);
@@ -363,6 +384,7 @@ namespace Mercs.Tactical
             info.transform.position = end;
             info.Position.SetFacing(target_dir);
             Vision.RecalcVision(info);
+            CurrentLoS = Vision.GetFrom(info);
             if (state != TacticalState.NotReady)
             {
                 yield return new WaitForSeconds(0.5f);

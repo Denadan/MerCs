@@ -124,11 +124,11 @@ namespace Mercs.Tactical.UI
             var list = TacticalController.Instance.Vision.GetTo(info);
             foreach (var item in list)
             {
-                if (item.level > Visibility.Level.None)
+                if (item.Level > Visibility.Level.None)
                 {
                     var str = Instantiate(StringPrefab, RadarContainer).GetComponent<IconText>();
-                    str.Text = item.target.PilotName;
-                    switch (item.level)
+                    str.Text = item.Target.PilotName;
+                    switch (item.Level)
                     {
                         case Visibility.Level.Sensor:
                             str.Icon = RadarSprite;
