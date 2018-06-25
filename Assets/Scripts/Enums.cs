@@ -105,6 +105,17 @@ namespace Mercs
             [TileFeature.Pillar] = -1,
         };
 
+        public static float ClassToEvasion(MercClass Class)
+        {
+            if (Class == MercClass.Medium2 || Class == MercClass.Heavy1)
+                return 0;
+
+            if (Class < MercClass.Medium1)
+                return (float) (Class - MercClass.Medium2) / 2f;
+
+            return (float) (Class - MercClass.Heavy1) / 2f;
+        }
+
         /// <summary>
         /// возвращает цвет по количеству хп
         /// </summary>

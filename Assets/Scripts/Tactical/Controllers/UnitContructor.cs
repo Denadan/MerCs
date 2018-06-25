@@ -35,7 +35,13 @@ namespace Mercs.Tactical
             info.Movement.Build();
 
             AddPilot(info, pilot, template.AddHp);
-              
+            
+            info.Buffs.Add(new BuffDescriptor
+            {
+                Type = BuffType.Evasion,
+                Value = CONST.ClassToEvasion(info.Class)
+            });
+
             return info;
 
         }

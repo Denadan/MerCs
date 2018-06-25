@@ -121,32 +121,21 @@ namespace Mercs.Tactical
                 //базовое значение
                 float aim = data.Weapon.AimBonus;
 
-                //если нет прямой видимости
-                if (los.Line == Visibility.Line.Indirect)
+                aim += indirect_check(los, data.Weapon);
+
+                if (aim < -100f)
                 {
-                    //если оружие не может стрелять по наводке
-                    if (!data.Weapon.IndirectFire || los.Level <= Visibility.Level.Visual)
-                    {
-                        res.Add((data, 0));
-                        continue;
-                    }
-                    // иначе штраф за наводку
-                    aim += -4;
+                    res.Add((data, 0));
+                    continue;
                 }
-                //если видииость частичная и пушка может стрелять напрямую
-                else if (los.Line == Visibility.Line.Partial && data.Weapon.DirectFire)
-                {
-                    aim -= 2;
-                }
-                //если пушка может стрелять только по наводке - обычный штраф
-                else if(!data.Weapon.DirectFire)
-                {
-                    aim -= 4;
-                }
+
+                if (aim < -100f) continue;
 
                 //бонусы баффов
                 aim += info.Buffs.SumBuffs(BuffType.Aim);
                 aim -= info.Buffs.SumBuffs(BuffType.Evasion);
+
+                aim *= range_check(los, data.Weapon);
 
                 aim = Mathf.Clamp(0.5f + aim / 0.05f, 0, 1);
 
@@ -170,30 +159,16 @@ namespace Mercs.Tactical
                 //базовое значение
                 float aim = data.Weapon.AimBonus;
 
-                //если нет прямой видимости
-                if (los.Line == Visibility.Line.Indirect)
-                {
-                    //если оружие не может стрелять по наводке
-                    if (!data.Weapon.IndirectFire || los.Level <= Visibility.Level.Visual)
-                    {
-                        res.Add((data, 0));
-                        continue;
-                    }
-                    // иначе штраф за наводку
-                    aim += -4;
-                }
-                //если видииость частичная и пушка может стрелять напрямую
-                else if (los.Line == Visibility.Line.Partial && data.Weapon.DirectFire)
-                {
-                    aim -= 2;
-                }
-                //если пушка может стрелять только по наводке - обычный штраф
-                else if (!data.Weapon.DirectFire)
-                {
-                    aim -= 4;
-                }
+                aim += indirect_check(los, data.Weapon);
 
-                //бонусы баффов
+                if (aim < -100f)
+                {
+                    res.Add((data, 0));
+                    continue;
+                }
+            
+
+            //бонусы баффов
                 aim += info.Buffs.Where(i => i.TAG != "move").SumBuffs(BuffType.Aim);
                 aim -= info.Buffs.SumBuffs(BuffType.Evasion);
 
@@ -216,12 +191,63 @@ namespace Mercs.Tactical
                     }
                 }
 
+                aim *= range_check(los, data.Weapon);
+
+
                 aim = Mathf.Clamp(0.5f + aim / 0.05f, 0, 1);
 
                 res.Add((data, aim));
             }
 
             return res;
+        }
+
+        private float indirect_check(Visibility.LoS los, Weapon weapon)
+        {
+            //если нет прямой видимости
+            if (los.Line == Visibility.Line.Indirect)
+            {
+                //если оружие не может стрелять по наводке
+                if (!weapon.IndirectFire || los.Level <= Visibility.Level.Visual)
+                    return -1000f;
+
+                // иначе штраф за наводку
+                return -4f;
+            }
+            //если видииость частичная и пушка может стрелять напрямую
+            if (los.Line == Visibility.Line.Partial && weapon.DirectFire)
+                return -2f;
+            //если пушка может стрелять только по наводке - обычный штраф
+
+            if (!weapon.DirectFire)
+                return -4f;
+            
+            return 0;
+        }
+
+        private float range_check(Visibility.LoS los, Weapon weapon)
+        {
+            if (los.Distance > weapon.Falloff)
+                return 0;
+            if (los.Distance > weapon.MinRange && los.Distance <= weapon.Optimal)
+                return 1;
+            if(los.Distance <= weapon.MinRange)
+                switch (weapon.Type)
+                {
+                    case WeaponType.GuidedMissile:
+                    case WeaponType.DirectFireMissile:
+                        return 0;
+
+                    case WeaponType.IonCannon:
+                    case WeaponType.Artillery:
+                        var t = los.Distance / weapon.MinRange;
+                        return t* t ;
+
+                    case WeaponType.Laser:
+                    case WeaponType.Autocannon:
+                        return Mathf.Sqrt(los.Distance / weapon.MinRange);
+                }
+            return 1 - (los.Distance - weapon.Optimal) / (weapon.Falloff - weapon.Optimal);
         }
 
         #region IEnumerable
